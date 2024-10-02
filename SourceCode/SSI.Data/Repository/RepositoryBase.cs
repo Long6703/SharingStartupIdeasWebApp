@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SSI.Data.IRepository;
+using SSI.Share.Data;
 using SSI.Share.Domain;
 using System;
 using System.Collections.Generic;
