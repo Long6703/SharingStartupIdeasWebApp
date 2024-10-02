@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
+using SSI.Share.Domain;
 
-namespace SSI.Share.Domain
+namespace SSI.Share.Data
 {
     public partial class PRN221_AssignmentContext : DbContext
     {

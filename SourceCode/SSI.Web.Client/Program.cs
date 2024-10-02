@@ -3,6 +3,7 @@ using SSI.Share.Domain;
 using SSI.Data;
 using SSI.Services;
 using SSI.Services.IService;
+using SSI.Share.Data;
 
 namespace SSI.Web.Client
 {

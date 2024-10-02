@@ -8,7 +8,7 @@ namespace SSI.Web.Client.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ITestService _testService;
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
 
         public IndexModel(ILogger<IndexModel> logger, ITestService testService)
         {
