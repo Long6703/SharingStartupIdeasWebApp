@@ -31,12 +31,7 @@ namespace SSI.Share.Domain
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                optionsBuilder.UseSqlServer(builder.Build().GetConnectionString("DefaultConnection"));
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

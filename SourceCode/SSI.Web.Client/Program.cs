@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using SSI.Share.Domain;
+using SSI.Data;
+using SSI.Services;
+using SSI.Services.IService;
+
 namespace SSI.Web.Client
 {
     public class Program
@@ -8,6 +14,12 @@ namespace SSI.Web.Client
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddDbContext<PRN221_AssignmentContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+            builder.Services.AddRepository();
+            builder.Services.AddService();
 
             var app = builder.Build();
 
