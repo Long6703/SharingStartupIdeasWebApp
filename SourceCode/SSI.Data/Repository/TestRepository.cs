@@ -1,5 +1,4 @@
 ﻿using SSI.Data.IRepository;
-using SSI.Share.Data;
 using SSI.Share.Domain;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace SSI.Data.Repository
 {
     public class TestRepository : RepositoryBase<Share.Domain.Role>, ITestRepository
     {
-        public TestRepository(PRN221_AssignmentContext context) : base(context)
+        public TestRepository(SSIContext context) : base(context)
         {
         }
 

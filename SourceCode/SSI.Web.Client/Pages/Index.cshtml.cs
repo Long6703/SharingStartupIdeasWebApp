@@ -21,7 +21,7 @@ namespace SSI.Web.Client.Pages
             try
             {
                 await _testService.TestAddRoleAsync();
-                Message = "Add role successfully!";
+                Message = "Add a role in table Role success!";
             }
             catch (Exception ex)
             {

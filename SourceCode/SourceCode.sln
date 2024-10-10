@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSI.Data", "SSI.Data\SSI.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSI.Share", "SSI.Share\SSI.Share.csproj", "{0EA743C7-012E-4DE4-92C0-A1CA795C3EE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSI.Services", "SSI.Services\SSI.Services.csproj", "{F7B8A262-B734-4731-8919-B2F828878E19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SSI.Services", "SSI.Services\SSI.Services.csproj", "{F7B8A262-B734-4731-8919-B2F828878E19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
