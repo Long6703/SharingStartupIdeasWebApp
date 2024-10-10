@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Share.Domain;
 using SSI.Data;
 using SSI.Services;
-using SSI.Services.IService;
-using SSI.Share.Data;
 
 namespace SSI.Web.Client
 {
@@ -15,7 +13,7 @@ namespace SSI.Web.Client
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddDbContext<PRN221_AssignmentContext>(options =>
+            builder.Services.AddDbContext<SSIContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });

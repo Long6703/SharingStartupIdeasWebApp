@@ -1,19 +1,808 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
-<form method="post">
-    <button type="submit">Click TestAddRole</button>
-</form>
 
-@if (Model.Message != null)
-{
-    <p>@Model.Message</p>
-}
+<section class="banner banner_3" style="background: url(assetsClient/images/banner_bg_3.jpg);">
+    <div class="banner_3_overlay">
+        <div class="container container_large">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-xl-7 col-lg-8 wow fadeInUp">
+                    <div class="banner_text">
+                        <h5>Welcome to our delicious corner</h5>
+                        <h1>Fresh ingredient testy meals & best flavor</h1>
+                        <p>
+                            Commodo ullamcorper a lacus vestibulum sed arcu non. Non blandit massa enim nec dui nunc
+                            mattis enim.
+                        </p>
+                        <a class="common_btn" href="menu_03.html">
+                            View Details <i class="far fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BANNER 3 END
+===========================-->
+<!--==========================
+    RESERVATION START
+===========================-->
+<section class="reservation pb_115 xs_pb_95">
+    <div class="container container_large">
+        <div class="reservation_bg">
+            <div class="row">
+                <div class="col-xxl-8 col-lg-7 col-xl-7 wow fadeInLeft">
+                    <div class="reservation_img">
+                        <img src="assetsClient/images/reservation_img.jpg" alt="reservation" class="img-fluid w-100">
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-lg-5 col-xl-5 wow fadeInRight">
+                    <div class="reservation_form">
+                        <h3>RESERVATIONS</h3>
+                        <form action="#">
+                            <div class="reservation_form_input">
+                                <input type="text" placeholder="Name">
+                            </div>
+                            <div class="reservation_form_input">
+                                <input type="email" placeholder="Email">
+                            </div>
+                            <div class="reservation_form_input">
+                                <select class="select_2" name="state">
+                                    <option value="AL">Select Person</option>
+                                    <option value="">1 Person</option>
+                                    <option value="">2 Person</option>
+                                    <option value="">3 Person</option>
+                                    <option value="">4 Person</option>
+                                    <option value="">5 Person</option>
+                                </select>
+                            </div>
+                            <div class="reservation_form_input">
+                                <input type="date">
+                            </div>
+                            <div class="reservation_form_input">
+                                <select class="select_2" name="state">
+                                    <option value="AL">Select Time</option>
+                                    <option value="">08.00 am to 09.00 am</option>
+                                    <option value="">09.00 am to 10.00 am</option>
+                                    <option value="">11.00 am to 12.00 am</option>
+                                    <option value="">02.00 am to 03.00 am</option>
+                                    <option value="">05.00 am to 06.00 am</option>
+                                </select>
+                            </div>
+                            <div class="reservation_form_input">
+                                <button class="common_btn" type="submit">Book Now</button>
+                                <p>*Reserve open Table</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sponsor wow fadeInUp">
+            <p>Global 6K+ Happy Sponsors With us</p>
+            <div class="marquee_animi">
+                <ul>
+                    <li><img src="assetsClient/images/sponsor_img_1.png" alt="sponsore" class="img-fluid w-100"></li>
+                    <li><img src="assetsClient/images/sponsor_img_2.png" alt="sponsore" class="img-fluid w-100"></li>
+                    <li><img src="assetsClient/images/sponsor_img_3.png" alt="sponsore" class="img-fluid w-100"></li>
+                    <li><img src="assetsClient/images/sponsor_img_4.png" alt="sponsore" class="img-fluid w-100"></li>
+                    <li><img src="assetsClient/images/sponsor_img_5.png" alt="sponsore" class="img-fluid w-100"></li>
+                    <li><img src="assetsClient/images/sponsor_img_6.png" alt="sponsore" class="img-fluid w-100"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    RESERVATION END
+===========================-->
+<!--==========================
+    MENU ITEM 3 START
+===========================-->
+<section class="menu_item_3 mt_110 xs_mt_90 pb_25 xs_pb_0">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-8">
+                <div class="section_heading heading_left mb_45">
+                    <h2>Food Menu</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="menu_item_3_area">
+                    <ul>
+                        <li>
+                            <p><span>Breakfast - Menu</span> 06.am - 11.am</p>
+                            <div class="img">
+                                <img src="assetsClient/images/menu_item_3_img_3.jpg" alt="menu item"
+                                     class="img-fluid w-100">
+                            </div>
+                            <a href="menu_03.html"><i class="far fa-arrow-right"></i></a>
+                        </li>
+                        <li>
+                            <p><span>Lunch - Menu</span> 12.am - 6.pm</p>
+                            <div class="img">
+                                <img src="assetsClient/images/menu_item_3_img_1.jpg" alt="menu item"
+                                     class="img-fluid w-100">
+                            </div>
+                            <a href="menu_03.html"><i class="far fa-arrow-right"></i></a>
+                        </li>
+                        <li>
+                            <p><span>Dinner - Menu</span> 07.pm - 11.pm</p>
+                            <div class="img">
+                                <img src="assetsClient/images/menu_item_3_img_2.jpg" alt="menu item"
+                                     class="img-fluid w-100">
+                            </div>
+                            <a href="menu_03.html"><i class="far fa-arrow-right"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    MENU ITEM 3 END
+===========================-->
+<!--==========================
+    COUNTER START
+===========================-->
+<section class="counter_area mt_120 xs_mt_100">
+    <div class="container">
+        <div class="counter_bg pt_30 pb_35">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">45</h2>
+                        <span>Dishes</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">68</h2>
+                        <span>Location</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">32</h2>
+                        <span>Chefs</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp">
+                    <div class="single_counter">
+                        <h2 class="counter">120</h2>
+                        <span>Cities</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    COUNTER END
+===========================-->
+<!--==========================
+    ABOUT START
+===========================-->
+<section class="about_us pt_120 xs_pt_100 pb_120 xs_pb_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6">
+                <div class="row">
+                    <div class="col-md-6 wow fadeInUp">
+                        <div class="about_img">
+                            <img src="assetsClient/images/about_img_1.jpg" alt="about us" class="img-fluid w-100">
+                        </div>
+                    </div>
+                    <div class="col-md-6 wow fadeInDown">
+                        <div class="about_img">
+                            <img src="assetsClient/images/about_img_2.jpg" alt="about us" class="img-fluid w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-6 m-auto wow fadeInRight">
+                <div class="about_text">
+                    <div class="section_heading heading_left">
+                        <h2>OUR EXCELLENT SERVICE & QUALITY DISHES</h2>
+                        <p>Commodo ullamcorper lacus vestibulum sed Non blandit massa enim.</p>
+                    </div>
+                    <ul>
+                        <li>Donec convallis vestibulum eget pharetra.</li>
+                        <li>Bignissim posuere. Suspendisse elementum quam</li>
+                        <li>Eget convallis erat sollicitudin pellentesque orci.</li>
+                    </ul>
+                    <div class="about_text_footer">
+                        <div class="img">
+                            <img src="assetsClient/images/about_ceo_img.jpg" alt="about" class="img-fluid w-100">
+                        </div>
+                        <div class="text">
+                            <h4>Dylan Meringue</h4>
+                            <p>CEO</p>
+                        </div>
+                        <div class="signature">
+                            <img src="assetsClient/images/about_ceo_signature.png" alt="about" class="img-fluid w-100">
+                        </div>
+                    </div>
+                    <a class="common_btn" href="about_us_02.html">
+                        View Details <i class="far fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    ABOUT END
+===========================-->
+<!--==========================
+    MENU ITEM 4 START
+===========================-->
+<section class="menu_item_2 menu_item_4 mt pt_125 xs_pt_85 pb_140 xs_pb_100">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-8">
+                <div class="section_heading heading_left mb_25">
+                    <h2>Popular Menu items</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row menu_4_slider">
+            <div class="col-12">
+                <div class="row justify-content-between">
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Hamburger Veggie</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$60</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>chicken Buffalo wing</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$30</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Chicken Strip Basket</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$45</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Double patty Hamburger</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$75</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Roast chicken</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$80</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Pasta Pappardelle</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$55</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row justify-content-between">
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Hamburger Veggie</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$60</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_1.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>chicken Buffalo wing</span></a>
+                                <p>American breakfast composed of breakfast items</p>
+                                <h3>$30</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Chicken Strip Basket</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$45</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_2.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Double patty Hamburger</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$75</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Roast chicken</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$80</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 wow fadeInUp">
+                        <div class="single_menu_2">
+                            <div class="single_menu_2_img">
+                                <img src="assetsClient/images/menu_item_4_img_3.jpg" alt="menu" class="img-fluid w-100">
+                            </div>
+                            <div class="single_menu_2_text">
+                                <a class="title" href="menu_details.html"><span>Pasta Pappardelle</span></a>
+                                <p>Homemade pizza crust, pizza sauce</p>
+                                <h3>$55</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    MENU ITEM 4 END
+===========================-->
+<!--==========================
+    TESTIMONIAL 3 START
+===========================-->
+<section class="testimonial_3 pt_120 xs_pt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 wow fadeInLeft">
+                <div class="testimonial_3_img">
+                    <img src="assetsClient/images/testimonial_3_img_1.jpg" alt="testimonial" class="img-fluid w-100">
+                </div>
+            </div>
+            <div class="col-md-6 wow fadeInRight">
+                <div class="testimonial_3_area">
+                    <div class="row testimonial_3_slider">
+                        <div class="col-12">
+                            <div class="single_testimonial_3">
+                                <h2>WHAT OUR GUESTS SAY</h2>
+                                <span class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <p>
+                                    "I love that solvency lets us manage everything in one place. It's super helpful
+                                    to be able to listen to voice samples, upload our own lists find quality
+                                    salespeople that can grow with our team."
+                                </p>
+                                <h4>Indigo Violet</h4>
+                                <h6>Food critic</h6>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="single_testimonial_3">
+                                <h2>WHAT OUR GUESTS SAY</h2>
+                                <span class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                <p>
+                                    "I love that solvency lets us manage everything in one place. It's super helpful
+                                    to be able to listen to voice samples, upload our own lists find quality
+                                    salespeople that can grow with our team."
+                                </p>
+                                <h4>Indigo Violet</h4>
+                                <h6>Food critic</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    TESTIMONIAL 3 END
+===========================-->
+<!--==========================
+    CHEFS 3 START
+===========================-->
+<section class="chefs_3 mt_110 xs_mt_90">
+    <div class="container">
+        <div class="row wow fadeInLeft">
+            <div class="col-xl-8">
+                <div class="section_heading heading_left mb_25">
+                    <h2>Meet with our Chefs</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                <div class="single_chef_3">
+                    <div class="single_chef_3_img">
+                        <img src="assetsClient/images/chefs_3_img_1.png" alt="Chef" class="img-fluid w-100">
+                        <div class="social_icon">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <span><i class="far fa-share-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="single_chef_text_3">
+                        <a class="title" href="chefs_details.html">Nathaneal Down</a>
+                        <p>Main Chef</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                <div class="single_chef_3">
+                    <div class="single_chef_3_img">
+                        <img src="assetsClient/images/chefs_3_img_2.png" alt="Chef" class="img-fluid w-100">
+                        <div class="social_icon">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <span><i class="far fa-share-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="single_chef_text_3">
+                        <a class="title" href="chefs_details.html">Pelican Steve</a>
+                        <p>Executive Chef</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                <div class="single_chef_3">
+                    <div class="single_chef_3_img">
+                        <img src="assetsClient/images/chefs_3_img_3.png" alt="Chef" class="img-fluid w-100">
+                        <div class="social_icon">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <span><i class="far fa-share-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="single_chef_text_3">
+                        <a class="title" href="chefs_details.html">Dylan Meringue</a>
+                        <p>Master Chef</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-lg-4 wow fadeInUp">
+                <div class="single_chef_3">
+                    <div class="single_chef_3_img">
+                        <img src="assetsClient/images/chefs_3_img_4.png" alt="Chef" class="img-fluid w-100">
+                        <div class="social_icon">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                            <span><i class="far fa-share-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="single_chef_text_3">
+                        <a class="title" href="chefs_details.html">Fergus Douchebag</a>
+                        <p>Executive Chef</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="common_btn wow fadeInRight" href="chefs.html">
+            View All Chef <i class="far fa-chevron-right"></i>
+        </a>
+    </div>
+</section>
+<!--==========================
+    CHEFS 3 END
+===========================-->
+<!--==========================
+    GALLERY START
+===========================-->
+<section class="gallery mt_115 xs_mt_95">
+    <div class="row gallery_slider">
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_1.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_2.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_3.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_4.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_3.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    GALLERY END
+===========================-->
+<!--==========================
+    BLOG START
+===========================-->
+<section class="blog pt_100 xs_pt_80">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-8 m-auto">
+                <div class="section_heading mb_25">
+                    <h2>Our Latest News & Article</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 wow fadeInUp">
+                <div class="single_blog">
+                    <div class="single_blog_img">
+                        <img src="assetsClient/images/blog_img_1.jpg" alt="blog" class="img-fluid w-100">
+                        <a class="category" href="#">Burger</a>
+                    </div>
+                    <div class="single_blog_text">
+                        <ul>
+                            <li>
+                                <span><img src="assetsClient/images/calendar.svg" alt="calendar" class="img-fluid"></span>
+                                April 18, 2024
+                            </li>
+                            <li>BY Admin</li>
+                        </ul>
+                        <a class="title" href="blog_details.html">
+                            WHAT IS THE DIFFERENCE BETWEEN
+                            HAMBURGERS & BURGERS?
+                        </a>
+                        <a class="read_btn" href="blog_details.html">
+                            Read More <i class="far fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 wow fadeInUp">
+                <div class="single_blog">
+                    <div class="single_blog_img">
+                        <img src="assetsClient/images/blog_img_2.jpg" alt="blog" class="img-fluid w-100">
+                        <a class="category" href="#">Snacks</a>
+                    </div>
+                    <div class="single_blog_text">
+                        <ul>
+                            <li>
+                                <span><img src="assetsClient/images/calendar.svg" alt="calendar" class="img-fluid"></span>
+                                April 18, 2024
+                            </li>
+                            <li>BY Admin</li>
+                        </ul>
+                        <a class="title" href="blog_details.html">
+                            PAIRING WINE WITH INDIAN FOOD:
+                            TIPS FROM A SOMMELIER
+                        </a>
+                        <a class="read_btn" href="blog_details.html">
+                            Read More <i class="far fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 wow fadeInUp">
+                <div class="single_blog">
+                    <div class="single_blog_img">
+                        <img src="assetsClient/images/blog_img_3.jpg" alt="blog" class="img-fluid w-100">
+                        <a class="category" href="#">Taste</a>
+                    </div>
+                    <div class="single_blog_text">
+                        <ul>
+                            <li>
+                                <span><img src="assetsClient/images/calendar.svg" alt="calendar" class="img-fluid"></span>
+                                April 18, 2024
+                            </li>
+                            <li>BY Admin</li>
+                        </ul>
+                        <a class="title" href="blog_details.html">
+                            THE WONDERS OF THAI CUISINE
+                            SWEET, SALTY & SOUR
+                        </a>
+                        <a class="read_btn" href="blog_details.html">
+                            Read More <i class="far fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BLOG END
+===========================-->
+<!--==========================
+    INSTAGRAM PHOTO START
+===========================-->
+<section class="instagran_photo mt_115 xs_mt_95">
+    <div class="row instagram_slider">
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_1.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_2.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_3.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_4.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_5.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="instagran_photo_item">
+                <img src="assetsClient/images/instageam_img_6.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <h4>Follow Us on</h4>
+                    <a href="#">
+                        <img src="assetsClient/images/instagram_icon.svg" alt="gallery"
+                             class="img-fluid w-100">
+                    </a>
+                    <p>FastFood_121</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    INSTAGRAM PHOTO END
+===========================-->

@@ -7,31 +7,30 @@ namespace SSI.Share.Domain
     {
         public Idea()
         {
-            Bills = new HashSet<Bill>();
             Comments = new HashSet<Comment>();
-            Images = new HashSet<Image>();
-            Likes = new HashSet<Like>();
-            Votes = new HashSet<Vote>();
-            Wishlists = new HashSet<Wishlist>();
+            IdeaInterests = new HashSet<IdeaInterest>();
+            MediaDescriptions = new HashSet<MediaDescription>();
+            Milestones = new HashSet<Milestone>();
+            ProjectUpdates = new HashSet<ProjectUpdate>();
         }
 
         public int IdeaId { get; set; }
-        public DateTime IdeaDate { get; set; }
-        public string Name { get; set; } = null!;
-        public string Summary { get; set; } = null!;
-        public string Content { get; set; } = null!;
-        public int StatusId { get; set; }
-        public int CateId { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? SubcategoryId { get; set; }
+        public string Title { get; set; } = null!;
+        public string? Description { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string Status { get; set; } = null!;
 
-        public virtual Category Cate { get; set; } = null!;
-        public virtual Status Status { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
-        public virtual ICollection<Bill> Bills { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual Subcategory? Subcategory { get; set; }
+        public virtual User? User { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<Like> Likes { get; set; }
-        public virtual ICollection<Vote> Votes { get; set; }
-        public virtual ICollection<Wishlist> Wishlists { get; set; }
+        public virtual ICollection<IdeaInterest> IdeaInterests { get; set; }
+        public virtual ICollection<MediaDescription> MediaDescriptions { get; set; }
+        public virtual ICollection<Milestone> Milestones { get; set; }
+        public virtual ICollection<ProjectUpdate> ProjectUpdates { get; set; }
     }
 }
