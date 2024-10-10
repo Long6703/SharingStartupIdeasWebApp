@@ -2,17 +2,22 @@
 <html lang="en">
 
 
-<!-- Mirrored from coderthemes.com/simple/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:25:32 GMT -->
+<!-- Mirrored from coderthemes.com/simple/layouts/vertical/tables-advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:26:12 GMT -->
 
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard | Simple - Responsive Bootstrap 4 Admin Dashboard</title>
+    <title>Tables Advanced | Simple - Responsive Bootstrap 4 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Responsive bootstrap 4 admin template" name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- third party css -->
+    <link href="assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css" />
     <!-- App css -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -292,7 +297,7 @@
                     </li>
                     <li>
                         <a href="pages-transaction.html">
-                            <i class="fas fa-wallet"></i>
+                            <i class="ti-paint-bucketfas fa-wallet"></i>
                             <span> Transactions Management</span>
                             <span class="badge badge-primary float-right">16</span>
                         </a>
@@ -439,315 +444,73 @@
                 <!-- Start container-fluid -->
                 <div class="container-fluid">
 
+                    <!-- start  -->
                     <div class="row">
                         <div class="col-12">
                             <div>
-                                <h4 class="header-title mb-3">Welcome !</h4>
+                                <h4 class="header-title mb-3">Information</h4>
                             </div>
                         </div>
                     </div>
                     <!-- end row -->
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div>
-                                <div class="card-box widget-inline">
-                                    <div class="row">
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i
-                                                        class="text-primary mdi mdi-access-point-network mr-2"></i>
-                                                    <b>8954</b></h2>
-                                                <p class="text-muted mb-0">Lifetime total sales</p>
-                                            </div>
+                    <section class="chef_details_area pt_120 xs_pt_100">
+                        <div class="container">
+                            <form style="width: 100%; margin-top: 20px;" onsubmit="event.preventDefault(); window.location.href='pages-founders-list.html';">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-6 wow fadeInLeft">
+                                        <div class="chefs_details_img">
+                                            <img src="assets/images/users/avatar-1.jpg" alt="chef" class="img-fluid w-100">
                                         </div>
-
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-teal mdi mdi-airplay mr-2"></i>
-                                                    <b>7841</b></h2>
-                                                <p class="text-muted mb-0">Income amounts</p>
-                                            </div>
+                                    </div>
+                                    <div class="col-lg-7 col-md-12 wow fadeInRight">
+                                        <div class="chefs_description">
+                                            <label for="title" style="font-weight: bold;">Title:</label>
+                                            <input type="text" id="title" name="title" value="CEO" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                            
+                                            <label for="name" style="font-weight: bold;">Name:</label>
+                                            <input type="text" id="name" name="name" value="Nathaneal Down" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                            
+                                            <label for="description" style="font-weight: bold;">Description:</label>
+                                            <textarea id="description" name="description" rows="5" style="width: 100%; padding: 8px;">Modern an unknown printer took a galley of type and scrambled it to make a type one specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the Letraset sheets containing. Pizzhen an unknown printer took.</textarea><br>
+                            
+                                            <label for="address" style="font-weight: bold;">Address:</label>
+                                            <input type="text" id="address" name="address" value="Lawrence Moreno935-9940 Tortor" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                            
+                                            <label for="phone" style="font-weight: bold;">Phone:</label>
+                                            <input type="text" id="phone" name="phone" value="+3584573968749" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                            
+                                            <label for="email" style="font-weight: bold;">Email:</label>
+                                            <input type="email" id="email" name="email" value="info@gmail.com" style="width: 100%; margin-bottom: 10px; padding: 8px;">
                                         </div>
-
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-info mdi mdi-black-mesa mr-2"></i>
-                                                    <b>6521</b></h2>
-                                                <p class="text-muted mb-0">Total users</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-3 col-sm-6">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-danger mdi mdi-cellphone-link mr-2"></i>
-                                                    <b>325</b></h2>
-                                                <p class="text-muted mb-0">Total visits</p>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
-                            </div>
+                            
+                                <div class="row wow fadeInUp">
+                                    <div class="col-xl-12">
+                                        <div class="chef_details_text">
+                                            <label for="personal-info" style="font-weight: bold;">Personal Information:</label>
+                                            <textarea id="personal-info" name="personal-info" rows="7" style="width: 100%; padding: 8px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,Lorem Ipsum is simply dummy text of the printing and typesetting in ry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printe took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</textarea><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="row mt_70">
+                                    <div class="col-xxl-7 col-lg-6 wow fadeInUp">
+                                        <div class="chefs_details_skills">
+                                            <label for="skills-title" style="font-weight: bold;">Professional Skills Title:</label>
+                                            <input type="text" id="skills-title" name="skills-title" value="Professional Skills" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                            
+                                            <label for="skills-description" style="font-weight: bold;">Skills Description:</label>
+                                            <textarea id="skills-description" name="skills-description" rows="5" style="width: 100%; padding: 8px;">Modern Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry's standard.</textarea><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <input type="submit" value="Save" style="padding: 10px 20px; float: right; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;" >
+                            </form>
                         </div>
-                    </div>
-                    <!--end row -->
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14">Total Revenue</h5>
-                                <div class="text-center">
-                                    <ul class="list-inline chart-detail-list">
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-primary"></i>Series A</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-muted"></i>Series B</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="dashboard-bar-stacked" class="morris-chart" dir="ltr" style="height: 300px;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14">Sales Analytics</h5>
-                                <div class="text-center">
-                                    <ul class="list-inline chart-detail-list">
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-primary"></i>Mobiles</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-info"></i>Tablets</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="dashboard-line-chart" class="morris-chart" dir="ltr" style="height: 300px;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14 mb-3">Contacts</h5>
-                                <div class="table-responsive">
-                                    <table class="table table-hover mails m-0 table table-actions-bar table-centered">
-                                        <thead>
-                                            <tr>
-                                                <th style="min-width: 95px;">
-
-                                                    <div class="checkbox checkbox-single checkbox-primary">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="action-checkbox">
-                                                        <label class="custom-control-label"
-                                                            for="action-checkbox">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Products</th>
-                                                <th>Start Date</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox2" type="checkbox">
-                                                        <label for="checkbox2"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-2.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Tomaslau
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">tomaslau@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>356</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    01/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox1" type="checkbox">
-                                                        <label for="checkbox1"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-1.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Chadengle
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">chadengle@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>568</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    01/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox3" type="checkbox">
-                                                        <label for="checkbox3"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-3.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Stillnotdavid
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">stillnotdavid@dummy.com</a>
-                                                </td>
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>201</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    12/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox4" type="checkbox">
-                                                        <label for="checkbox4"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-4.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Kurafire
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">kurafire@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>56</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    14/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox5" type="checkbox">
-                                                        <label for="checkbox5"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Shahedk
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">shahedk@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>356</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    20/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox6" type="checkbox">
-                                                        <label for="checkbox6"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-6.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Adhamdannaway
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">adhamdannaway@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>956</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    24/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
                     <!-- end row -->
 
                 </div>
@@ -834,17 +597,65 @@
     <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
 
-    <script src="assets/libs/morris-js/morris.min.js"></script>
-    <script src="assets/libs/raphael/raphael.min.js"></script>
+    <!-- Required datatable js -->
+    <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <script src="assets/js/pages/dashboard.init.js"></script>
+    <!-- Buttons examples -->
+    <script src="assets/libs/datatables/dataTables.buttons.min.js"></script>
+    <script src="assets/libs/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.keyTable.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.select.min.js"></script>
+    <script src="assets/libs/jszip/jszip.min.js"></script>
+    <script src="assets/libs/pdfmake/pdfmake.min.js"></script>
+    <script src="assets/libs/pdfmake/vfs_fonts.js"></script>
+    <script src="assets/libs/datatables/buttons.html5.min.js"></script>
+    <script src="assets/libs/datatables/buttons.print.min.js"></script>
+
+    <!-- Responsive examples -->
+    <script src="assets/libs/datatables/dataTables.responsive.min.js"></script>
+    <script src="assets/libs/datatables/responsive.bootstrap4.min.js"></script>
+
+    <!-- Datatables init -->
+    <script src="assets/js/pages/datatables.init.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
+    <script>
+        function lockAccount(button) {
+            // Find the parent row of the clicked button
+            var row = button.closest('tr');
+            // Find the Status column (assumed to be the 5th column with class 'status')
+            var statusCell = row.querySelector('.status');
+            // Change the Status to "Locked"
+            statusCell.innerText = 'Locked';
+        }
+        function activateAccount(button) {
+            // Find the parent row of the clicked button
+            var row = button.closest('tr');
+            // Find the Status column (assumed to be the 5th column with class 'status')
+            var statusCell = row.querySelector('.status');
+            // Change the Status to "Active"
+            statusCell.innerText = 'Active';
+        }
+        function updateRowNumbers() {
+            // Get all the rows in the table body
+            var rows = document.querySelectorAll("#datatable-buttons tbody tr");
+            // Loop through each row and set the row number
+            rows.forEach(function (row, index) {
+                // Get the first cell (where the row number should be displayed)
+                var rowNumberCell = row.querySelector('.row-number');
+                // Set the row number (index + 1 to make it 1-based)
+                rowNumberCell.innerText = index + 1;
+            });
+        }
 
+        // Call the function to update row numbers when the page loads
+        document.addEventListener("DOMContentLoaded", updateRowNumbers);
+    </script>
 </body>
 
 
-<!-- Mirrored from coderthemes.com/simple/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:25:47 GMT -->
+<!-- Mirrored from coderthemes.com/simple/layouts/vertical/tables-advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:26:18 GMT -->
 
 </html>

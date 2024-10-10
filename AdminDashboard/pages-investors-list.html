@@ -2,17 +2,22 @@
 <html lang="en">
 
 
-<!-- Mirrored from coderthemes.com/simple/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:25:32 GMT -->
+<!-- Mirrored from coderthemes.com/simple/layouts/vertical/tables-advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:26:12 GMT -->
 
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard | Simple - Responsive Bootstrap 4 Admin Dashboard</title>
+    <title>Tables Advanced | Simple - Responsive Bootstrap 4 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Responsive bootstrap 4 admin template" name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- third party css -->
+    <link href="assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css" />
     <!-- App css -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -439,10 +444,14 @@
                 <!-- Start container-fluid -->
                 <div class="container-fluid">
 
+                    <!-- start  -->
                     <div class="row">
                         <div class="col-12">
-                            <div>
-                                <h4 class="header-title mb-3">Welcome !</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4 class="header-title mb-3">Investors List</h4>
+                                <a href="pages-information-details.html">
+                                    <button class="btn btn-icon btn-warning"><i class="fas fa-plus"></i></button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -450,301 +459,116 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div>
-                                <div class="card-box widget-inline">
-                                    <div class="row">
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i
-                                                        class="text-primary mdi mdi-access-point-network mr-2"></i>
-                                                    <b>8954</b></h2>
-                                                <p class="text-muted mb-0">Lifetime total sales</p>
-                                            </div>
-                                        </div>
+                            <div class="mt-5">
+                                <table id="datatable-buttons"
+                                    class="table table-striped table-bordered dt-responsive nowrap"
+                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Start date</th>
+                                            <th>Status</th> <!-- Moved the Age column header here -->
+                                            <th></th> <!-- This is the new empty header for Status -->
+                                        </tr>
+                                    </thead>
 
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-teal mdi mdi-airplay mr-2"></i>
-                                                    <b>7841</b></h2>
-                                                <p class="text-muted mb-0">Income amounts</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-3 col-sm-6 widget-inline-box">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-info mdi mdi-black-mesa mr-2"></i>
-                                                    <b>6521</b></h2>
-                                                <p class="text-muted mb-0">Total users</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-3 col-sm-6">
-                                            <div class="text-center p-3">
-                                                <h2 class="mt-2"><i class="text-danger mdi mdi-cellphone-link mr-2"></i>
-                                                    <b>325</b></h2>
-                                                <p class="text-muted mb-0">Total visits</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end row -->
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14">Total Revenue</h5>
-                                <div class="text-center">
-                                    <ul class="list-inline chart-detail-list">
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-primary"></i>Series A</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-muted"></i>Series B</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="dashboard-bar-stacked" class="morris-chart" dir="ltr" style="height: 300px;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-
-                        <div class="col-lg-6">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14">Sales Analytics</h5>
-                                <div class="text-center">
-                                    <ul class="list-inline chart-detail-list">
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-primary"></i>Mobiles</p>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <p class="font-weight-semibold"><i
-                                                    class="fa fa-circle mr-2 text-info"></i>Tablets</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div id="dashboard-line-chart" class="morris-chart" dir="ltr" style="height: 300px;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card-box">
-                                <h5 class="mt-0 font-14 mb-3">Contacts</h5>
-                                <div class="table-responsive">
-                                    <table class="table table-hover mails m-0 table table-actions-bar table-centered">
-                                        <thead>
-                                            <tr>
-                                                <th style="min-width: 95px;">
-
-                                                    <div class="checkbox checkbox-single checkbox-primary">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="action-checkbox">
-                                                        <label class="custom-control-label"
-                                                            for="action-checkbox">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Products</th>
-                                                <th>Start Date</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox2" type="checkbox">
-                                                        <label for="checkbox2"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-2.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Tomaslau
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">tomaslau@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>356</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    01/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox1" type="checkbox">
-                                                        <label for="checkbox1"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-1.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Chadengle
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">chadengle@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>568</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    01/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox3" type="checkbox">
-                                                        <label for="checkbox3"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-3.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Stillnotdavid
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">stillnotdavid@dummy.com</a>
-                                                </td>
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>201</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    12/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox4" type="checkbox">
-                                                        <label for="checkbox4"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-4.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Kurafire
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">kurafire@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>56</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    14/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox5" type="checkbox">
-                                                        <label for="checkbox5"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-5.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Shahedk
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">shahedk@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>356</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    20/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="checkbox checkbox-primary mr-2 float-left">
-                                                        <input id="checkbox6" type="checkbox">
-                                                        <label for="checkbox6"></label>
-                                                    </div>
-
-                                                    <img src="assets/images/users/avatar-6.jpg" alt="contact-img"
-                                                        title="contact-img" class="rounded-circle avatar-sm" />
-                                                </td>
-
-                                                <td>
-                                                    Adhamdannaway
-                                                </td>
-
-                                                <td>
-                                                    <a href="#" class="text-muted">adhamdannaway@dummy.com</a>
-                                                </td>
-
-                                                <td>
-                                                    <b><a href="#" class="text-dark"><b>956</b></a>
-                                                    </b>
-                                                </td>
-
-                                                <td>
-                                                    24/11/2003
-                                                </td>
-
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    <tbody>
+                                        <tr>
+                                            <td class="row-number"></td>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>2011/04/25</td>
+                                            <td class="status">Active</td> <!-- Moved Age value here -->
+                                            <td>
+                                                <a href="pages-information-details.html">
+                                                    <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                                </a>
+                                                <button class="btn btn-icon btn-danger" onclick="lockAccount(this)"><i
+                                                        class="fas fa-times"></i></button>
+                                                <button class="btn btn-icon btn-primary"
+                                                    onclick="activateAccount(this)"><i
+                                                        class="far fa-heart"></i></button>
+                                            </td> <!-- Added three buttons here -->
+                                        </tr>
+                                        <tr>
+                                            <td class="row-number"></td>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>2011/07/25</td>
+                                            <td class="status">Locked</td>
+                                            <td>
+                                                <a href="pages-information-details.html">
+                                                    <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                                </a>
+                                                <button class="btn btn-icon btn-danger" onclick="lockAccount(this)"><i
+                                                        class="fas fa-times"></i></button>
+                                                <button class="btn btn-icon btn-primary"
+                                                    onclick="activateAccount(this)"><i
+                                                        class="far fa-heart"></i></button>
+                                            </td> <!-- Added three buttons here -->
+                                        </tr>
+                                        <tr>
+                                            <td class="row-number"></td>
+                                            <td>Ashton Cox</td>
+                                            <td>Junior Technical Author</td>
+                                            <td>San Francisco</td>
+                                            <td>2009/01/12</td>
+                                            <td class="status">Locked</td>
+                                            <td>
+                                                <a href="pages-information-details.html">
+                                                    <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                                </a>
+                                                <button class="btn btn-icon btn-danger" onclick="lockAccount(this)"><i
+                                                        class="fas fa-times"></i></button>
+                                                <button class="btn btn-icon btn-primary"
+                                                    onclick="activateAccount(this)"><i
+                                                        class="far fa-heart"></i></button>
+                                            </td> <!-- Added three buttons here -->
+                                        </tr>
+                                        <tr>
+                                            <td class="row-number"></td>
+                                            <td>Cedric Kelly</td>
+                                            <td>Senior Javascript Developer</td>
+                                            <td>Edinburgh</td>
+                                            <td>2012/03/29</td>
+                                            <td class="status">Active</td>
+                                            <td>
+                                                <a href="pages-information-details.html">
+                                                    <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                                </a>
+                                                <button class="btn btn-icon btn-danger" onclick="lockAccount(this)"><i
+                                                        class="fas fa-times"></i></button>
+                                                <button class="btn btn-icon btn-primary"
+                                                    onclick="activateAccount(this)"><i
+                                                        class="far fa-heart"></i></button>
+                                            </td> <!-- Added three buttons here -->
+                                        </tr>
+                                        <tr>
+                                            <td class="row-number"></td>
+                                            <td>Airi Satou</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>2008/11/28</td>
+                                            <td class="status">Locked</td>
+                                            <td>
+                                                <a href="pages-information-details.html">
+                                                    <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                                </a>
+                                                <button class="btn btn-icon btn-danger" onclick="lockAccount(this)"><i
+                                                        class="fas fa-times"></i></button>
+                                                <button class="btn btn-icon btn-primary"
+                                                    onclick="activateAccount(this)"><i
+                                                        class="far fa-heart"></i></button>
+                                            </td> <!-- Added three buttons here -->
+                                        </tr>
+                                        <!-- Continue for the remaining rows -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -834,17 +658,65 @@
     <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
 
-    <script src="assets/libs/morris-js/morris.min.js"></script>
-    <script src="assets/libs/raphael/raphael.min.js"></script>
+    <!-- Required datatable js -->
+    <script src="assets/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <script src="assets/js/pages/dashboard.init.js"></script>
+    <!-- Buttons examples -->
+    <script src="assets/libs/datatables/dataTables.buttons.min.js"></script>
+    <script src="assets/libs/datatables/buttons.bootstrap4.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.keyTable.min.js"></script>
+    <script src="assets/libs/datatables/dataTables.select.min.js"></script>
+    <script src="assets/libs/jszip/jszip.min.js"></script>
+    <script src="assets/libs/pdfmake/pdfmake.min.js"></script>
+    <script src="assets/libs/pdfmake/vfs_fonts.js"></script>
+    <script src="assets/libs/datatables/buttons.html5.min.js"></script>
+    <script src="assets/libs/datatables/buttons.print.min.js"></script>
+
+    <!-- Responsive examples -->
+    <script src="assets/libs/datatables/dataTables.responsive.min.js"></script>
+    <script src="assets/libs/datatables/responsive.bootstrap4.min.js"></script>
+
+    <!-- Datatables init -->
+    <script src="assets/js/pages/datatables.init.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
+    <script>
+        function lockAccount(button) {
+            // Find the parent row of the clicked button
+            var row = button.closest('tr');
+            // Find the Status column (assumed to be the 5th column with class 'status')
+            var statusCell = row.querySelector('.status');
+            // Change the Status to "Locked"
+            statusCell.innerText = 'Locked';
+        }
+        function activateAccount(button) {
+            // Find the parent row of the clicked button
+            var row = button.closest('tr');
+            // Find the Status column (assumed to be the 5th column with class 'status')
+            var statusCell = row.querySelector('.status');
+            // Change the Status to "Active"
+            statusCell.innerText = 'Active';
+        }
+        function updateRowNumbers() {
+            // Get all the rows in the table body
+            var rows = document.querySelectorAll("#datatable-buttons tbody tr");
+            // Loop through each row and set the row number
+            rows.forEach(function (row, index) {
+                // Get the first cell (where the row number should be displayed)
+                var rowNumberCell = row.querySelector('.row-number');
+                // Set the row number (index + 1 to make it 1-based)
+                rowNumberCell.innerText = index + 1;
+            });
+        }
 
+        // Call the function to update row numbers when the page loads
+        document.addEventListener("DOMContentLoaded", updateRowNumbers);
+    </script>
 </body>
 
 
-<!-- Mirrored from coderthemes.com/simple/layouts/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:25:47 GMT -->
+<!-- Mirrored from coderthemes.com/simple/layouts/vertical/tables-advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:26:18 GMT -->
 
 </html>
