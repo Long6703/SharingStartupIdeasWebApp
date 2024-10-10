@@ -1,0 +1,100 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Web.Client\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SourceCode\\SSI.Web.Client\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\IService\\ITestService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SourceCode\\SSI.Services\\IService\\ITestService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Web.Client\\appsettings.json",
+              "RelativeDocumentMoniker": "SourceCode\\SSI.Web.Client\\appsettings.json",
+              "ToolTip": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Web.Client\\appsettings.json",
+              "RelativeToolTip": "SourceCode\\SSI.Web.Client\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-08T16:37:50.745Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VnPaymentResponseModel.cs",
+              "DocumentMoniker": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs",
+              "RelativeDocumentMoniker": "SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs",
+              "ToolTip": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs",
+              "RelativeToolTip": "SourceCode\\SSI.Share\\ViewModel\\VnPaymentResponseModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T16:33:44.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VnPayLibrary.cs",
+              "DocumentMoniker": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs",
+              "RelativeDocumentMoniker": "SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs",
+              "ToolTip": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs",
+              "RelativeToolTip": "SourceCode\\SSI.Services\\Service\\VnPayLibrary.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAJcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T16:19:34.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ITestService.cs",
+              "DocumentMoniker": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\IService\\ITestService.cs",
+              "RelativeDocumentMoniker": "SourceCode\\SSI.Services\\IService\\ITestService.cs",
+              "ToolTip": "D:\\PRN221_Assignment\\SharingStartupIdeasWebApp\\SourceCode\\SSI.Services\\IService\\ITestService.cs",
+              "RelativeToolTip": "SourceCode\\SSI.Services\\IService\\ITestService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T15:19:12.146Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

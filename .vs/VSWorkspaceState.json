@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SourceCode",
+    "\\SourceCode\\SSI.Data",
+    "\\SourceCode\\SSI.Services",
+    "\\SourceCode\\SSI.Services\\IService",
+    "\\SourceCode\\SSI.Services\\Service",
+    "\\SourceCode\\SSI.Share",
+    "\\SourceCode\\SSI.Share\\EditModel",
+    "\\SourceCode\\SSI.Share\\ViewModel",
+    "\\SourceCode\\SSI.Web.Client"
+  ],
+  "SelectedNode": "\\SourceCode\\SSI.Web.Client\\appsettings.json",
+  "PreviewInSolutionExplorer": false
+}
