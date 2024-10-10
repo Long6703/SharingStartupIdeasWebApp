@@ -10,7 +10,7 @@ namespace SSI.Data.Repository
 {
     public class TestRepository : RepositoryBase<Share.Domain.Role>, ITestRepository
     {
-        public TestRepository(PRN221_AssignmentContext context) : base(context)
+        public TestRepository(SSIContext context) : base(context)
         {
         }
 

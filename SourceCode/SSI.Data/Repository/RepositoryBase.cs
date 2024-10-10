@@ -12,10 +12,10 @@ namespace SSI.Data.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected readonly PRN221_AssignmentContext _context;
+        protected readonly SSIContext _context;
         protected DbSet<T> _dbset;
 
-        public RepositoryBase(PRN221_AssignmentContext context)
+        public RepositoryBase(SSIContext context)
         {
             _context = context;
             _dbset = _context.Set<T>();

@@ -7,31 +7,32 @@ namespace SSI.Share.Domain
     {
         public User()
         {
-            Bills = new HashSet<Bill>();
+            ChatMessageReceivers = new HashSet<ChatMessage>();
+            ChatMessageSenders = new HashSet<ChatMessage>();
             Comments = new HashSet<Comment>();
+            IdeaInterests = new HashSet<IdeaInterest>();
             Ideas = new HashSet<Idea>();
-            Likes = new HashSet<Like>();
-            Votes = new HashSet<Vote>();
-            Wishlists = new HashSet<Wishlist>();
+            Notifications = new HashSet<Notification>();
+            Transactions = new HashSet<Transaction>();
         }
 
         public int UserId { get; set; }
-        public string UserName { get; set; } = null!;
-        public string Password { get; set; } = null!;
-        public string Name { get; set; } = null!;
-        public string Address { get; set; } = null!;
-        public string Phonenumber { get; set; } = null!;
+        public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public bool Status { get; set; }
-        public int RoleId { get; set; }
+        public string PasswordHash { get; set; } = null!;
+        public string? ProfileImageUrl { get; set; }
+        public string? Bio { get; set; }
+        public string Status { get; set; } = null!;
+        public DateTime? CreatedAt { get; set; }
+        public int? RoleId { get; set; }
 
-        public virtual Role Role { get; set; } = null!;
-        public virtual ICollection<Bill> Bills { get; set; }
+        public virtual Role? Role { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessageReceivers { get; set; }
+        public virtual ICollection<ChatMessage> ChatMessageSenders { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<IdeaInterest> IdeaInterests { get; set; }
         public virtual ICollection<Idea> Ideas { get; set; }
-        public virtual ICollection<Like> Likes { get; set; }
-        public virtual ICollection<Vote> Votes { get; set; }
-        public virtual ICollection<Wishlist> Wishlists { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

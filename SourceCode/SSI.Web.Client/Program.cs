@@ -14,7 +14,7 @@ namespace SSI.Web.Client
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            builder.Services.AddDbContext<PRN221_AssignmentContext>(options =>
+            builder.Services.AddDbContext<SSIContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
