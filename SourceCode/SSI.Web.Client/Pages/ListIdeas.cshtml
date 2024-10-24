@@ -1,0 +1,120 @@
+﻿@page
+@model SSI.Web.Client.Pages.ListIdeasModel
+@{
+}
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Ideas</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Ideas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--==========================
+    BLOGS START
+===========================-->
+<section class="menu_grid_view mt_120 xs_mt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 order-2 wow fadeInLeft">
+                <div class="menu_sidebar sticky_sidebar">
+                    <div class="sidebar_wizard sidebar_search">
+                        <h2>Search</h2>
+                        <form method="get">
+                            <input type="text" name="searchTerm" placeholder="Search by name..." value="@Model.SearchTerm">
+                            <button type="submit"><i class="far fa-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="sidebar_wizard sidebar_tags mt_25">
+                        <h2>Categories</h2>
+                        <ul>
+                            @foreach (var category in Model.Categories)
+                                {
+                                <li><a href="?SelectedCategoryId=@category.CategoryId &searchTerm=@Model.SearchTerm">@category.Name</a></li>
+                                }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 order-lg-2">
+                <div class="row">
+                    @foreach (var idea in Model.Ideas)
+                    {
+                        <div class="col-xl-4 col-md-6 wow fadeInUp">
+                            <div class="single_blog_2">
+                                <a href="blog_details.html" class="single_blog_2_img">
+                                    @if (idea.MediaDescriptions != null && idea.MediaDescriptions.Any())
+                                    {
+                                        var imageMedia = idea.MediaDescriptions.FirstOrDefault(m => m.MediaType == "image");
+                                        if (imageMedia != null)
+                                        {
+                                            <img src="@imageMedia.MediaUrl" alt="blog" class="img-fluid w-100">
+                                        }
+                                        else
+                                        {
+                                            <img src="https://media.istockphoto.com/id/825670306/vi/vec-to/ph%C3%A1t-vector-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ph%C3%A1t-minh-h%E1%BB%8Da-video-theo-phong-c%C3%A1ch-ph%E1%BA%B3ng-bi%E1%BB%83u-%C4%91%E1%BB%93-kh%C3%A1i-ni%E1%BB%87m-kinh-doanh.jpg?s=612x612&w=0&k=20&c=g_3-7bJVD8fYCjHg6kYAVK4giwglaxhRF-6ieLz-T6E=" alt="blog" class="img-fluid w-100">
+
+                                        }
+                                    }
+                                </a>
+                                <div class="single_blog_2_text">
+                                    <ul>
+                                        <li>
+                                            <a href="#">@idea.Category.Name</a>
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <img src="~/assetsClient/images/calendar_2.svg" alt="calendar" class="img-fluid w-100">
+                                            </span>
+                                            @idea.CreatedAt
+                                        </li>
+                                    </ul>
+                                    <a class="title" href="blog_details.html">
+                                        @idea.Title
+                                    </a>
+                                    <a class="read_btn" href="blog_details.html">
+                                        Read More <i class="far fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+            <div class="pagination_area mt_60 wow fadeInUp">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <i class="far fa-arrow-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <i class="far fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        
+    </div>
+</section>

@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Share.Domain;
 using SSI.Data;
 using SSI.Services;
+using SSI.Data.IRepository;
+using SSI.Data.Repository;
+using SSI.Services.IService;
+using SSI.Services.Service;
 
 namespace SSI.Web.Client
 {
@@ -10,7 +14,8 @@ namespace SSI.Web.Client
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+            builder.Services.AddScoped<IIdeaService, IdeaService>();
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddDbContext<SSIContext>(options =>
@@ -19,7 +24,6 @@ namespace SSI.Web.Client
             });
             builder.Services.AddRepository();
             builder.Services.AddService();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -11,4 +11,10 @@
     <ProjectReference Include="..\SSI.Share\SSI.Share.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\assetsClient\js\jquery-3.7.1.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
