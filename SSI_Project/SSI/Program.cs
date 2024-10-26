@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Models;
 using SSI.Data;
 using SSI.Services;
+using SSI.Data.Repository;
+using SSI.Data.IRepository;
+using SSI.Services.Service;
+using SSI.Services.IService;
 namespace SSI
 {
     public class Program
@@ -19,7 +23,8 @@ namespace SSI
             });
             builder.Services.AddRepository();
             builder.Services.AddService();
-
+            builder.Services.AddScoped<IInvestmentRequestRepository, InvestmentRequestRepository>();
+            builder.Services.AddScoped<IInvestmentRequestService, InvestmentRequestService>();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
