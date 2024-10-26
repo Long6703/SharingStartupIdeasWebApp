@@ -30,8 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\IService\" />
-    <Folder Include="Services\Service\" />
     <Folder Include="Ultils\EditModel\" />
     <Folder Include="Ultils\Mapper\" />
     <Folder Include="Ultils\ViewModel\" />
