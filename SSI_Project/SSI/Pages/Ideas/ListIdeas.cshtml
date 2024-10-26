@@ -1,0 +1,130 @@
+﻿@page
+@model SSI.Pages.Ideas.ListIdeasModel
+@{
+}
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Ideas</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Ideas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--==========================
+    BLOGS START
+===========================-->
+<section class="menu_grid_view mt_120 xs_mt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 order-2 wow fadeInLeft">
+                <div class="menu_sidebar sticky_sidebar">
+                    <div class="sidebar_wizard sidebar_search">
+                        <h2>Search</h2>
+                        <form method="get">
+                            <input type="text" name="searchTerm" placeholder="Search by name..." value="@Model.SearchTerm">
+                            <button type="submit"><i class="far fa-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="sidebar_wizard sidebar_tags mt_25">
+                        <h2>Categories</h2>
+                        <ul>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <li><a href="?SelectedCategoryId=@category.CategoryId &searchTerm=@Model.SearchTerm">@category.Name</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 order-lg-2">
+
+                <div class="row">
+                    @if (Model.Ideas.Any())
+                    {
+                        @foreach (var idea in Model.Ideas)
+                        {
+                            <div class="col-xl-4 col-md-6 wow fadeInUp">
+                                <div class="single_blog_2">
+                                    <a href="blog_details.html" class="single_blog_2_img">
+                                        <img src="@idea.PosterImg" alt="blog" class="img-fluid w-100">
+                                    </a>
+                                    <div class="single_blog_2_text">
+                                        <ul>
+                                            <li>
+                                                <a href="#">@idea.Category.Name</a>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <img src="~/assetsClient/images/calendar_2.svg" alt="calendar" class="img-fluid w-100">
+                                                </span>
+                                                @idea.CreatedAt
+                                            </li>
+                                        </ul>
+                                        <a class="title" href="@Url.Page("IdeaDetails", new { id = idea.IdeaId })">
+                                            @idea.Title
+                                        </a>
+                                        <a class="read_btn" href="@Url.Page("IdeaDetails", new { id = idea.IdeaId })">
+                                            Read More <i class="far fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-12 text-center">
+                            <h3>No ideas available</h3>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="pagination_area mt_60 wow fadeInUp">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="?PageNumber=@(Model.PageNumber - 1)&searchTerm=@Model.SearchTerm&SelectedCategoryId=@Model.SelectedCategoryId" aria-label="Previous">
+                                <i class="far fa-arrow-left"></i>
+                            </a>
+                        </li>
+                    }
+
+                    <!-- Page Numbers -->
+                    @for (var i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link" href="?PageNumber=@i&searchTerm=@Model.SearchTerm&SelectedCategoryId=@Model.SelectedCategoryId">@i</a>
+                        </li>
+                    }
+
+                    <!-- Next Page Link -->
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="?PageNumber=@(Model.PageNumber + 1)&searchTerm=@Model.SearchTerm&SelectedCategoryId=@Model.SelectedCategoryId" aria-label="Next">
+                                <i class="far fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</section>

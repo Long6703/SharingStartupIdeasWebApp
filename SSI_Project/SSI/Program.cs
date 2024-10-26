@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Models;
 using SSI.Data;
 using SSI.Services;
+using SSI.Data.IRepository;
+using SSI.Data.Repository;
+using SSI.Services.IService;
+using SSI.Services.Service;
 namespace SSI
 {
     public class Program
@@ -9,7 +13,8 @@ namespace SSI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+            builder.Services.AddScoped<IIdeaService, IdeaService>();
             // Add services to the container.
             builder.Services.AddRazorPages();
 
