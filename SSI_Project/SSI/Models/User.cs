@@ -11,7 +11,6 @@ namespace SSI.Models
             IdeaInterests = new HashSet<IdeaInterest>();
             Ideas = new HashSet<Idea>();
             InvestmentRequests = new HashSet<InvestmentRequest>();
-            Transactions = new HashSet<Transaction>();
         }
 
         public int UserId { get; set; }
@@ -26,6 +25,5 @@ namespace SSI.Models
         public virtual ICollection<IdeaInterest> IdeaInterests { get; set; }
         public virtual ICollection<Idea> Ideas { get; set; }
         public virtual ICollection<InvestmentRequest> InvestmentRequests { get; set; }
-        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

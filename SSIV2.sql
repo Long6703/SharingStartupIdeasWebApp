@@ -85,12 +85,10 @@ CREATE TABLE idea_interest (
 
 CREATE TABLE [transaction] (
     transaction_id INT PRIMARY KEY IDENTITY,
-    user_id INT NOT NULL,
-    idea_id INT NOT NULL,
+    investment_request_id INT NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
     status NVARCHAR(20) CHECK (status IN ('completed', 'pending', 'cancelled')) DEFAULT 'pending',
     created_at DATETIME DEFAULT GETDATE(),
     transaction_code NVARCHAR(50) UNIQUE,
-    FOREIGN KEY (user_id) REFERENCES [user](user_id),
-    FOREIGN KEY (idea_id) REFERENCES idea(idea_id)
+    FOREIGN KEY (investment_request_id) REFERENCES investment_request(request_id)
 );

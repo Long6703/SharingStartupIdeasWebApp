@@ -5,6 +5,11 @@ namespace SSI.Models
 {
     public partial class InvestmentRequest
     {
+        public InvestmentRequest()
+        {
+            Transactions = new HashSet<Transaction>();
+        }
+
         public int RequestId { get; set; }
         public int IdeaId { get; set; }
         public int UserId { get; set; }
@@ -17,5 +22,6 @@ namespace SSI.Models
 
         public virtual Idea Idea { get; set; } = null!;
         public virtual User User { get; set; } = null!;
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
