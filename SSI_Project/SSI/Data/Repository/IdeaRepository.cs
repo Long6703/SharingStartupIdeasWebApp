@@ -36,13 +36,19 @@ namespace SSI.Data.Repository
 
             return query.ToList();
         }
-        public Idea GetIdeaById(int id)
+        public (Idea, int) GetIdeaById(int id)
         {
-            return _context.Ideas
-                .Include(i => i.Category)
-                .Include(i => i.Ideadetails)
-                .ThenInclude(d => d.Images)
-                .FirstOrDefault(i => i.IdeaId == id);
+            var idea = _context.Ideas
+        .Include(i => i.Category)
+        .Include(i => i.Ideadetails)
+            .ThenInclude(d => d.Images)
+        .Include(i => i.Ideadetails)
+            .ThenInclude(d => d.Comments)
+        .Include(u=>u.User)
+        .FirstOrDefault(i => i.IdeaId == id);
+            int commentCount = idea?.Ideadetails.SelectMany(d => d.Comments).Count() ?? 0;
+
+            return (idea, commentCount);
         }
     }
 }

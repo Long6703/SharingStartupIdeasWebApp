@@ -9,7 +9,7 @@ namespace SSI.Data.IRepository
 {
     public interface IIdeaRepository
     {
-        Idea GetIdeaById(int id);
+        (Idea,int) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
     }
 }

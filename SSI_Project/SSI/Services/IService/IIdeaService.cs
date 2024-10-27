@@ -9,7 +9,7 @@ namespace SSI.Services.IService
 {
     public interface IIdeaService
     {
-        Idea GetIdeaById(int id);
+        (Idea,int) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
     }
 }
