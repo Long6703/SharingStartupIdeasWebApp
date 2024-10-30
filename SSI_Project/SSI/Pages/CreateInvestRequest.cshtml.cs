@@ -9,8 +9,6 @@ namespace SSI.Pages
     {
         private readonly ILogger<CreateInvestRequestModel> _logger;
         private readonly IInvestmentRequestService _investReqService;
-
-        // BindProperty ensures data is received from the form for these properties
         [BindProperty]
         public decimal Amount { get; set; }
 
@@ -31,40 +29,31 @@ namespace SSI.Pages
             _logger = logger;
             _investReqService = investReqService;
         }
-
-        // GET method to show investment details
         public void OnGet(int ideaId)
         {
-            IdeaId = ideaId; // Fetch ideaId from the query string or parameter
+            IdeaId = ideaId;
         }
 
-        // POST method to submit the investment request
         public async Task<IActionResult> OnPostAsync()
         {
-            // Ensure model is valid before proceeding
             if (!ModelState.IsValid)
             {
-                // Return the page with validation messages
                 return Page();
             }
-
-            // Create a new InvestmentRequest model
+            var username = HttpContext.Session.GetString("user");
+            //get userid by username
             var investReq = new Models.InvestmentRequest
             {
                 IdeaId = IdeaId,
-                UserId = 2,  // Static value for now, replace with logged-in user ID in the future
+                UserId = 2,
                 Amount = Amount,
                 Status = "pending",
                 CreatedAt = DateTime.Now,
                 EquityPercentage = EquityPercentage,
-                InvestmentPeriod = InvestmentPeriod,  // Value from the form
+                InvestmentPeriod = InvestmentPeriod,
                 Description = Description
             };
-
-            // Call the service to save the investment request
             await _investReqService.AddInvestmentRequestAsync(investReq);
-
-            // Redirect to Index page after successful submission
             return RedirectToPage("/ManageRequestInvestor");
         }
     }

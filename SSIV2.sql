@@ -1,6 +1,6 @@
-create database SSIV2;
+create database SSIV;
 
-use SSIV2;
+use SSIV;
 
 CREATE TABLE [user] (
     user_id INT PRIMARY KEY IDENTITY,
@@ -24,7 +24,7 @@ CREATE TABLE idea (
     description TEXT NULL,
     category_id INT,
     created_at DATETIME DEFAULT GETDATE(),
-    status NVARCHAR(20) CHECK (status IN ('approved', 'pending', 'rejected')) DEFAULT 'pending',
+    status NVARCHAR(20) CHECK (status IN ('completed','approved', 'pending', 'rejected')) DEFAULT 'pending',
     is_seeking_investment BIT DEFAULT 0,
     is_implement BIT DEFAULT 0,
     poster_img NVARCHAR(255),

@@ -11,10 +11,10 @@
         <div class="row wow fadeInUp">
             <div class="col-12">
                 <div class="breadcrumb_text">
-                    <h1>dashboard order</h1>
+                    <h1>Dashboard Transaction</h1>
                     <ul>
                         <li><a href="#">Home </a></li>
-                        <li><a href="#">dashboard order</a></li>
+                        <li><a href="#">Dashboard Transaction</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,29 +41,7 @@
                         <h3>Addition Smith</h3>
                         <p>Paris, France</p>
                     </div>
-                    <div class="dashboard_sidebar_menu">
-                        <ul>
-                            <li><a href="dashboard.html"><i class="fas fa-user"></i> Personal Info</a></li>
-                            <li>
-                                <a href="dashboard_address.html"><i class="fas fa-clipboard-list"></i> address</a>
-                            </li>
-                            <li>
-                                <a class="active" href="dashboard_order.html">
-                                    <i class="fas fa-shopping-basket"></i>
-                                    Order
-                                </a>
-                            </li>
-                            <li><a href="dashboard_review.html"><i class="fas fa-star"></i> Reviews</a></li>
-                            <li><a href="dashboard_wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
-                            <li>
-                                <a href="dashboard_change_password.html">
-                                    <i class="fas fa-key"></i> Change
-                                    Password
-                                </a>
-                            </li>
-                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                        </ul>
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8 wow fadeInRight">
@@ -77,7 +55,7 @@
                                     <thead>
                                         <tr>
                                             <th>Request ID</th>
-                                            <th>Idea</th>
+                                            <th>Idea Name</th>
                                             <th>Amount</th>
                                             <th>Status</th>
                                             <th>Equity Percentage</th>
@@ -92,10 +70,10 @@
                                         {
                                             <tr>
                                                 <td>@investReq.RequestId</td>
-                                                <td>@investReq.IdeaId</td>
-                                                <td>@investReq.Amount</td>
+                                                <td><a href="/IdeaDetail?ideaId=@investReq.IdeaId">@investReq.IdeaId</a></td>
+                                                <td>@investReq.Amount.ToString("0.#")</td>
                                                 <td>@investReq.Status</td>
-                                                <td>@investReq.EquityPercentage</td>
+                                                <td>@investReq.EquityPercentage.ToString("0.#")</td>
                                                 <td>@investReq.InvestmentPeriod</td>
                                                 <td>@investReq.CreatedAt</td>
                                                 <td>@investReq.Description</td>
@@ -116,11 +94,15 @@
                                                  
                                                     @if (investReq.Status == "approved")
                                                     {
-                                                        <a href="/Payment/@investReq.RequestId" class="btn btn-success">Thanh toán</a>
+                                                        <form method="get" action="Payment">
+                                                            <input type="hidden" name="Amount" value="@(investReq.Amount /100)" />
+                                                            <input type="hidden" name="RequestId" value="@investReq.RequestId" />
+                                                            <button type="submit" class="btn btn-success">Thanh Toán</button>
+                                                        </form>
                                                     }
                                                     @if (investReq.Status == "approved" || investReq.Status == "completed")
                                                     {
-                                                        <a href="/RequestDetails/@investReq.RequestId" class="btn btn-primary">View Detail</a>
+                                                        <a href="/InvestmentRequestDetail?RequestId=@investReq.RequestId" class="btn btn-primary">View Detail</a>
                                                     }
                                                 </td>
                                             </tr>
