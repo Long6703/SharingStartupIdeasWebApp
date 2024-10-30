@@ -122,31 +122,6 @@
                                     unknown printer took a galley of type and scrambled it to make a type specimen
                                     book. It has survived not only five centuries, but also the leap into electronic
                                     typese
-                                    tting, remaining essentially unchanged. It was popularised in the 1960s with the
-                                    release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                    with
-                                    desktop publishing software like Aldus PageMaker including versions of Lorem
-                                    Ipsum.
-                                </p>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type.
-                                </p>
-
-                                <ul>
-                                    <li>One popular belief, Lorem Ipsum is not simply random.</li>
-                                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                                    <li>To popular belief, Lorem Ipsum is not simply random.</li>
-                                    <li>Contrary to popular belief, Lorem Ipsum is not simply random.</li>
-                                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                                </ul>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen
-                                    book. It has survived not only five centuries, but also the leap into electronic
-                                    typese
                                     tting, remaining essentially unchanged. It was popularised in the 1960.
                                 </p>
                             </div>
@@ -156,94 +131,20 @@
                             <div class="menu_det_review_area">
                                 <div class="row">
                                     <div class="col-lg-8">
-                                        <h2>(15) Reviews</h2>
-                                        <div class="single_review">
-                                            <div class="img">
-                                                <img src="assets/images/client_img_1.png" alt="Reviewer"
-                                                     class="img-fluid w-100">
+                                        <h2>(@Model.CommentCount) Reviews</h2>
+                                        @foreach (var comment in Model.Comments)
+                                        {
+                                            <div class="single_review">
+                                                <div class="img">
+                                                    <img src="assets/images/client_img_1.png" alt="Reviewer" class="img-fluid w-100">
+                                                </div>
+                                                <div class="text">
+                                                    <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
+                                                    <span class="rating"></span>
+                                                    <p>@comment.Content</p>
+                                                </div>
                                             </div>
-                                            <div class="text">
-                                                <h4>Hasnat Abdullah <span>May 8, 2024</span></h4>
-                                                <span class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="far fa-star"></i>
-                                                </span>
-                                                <p>
-                                                    Lorem ipsum is simply free text used by copytyping refreshing.
-                                                    Neque
-                                                    porro est is a rem ipsum qu
-                                                    ia qued inventore veritatis et quasi architecto beatae
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="single_review">
-                                            <div class="img">
-                                                <img src="assets/images/client_img_2.png" alt="Reviewer"
-                                                     class="img-fluid w-100">
-                                            </div>
-                                            <div class="text">
-                                                <h4>Sinthis Mou <span>May 8, 2024</span></h4>
-                                                <span class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                </span>
-                                                <p>
-                                                    Lorem ipsum is simply free text used by copytyping refreshing.
-                                                    Neque
-                                                    porro est is a rem ipsum qu
-                                                    ia qued inventore veritatis et quasi architecto beatae
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="single_review">
-                                            <div class="img">
-                                                <img src="assets/images/client_img_2.png" alt="Reviewer"
-                                                     class="img-fluid w-100">
-                                            </div>
-                                            <div class="text">
-                                                <h4>Samira Khanom <span>May 8, 2024</span></h4>
-                                                <span class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                    <i class="far fa-star"></i>
-                                                </span>
-                                                <p>
-                                                    Lorem ipsum is simply free text used by copytyping refreshing.
-                                                    Neque
-                                                    porro est is a rem ipsum qu
-                                                    ia qued inventore veritatis et quasi architecto beatae
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="pagination_area mt_30">
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="#" aria-label="Previous">
-                                                            <i class="far fa-arrow-left"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item">
-                                                        <a class="page-link active" href="#">1</a>
-                                                    </li>
-                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="#" aria-label="Next">
-                                                            <i class="far fa-arrow-right"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
+                                        }
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="review_input_area">

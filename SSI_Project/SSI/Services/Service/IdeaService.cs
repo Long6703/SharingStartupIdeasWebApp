@@ -21,7 +21,7 @@ namespace SSI.Services.Service
         {
             return _ideaRepository.SearchIdeas(searchTerm, categoryId);
         }
-        public (Idea,int) GetIdeaById(int id)
+        public (Idea,int, List<Comment>) GetIdeaById(int id)
         {
             return _ideaRepository.GetIdeaById(id);
         }

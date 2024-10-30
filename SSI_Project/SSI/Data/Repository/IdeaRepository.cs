@@ -36,19 +36,32 @@ namespace SSI.Data.Repository
 
             return query.ToList();
         }
-        public (Idea, int) GetIdeaById(int id)
+        public (Idea, int, List<Comment>) GetIdeaById(int id)
         {
+            // Retrieve the idea with basic relationships
             var idea = _context.Ideas
-        .Include(i => i.Category)
-        .Include(i => i.Ideadetails)
-            .ThenInclude(d => d.Images)
-        .Include(i => i.Ideadetails)
-            .ThenInclude(d => d.Comments)
-        .Include(u=>u.User)
-        .FirstOrDefault(i => i.IdeaId == id);
-            int commentCount = idea?.Ideadetails.SelectMany(d => d.Comments).Count() ?? 0;
+                .Include(i => i.Category)
+                .Include(i => i.User)
+                .FirstOrDefault(i => i.IdeaId == id);
 
-            return (idea, commentCount);
+            if (idea == null)
+            {
+                return (null, 0, new List<Comment>()); // Return default values if idea is not found
+            }
+
+            // Load additional related data for idea details and comments with users
+            _context.Entry(idea)
+                .Collection(i => i.Ideadetails)
+                .Query()
+                .Include(d => d.Images)
+                .Include(d => d.Comments)
+                    .ThenInclude(c => c.User) // Include the User for each Comment
+                .Load();
+
+            int commentCount = idea.Ideadetails.SelectMany(d => d.Comments).Count();
+            var comments = idea.Ideadetails.SelectMany(d => d.Comments).ToList();
+
+            return (idea, commentCount, comments);
         }
     }
 }

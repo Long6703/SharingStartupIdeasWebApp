@@ -10,6 +10,7 @@ namespace SSI.Pages.Ideas
         private readonly IIdeaService _ideaService;
         public Idea Idea { get; set; }
         public int CommentCount { get; set; }
+        public List<Comment> Comments { get; set; }
         public IdeaDetailsModel(IIdeaService ideaService)
         {
             _ideaService = ideaService;
@@ -17,7 +18,7 @@ namespace SSI.Pages.Ideas
 
         public IActionResult OnGet(int id)
         {
-            (Idea, CommentCount) = _ideaService.GetIdeaById(id);
+            (Idea, CommentCount, Comments) = _ideaService.GetIdeaById(id);
             if (Idea == null)
             {
                 return NotFound();
