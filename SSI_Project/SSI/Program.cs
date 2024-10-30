@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Models;
 using SSI.Data;
 using SSI.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using SSI.Ultils.Mapper;
 namespace SSI
 {
     public class Program
@@ -17,9 +19,20 @@ namespace SSI
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/login";
+                options.LogoutPath = "";
+                options.AccessDeniedPath = "";
+                options.SlidingExpiration = true;
+                options.Cookie.Name = "SSI";
+
+            });
             builder.Services.AddRepository();
             builder.Services.AddService();
-
+            builder.Services.AddAutoMapperConfig();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -34,14 +47,14 @@ namespace SSI
             {
                 app.UseExceptionHandler("/Error");
             }
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
             app.UseSession();
 
             app.UseRouting();
 
+            // Apply authentication and authorization middleware
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.MapRazorPages();

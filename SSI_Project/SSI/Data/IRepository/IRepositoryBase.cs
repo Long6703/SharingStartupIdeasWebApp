@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SSI.Data.IRepository
+namespace SSI.Data.IRepositoryBase
 {
     public interface IRepositoryBase<T> where T : class
     {

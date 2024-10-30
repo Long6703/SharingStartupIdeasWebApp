@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SSI.Data.IRepository;
+using SSI.Data.IRepositoryBase;
 using SSI.Models;
 using System;
 using System.Collections.Generic;
