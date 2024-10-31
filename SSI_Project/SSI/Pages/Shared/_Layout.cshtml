@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using SSI.Ultils.ViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@using System.Text.Json
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,7 +31,22 @@
             <div class="row">
                 <div class="col-xl-6 col-md-6 d-none d-md-block">
                     <div class="header_left">
-                        <p><i class="fal fa-map-marker-alt"></i> Longnk.</p>
+                        @{
+                            var session = HttpContextAccessor.HttpContext.Session;
+                            string displayText = "<i class=\"fal fa-map-marker-alt\"></i> Hi, I Love You :)))).";
+
+                            if (session.TryGetValue("UserSession", out var userBytes))
+                            {
+                                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+
+                                if (userViewModel != null && !string.IsNullOrEmpty(userViewModel.Displayname))
+                                {
+                                    displayText = $"<i class=\"fal fa-map-marker-alt\"></i> {userViewModel.Displayname}";
+                                }
+                            }
+                        }
+                        <p>@Html.Raw(displayText)</p>
                     </div>
                 </div>
                 <div class="col-xl-6 col-md-6">
@@ -128,11 +147,8 @@
                 </ul>
                 <ul class="menu_right">
                     <li>
-                        <a class="menu_order common_btn" href="menu_03.html">
-                            <span class="icon">
-                                <img src="~/assetsClient/images/cart_icon_2.png" alt="order" class="img-fluid w-100">
-                            </span>
-                            order now
+                        <a class="menu_order common_btn" asp-page="">
+                            login
                         </a>
                     </li>
                 </ul>
@@ -142,13 +158,14 @@
     <!--==========================
         MENU END
     ===========================-->
-    @RenderBody()
+
+     @RenderBody()
 
 
     <!--==========================
         FOOTER 3 START
     ===========================-->
-    <footer class="footer_3" style="background: url(assetsClient/images/footer_3_bg.jpg);">
+    <footer class="footer_3" style="background: url(~/assetsClient/images/footer_3_bg.jpg);">
         <div class="container">
             <div class="row wow fadeInUp">
                 <div class="col-12">
@@ -182,66 +199,46 @@
     <!--==========================
         SCROLL BUTTON END
     ===========================-->
-    <!-- jQuery -->
+    <!--jquery library js-->
     <script src="~/assetsClient/js/jquery-3.7.1.min.js"></script>
-
-    <!-- Bootstrap JS -->
+    <!--bootstrap js-->
     <script src="~/assetsClient/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Font-Awesome JS -->
+    <!--font-awesome js-->
     <script src="~/assetsClient/js/Font-Awesome.js"></script>
-
-    <!-- Nice Select JS -->
+    <!--nice select js-->
     <script src="~/assetsClient/js/jquery.nice-select.min.js"></script>
-
-    <!-- Marquee JS -->
+    <!--marquee js-->
     <script src="~/assetsClient/js/jquery.marquee.min.js"></script>
-
-    <!-- Slick JS -->
+    <!--slick js-->
     <script src="~/assetsClient/js/slick.min.js"></script>
-
-    <!-- CountUp JS -->
+    <!--countup js-->
     <script src="~/assetsClient/js/jquery.waypoints.min.js"></script>
     <script src="~/assetsClient/js/jquery.countup.min.js"></script>
-
-    <!-- Venobox JS -->
+    <!--venobox js-->
     <script src="~/assetsClient/js/venobox.min.js"></script>
-
-    <!-- Scroll Button JS -->
+    <!--scroll button js-->
     <script src="~/assetsClient/js/scroll_button.js"></script>
-
-    <!-- Price Ranger JS -->
+    <!--price ranger js-->
     <script src="~/assetsClient/js/ranger_jquery-ui.min.js"></script>
     <script src="~/assetsClient/js/ranger_slider.js"></script>
-
-    <!-- Select2 JS -->
+    <!--select 2 js-->
     <script src="~/assetsClient/js/select2.min.js"></script>
-
-    <!-- AOS JS -->
+    <!--aos js-->
     <script src="~/assetsClient/js/wow.min.js"></script>
-
-    <!-- ColorfulTab JS -->
+    <!--colorfulTab js-->
     <script src="~/assetsClient/js/colorfulTab.min.js"></script>
-
-    <!-- Sticky Sidebar JS -->
+    <!--sticky sidebar js-->
     <script src="~/assetsClient/js/sticky_sidebar.js"></script>
-
-    <!-- Animated Barfiller JS -->
+    <!--animated barfiller js-->
     <script src="~/assetsClient/js/animated_barfiller.js"></script>
-
-    <!-- Animated Headline JS -->
+    <!--animatedheadline js-->
     <script src="~/assetsClient/js/jquery.animatedheadline.min.js"></script>
-
-    <!-- Custom Script -->
+    <!--script/custom js-->
     <script src="~/assetsClient/js/script.js"></script>
 
-    <!-- Initialize Nice Select -->
-    <script>
-        $(document).ready(function () {
-            $('select').niceSelect();
-        });
-    </script>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

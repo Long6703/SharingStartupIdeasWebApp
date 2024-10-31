@@ -1,0 +1,106 @@
+﻿@page "{id:int}"
+@model SSI.Pages.Ideas.StartupIdeaDetailsModel
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Idea Details";
+}
+<section class="blog_details mt_120 xs_mt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 wow fadeInLeft">
+                <div class="blog_details_img">
+                    <img src="~/images/@Model.Idea?.PosterImg" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
+                </div>
+                <div class="blog_details_text">
+                    <h2>@Model.Idea?.Title</h2>
+                    <p>
+                        @Model.Idea?.Description
+                    </p>
+                    @foreach (var detail in Model.Idea?.Ideadetails)
+                    {
+                        <p>
+                            @detail.Content
+                        </p>
+                        <div class="row mb_45">
+                            <div class="col-xl-6 col-sm-6">
+                                <div class="details_center_img">
+                                    @foreach (var image in detail.Images)
+                                    {
+                                        <img src="~/images/@image.Url" alt="Image for @Model.Idea?.Title"
+                                             class="img-fluid w-100">
+                                    }    
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                </div>
+                <div class="blog_det_comment_area menu_det_review_area mt_80">
+                    @foreach (var detail in Model.Idea?.Ideadetails)
+                    {
+                        <h2>(03) Comments</h2>
+                        @foreach (var comment in detail.Comments)
+                        {
+                            <div class="single_review">
+
+                                <div class="img">
+                                    <img src="~/assetsClient/images/client_img_1.png" alt="Reviewer" class="img-fluid w-100">
+                                </div>
+                                <div class="text">
+                                    <h4>@comment.User.Displayname <span>@comment.CreatedAt</span></h4>
+                                    <p>
+                                        @comment.Content
+                                    </p>
+                                    <a href="#"><i class="far fa-reply"></i> Reply</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    
+                    @* <div class="single_review reply">
+                        <div class="img">
+                            <img src="assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
+                        </div>
+                        <div class="text">
+                            <h4>Sinthis Mou <span>May 8, 2024</span></h4>
+                            <p>
+                                Lorem ipsum is simply free text used by copytyping refreshing.
+                                Neque
+                                porro est is a rem ipsum qu
+                                ia qued inventore veritatis et quasi architecto beatae
+                            </p>
+                            <a href="#"><i class="far fa-reply"></i> Reply</a>
+                        </div>
+                    </div> *@
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 wow fadeInRight">
+                <div class="blog_sidebar sticky_sidebar">
+                    <div class="sidebar_wizard sidebar_category mt_25">
+                        <h2>MileStones</h2>
+                        <ul>
+                            @if (Model.Idea != null && Model.Idea.Ideadetails.Any())
+                            {
+                                int milestoneNumber = 1;
+                                foreach (var detail in Model.Idea.Ideadetails)
+                                {
+                                    <li>
+                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId })">
+                                            Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
+                                            <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
+                                        </a>
+                                    </li>
+                                    milestoneNumber++;
+                                }
+                            } else
+                            {
+                                <li>No milestones available</li>
+                            }
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
