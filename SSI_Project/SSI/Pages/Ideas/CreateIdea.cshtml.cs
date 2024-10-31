@@ -70,7 +70,7 @@ namespace SSI.Pages.Ideas
             Idea.Ideadetails = new List<Ideadetail> { Ideadetail };
 
             // Save the idea and detail using the service
-            //await _ideaService.CreateIdeaWithDetailAsync(Idea);
+            await _ideaService.CreateIdeaWithDetailAsync(Idea);
 
             return RedirectToPage("IdeaList");
         }

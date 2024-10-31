@@ -15,5 +15,6 @@ namespace SSI.Services.IService
         Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId);
         (Idea,int, List<Comment>) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
+        Task CreateIdeaWithDetailAsync(Idea idea);
     }
 }

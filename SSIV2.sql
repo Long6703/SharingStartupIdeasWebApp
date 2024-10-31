@@ -1,10 +1,4 @@
-USE [master]
-IF EXISTS (SELECT [name] FROM master.dbo.sysdatabases WHERE name = N'SSIV2')
-BEGIN
-	ALTER DATABASE [SSIV2] SET OFFLINE WITH ROLLBACK IMMEDIATE;
-	ALTER DATABASE [SSIV2] SET ONLINE;
-	DROP DATABASE [SSIV2];
-END
+
 create database SSIV2;
 
 use SSIV2;
@@ -124,11 +118,11 @@ VALUES
     ('Finance');
 INSERT INTO idea (user_id, title, description, category_id, status, is_seeking_investment, is_implement, poster_img)
 VALUES 
-    (2, 'Smart Healthcare', 'A healthcare platform using AI for diagnostics', 1, 'approved', 1, 0, 'healthcare.jpg'),
-    (2, 'E-learning App', 'A platform for online learning', 3, 'pending', 1, 0, 'elearning.jpg'),
-    (3, 'Eco-friendly Packaging', 'Biodegradable packaging solutions', 4, 'rejected', 0, 1, 'eco.jpg'),
+    (1, 'Smart Healthcare', 'A healthcare platform using AI for diagnostics', 1, 'approved', 1, 0, 'healthcare.jpg'),
+    (1, 'E-learning App', 'A platform for online learning', 3, 'pending', 1, 0, 'elearning.jpg'),
+    (1, 'Eco-friendly Packaging', 'Biodegradable packaging solutions', 4, 'rejected', 0, 1, 'eco.jpg'),
     (1, 'Fintech Solution', 'Blockchain-based finance management', 5, 'approved', 1, 1, 'fintech.jpg'),
-    (4, 'Agritech', 'Technology solutions for agriculture', 1, 'pending', 0, 0, 'agritech.jpg');
+    (1, 'Agritech', 'Technology solutions for agriculture', 1, 'pending', 0, 0, 'agritech.jpg');
 INSERT INTO ideadetail (idea_id, content)
 VALUES 
     (1, 'Detailed description of Smart Healthcare project'),
@@ -145,10 +139,10 @@ VALUES
     (5, 'agritech_img1.jpg');
 INSERT INTO comment (idea_detail_id, user_id, parent_id, content)
 VALUES 
-    (1, 3, NULL, 'Great healthcare idea!'),
-    (2, 5, NULL, 'E-learning is the future'),
-    (2, 5, 2, 'Agreed!'),
-    (3, 2, NULL, 'Eco-friendly solutions are necessary'),
+    (1, 1, NULL, 'Great healthcare idea!'),
+    (2, 1, NULL, 'E-learning is the future'),
+    (2, 1, 2, 'Agreed!'),
+    (3, 1, NULL, 'Eco-friendly solutions are necessary'),
     (4, 1, NULL, 'Blockchain can be revolutionary');
 INSERT INTO investment_request (idea_id, user_id, amount, status, equity_percentage, investment_period, description)
 VALUES 

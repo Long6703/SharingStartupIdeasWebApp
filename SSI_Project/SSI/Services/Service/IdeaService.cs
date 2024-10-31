@@ -42,5 +42,9 @@ namespace SSI.Services.Service
         {
             return _ideaRepository.GetIdeaById(id);
         }
+        public Task CreateIdeaWithDetailAsync(Idea idea)
+        {
+            return null;
+        }
     }
 }
