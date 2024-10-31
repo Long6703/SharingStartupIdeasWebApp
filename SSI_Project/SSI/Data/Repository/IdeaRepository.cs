@@ -51,6 +51,7 @@ namespace SSI.Data.Repository
                 .Include(d => d.Comments)
                     .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(d => d.IdeaDetailId == ideaDetailId);
+        }
         public List<Idea> SearchIdeas(string searchTerm, int? categoryId)
         {
             var query = _context.Ideas

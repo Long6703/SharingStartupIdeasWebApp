@@ -33,6 +33,7 @@ namespace SSI.Services.Service
         public async Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId)
         {
             return await _ideaRepository.GetMilestoneDetailByIdAsync(ideaDetailId);
+        }
         public List<Idea> SearchIdeas(string searchTerm, int? categoryId)
         {
             return _ideaRepository.SearchIdeas(searchTerm, categoryId);

@@ -18,10 +18,12 @@ namespace SSI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddScoped<IIdeaRepository, IdeaRepository>();
-            builder.Services.AddScoped<IIdeaService, IdeaService>();
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddScoped<IInvestmentRequestRepository, InvestmentRequestRepository>();
+            builder.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+            builder.Services.AddScoped<IIdeaService, IdeaService>();
+            builder.Services.AddScoped<IInvestmentRequestService, InvestmentRequestService>();
 
             builder.Services.AddDbContext<SSIV2Context>(options =>
             {
@@ -47,7 +49,6 @@ namespace SSI
                 options.Cookie.Name = "SSI";
 
             });
-
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
