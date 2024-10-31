@@ -1,4 +1,9 @@
 ﻿using SSI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SSI.Services.IService
 {
@@ -8,5 +13,7 @@ namespace SSI.Services.IService
         Task<int> GetTotalIdeasCountByUserIdAndRoleAsync(int userId, string role);
         Task<Idea?> GetIdeaWithDetailsAsync(int ideaId);
         Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId);
+        (Idea,int, List<Comment>) GetIdeaById(int id);
+        List<Idea> SearchIdeas(string searchTerm, int? categoryId);
     }
 }
