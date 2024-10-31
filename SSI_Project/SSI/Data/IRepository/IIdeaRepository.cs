@@ -15,5 +15,8 @@ namespace SSI.Data.IRepository
         Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId);
         (Idea,int, List<Comment>) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
+        Task CreateIdeaAsync(Idea idea);
+        Task CreateIdeaDetailAsync(Ideadetail ideaDetail);
+        Task CreateImageAsync(Image image);
     }
 }

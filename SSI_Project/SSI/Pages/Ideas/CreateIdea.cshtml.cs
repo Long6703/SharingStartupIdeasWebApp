@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
 using SSI.Services.Service;
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
@@ -11,6 +13,7 @@ namespace SSI.Pages.Ideas
         private readonly IIdeaService _ideaService;
         private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<CreateIdeaModel> _logger;
 
         [BindProperty]
         public Idea Idea { get; set; }
@@ -19,60 +22,112 @@ namespace SSI.Pages.Ideas
         public Ideadetail Ideadetail { get; set; }
 
         [BindProperty]
-        public List<IFormFile> Images { get; set; }
+        public IFormFile PosterImage { get; set; }  // Single image for poster_img
+
+        [BindProperty]
+        public List<IFormFile> Images { get; set; }  // Multiple images for Ideadetail
 
         public List<Category> Categories { get; set; }
 
-        public CreateIdeaModel(IIdeaService ideaService, ICategoryService categoryService, IWebHostEnvironment environment)
+        public CreateIdeaModel(IIdeaService ideaService, ICategoryService categoryService,
+                               IWebHostEnvironment environment, ILogger<CreateIdeaModel> logger)
         {
             _ideaService = ideaService;
             _categoryService = categoryService;
             _environment = environment;
+            _logger = logger;
         }
 
-        public void OnGetAsync()
+        public void OnGet()
         {
-            // Load categories to populate the dropdown
-            Categories =  _categoryService.GetAllCategories();
+            Categories = _categoryService.GetAllCategories();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int userId)
         {
-            //if (!ModelState.IsValid)
+            var session = HttpContext.Session;
+            if (session.TryGetValue("UserSession", out var userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                if (userViewModel != null)
+                {
+                    userId = userViewModel.UserId;
+                }
+            }
+            //    if (!ModelState.IsValid)
             //{
-            //    // Reload categories if form submission fails
-            //    Categories = await _categoryService.GetAllCategoriesAsync();
+            //    Categories = _categoryService.GetAllCategories();
             //    return Page();
             //}
 
-            // Set initial properties for the new idea
-            Idea.Status = "Pending";
-            Idea.CreatedAt = DateTime.UtcNow;
-            Ideadetail.CreatedAt = DateTime.UtcNow;
-
-            // Save each uploaded image file to wwwroot/images and add to Ideadetail
-            Ideadetail.Images = new List<Image>();
-            foreach (var formFile in Images)
+            try
             {
-                if (formFile.Length > 0)
+                // Tạo đối tượng Idea và gán các thuộc tính
+                Idea.UserId = userId;
+                Idea.Status = "Pending";
+                Idea.CreatedAt = DateTime.UtcNow;
+
+                // 1. Xử lý Poster Image cho Idea
+                if (PosterImage != null && PosterImage.Length > 0)
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
-                    var filePath = Path.Combine(_environment.WebRootPath, "images", fileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    var posterFileName = Guid.NewGuid() + Path.GetExtension(PosterImage.FileName);
+                    var posterPath = Path.Combine(_environment.WebRootPath, "images", posterFileName);
+
+                    using (var stream = new FileStream(posterPath, FileMode.Create))
                     {
-                        await formFile.CopyToAsync(stream);
+                        await PosterImage.CopyToAsync(stream);
                     }
-                    Ideadetail.Images.Add(new Image { Url = fileName });
+
+                    Idea.PosterImg = posterFileName;
                 }
+
+                // Lưu Idea vào database trước để lấy IdeaId
+                await _ideaService.CreateIdeaAsync(Idea);
+
+                // 2. Xử lý và lưu các hình ảnh cho Ideadetail
+                Ideadetail.CreatedAt = DateTime.UtcNow;
+                Ideadetail.IdeaId = Idea.IdeaId; // Gán IdeaId vừa tạo vào Ideadetail
+
+                // Danh sách hình ảnh để lưu vào cơ sở dữ liệu
+                List<Image> imagesToSave = new List<Image>();
+                var imagesDirectory = Path.Combine(_environment.WebRootPath, "images");
+
+                foreach (var formFile in Images)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid() + Path.GetExtension(formFile.FileName);
+                        var filePath = Path.Combine(imagesDirectory, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+
+                        // Thêm hình ảnh vào danh sách để lưu vào cơ sở dữ liệu
+                        imagesToSave.Add(new Image { Url = fileName, IdeaDetailId = Ideadetail.IdeaDetailId });
+                    }
+                }
+
+                // Lưu chi tiết ý tưởng và hình ảnh
+                await _ideaService.CreateIdeaWithDetailAsync(Ideadetail);
+
+                foreach (var image in imagesToSave)
+                {
+                    image.IdeaDetailId = Ideadetail.IdeaDetailId;
+                    await _ideaService.CreateImageAsync(image);
+                }
+
+                return RedirectToPage("StartupIdeaList");
             }
-
-            // Associate Ideadetail with Idea
-            Idea.Ideadetails = new List<Ideadetail> { Ideadetail };
-
-            // Save the idea and detail using the service
-            await _ideaService.CreateIdeaWithDetailAsync(Idea);
-
-            return RedirectToPage("IdeaList");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the idea.");
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again.");
+                Categories = _categoryService.GetAllCategories();
+                return Page();
+            }
         }
     }
 }

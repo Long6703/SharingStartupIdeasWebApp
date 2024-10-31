@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Ultils\EditModel\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

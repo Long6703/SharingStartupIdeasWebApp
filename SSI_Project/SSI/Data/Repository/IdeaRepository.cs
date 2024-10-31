@@ -99,5 +99,20 @@ namespace SSI.Data.Repository
 
             return (idea, commentCount, comments);
         }
+        public async Task CreateIdeaAsync(Idea idea)
+        {
+            _context.Ideas.Add(idea);
+            await _context.SaveChangesAsync();
+        }
+        public async Task CreateIdeaDetailAsync(Ideadetail ideaDetail)
+        {
+            _context.Ideadetails.Add(ideaDetail);
+            await _context.SaveChangesAsync();
+        }
+        public async Task CreateImageAsync(Image image)
+        {
+            await _context.Images.AddAsync(image);
+            await _context.SaveChangesAsync();
+        }
     }
 }

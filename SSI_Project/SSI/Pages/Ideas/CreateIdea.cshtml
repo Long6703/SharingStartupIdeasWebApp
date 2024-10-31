@@ -1,67 +1,79 @@
 ﻿@page
+@using SSI.Ultils.ViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@using System.Text.Json
 @model SSI.Pages.Ideas.CreateIdeaModel
 @{
     ViewData["Title"] = "Create New Idea";
     Layout = "/Pages/Shared/_Layout.cshtml";
+    var session = HttpContextAccessor.HttpContext.Session;
+    int userId = 0;
+    if (session.TryGetValue("UserSession", out var userBytes))
+    {
+        var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+        var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+
+        if (userViewModel != null)
+        {
+            userId = userViewModel.UserId;
+        }
+    }
 }
+
 <section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
-        <div class="container">
-            <div class="row wow fadeInUp">
-                <div class="col-12">
-                    <div class="breadcrumb_text">
-                    <h1>create idea</h1>
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Create Idea</h1>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Create Idea</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
+                <div class="dashboard_sidebar">
+                    <div class="dashboard_sidebar_user">
+                        <div class="img">
+                            <img src="~/assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
+                            <label for="profile_photo"><i class="far fa-camera"></i></label>
+                            <input type="file" id="profile_photo" hidden>
+                        </div>
+                        <h3>Addition Smith</h3>
+                        <p>Paris, France</p>
+                    </div>
+                    <div class="dashboard_sidebar_menu">
                         <ul>
-                            <li><a href="#">Home </a></li>
-                            <li><a href="#">Create Idea</a></li>
+                            <li><a href="dashboard.html"><i class="fas fa-user"></i> Personal Info</a></li>
+                            <li><a href="dashboard_address.html"><i class="fas fa-clipboard-list"></i> Address</a></li>
+                            <li><a href="dashboard_order.html"><i class="fas fa-shopping-basket"></i> Order</a></li>
+                            <li><a href="dashboard_review.html"><i class="fas fa-star"></i> Reviews</a></li>
+                            <li><a href="dashboard_wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
+                            <li><a class="active" href="dashboard_change_password.html"><i class="fas fa-key"></i> Change Password</a></li>
+                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="dashboard pt_120 xs_pt_80">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-3 col-lg-4 wow fadeInLeft">
-                    <div class="dashboard_sidebar">
-                        <div class="dashboard_sidebar_user">
-                            <div class="img">
-                                <img src="~/assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
-                                <label for="profile_photo"><i class="far fa-camera"></i></label>
-                                <input type="file" id="profile_photo" hidden>
-                            </div>
-                            <h3>Addition Smith</h3>
-                            <p>Paris, France</p>
-                        </div>
-                        <div class="dashboard_sidebar_menu">
-                            <ul>
-                                <li><a href="dashboard.html"><i class="fas fa-user"></i> Personal Info</a></li>
-                                <li><a href="dashboard_address.html"><i class="fas fa-clipboard-list"></i> address</a>
-                                </li>
-                                <li><a href="dashboard_order.html"><i class="fas fa-shopping-basket"></i> Order</a></li>
-                                <li><a href="dashboard_review.html"><i class="fas fa-star"></i> Reviews</a></li>
-                                <li><a href="dashboard_wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
-                                <li><a class="active" href="dashboard_change_password.html"><i class="fas fa-key"></i>
-                                        Change Password</a></li>
-                                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-9 col-lg-8 wow fadeInRight">
-                    <div class="dashboard_content">
-                        <h2 class="dashboard_title">Create Idea</h2>
-                        <form class="dashboard_change_password">
-                            <div class="row">
-                                <div class="col-md-6">
+
+            <div class="col-xl-9 col-lg-8 wow fadeInRight">
+                <div class="dashboard_content">
+                    <h2 class="dashboard_title">Create Idea</h2>
+                    <form class="dashboard_form" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <label for="Title">Idea Title</label>
                                 <input type="text" id="Title" name="Idea.Title" class="form-control" required />
-                                </div>
-                                <div class="col-md-6">
-                                <label for="Description">Idea Description</label>
-                                <textarea id="Description" name="Idea.Description" class="form-control" required></textarea>
-                                </div>
-                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label for="Category">Category</label>
                                 <select id="Category" name="Idea.CategoryId" class="form-control" required>
                                     <option value="">Select Category</option>
@@ -71,20 +83,40 @@
                                     }
                                 </select>
                             </div>
-                            <hr/>
-                            <h3>Initial Milestone Detail</h3>
-                            <div class="col-md-6">
+                            <div class="col-12 mb-3">
+                                <label for="Description">Idea Description</label>
+                                <textarea id="Description" name="Idea.Description" class="form-control" rows="3" required></textarea>
+                            </div>
+
+                            <div class="col-12 mb-4">
+                                <label for="poster_img">Upload Poster Image</label>
+                                <input type="file" id="poster_img" name="PosterImage" class="form-control-file" accept="image/*" required />
+                                <small class="form-text text-muted">Upload an image that represents your idea.</small>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <h3>Initial Milestone Detail</h3>
+                        <div class="row">
+                            <div class="col-12 mb-3">
                                 <label for="DetailContent">Detail Content</label>
-                                <textarea id="DetailContent" name="Ideadetail.Content" class="form-control" required></textarea>
+                                <textarea id="DetailContent" name="Ideadetail.Content" class="form-control" rows="3" required></textarea>
                             </div>
-                                <div class="col-xl-12">
-                                    <input type="password" placeholder="Conform Password">
-                                    <button type="submit" class="common_btn">Submit <span></span></button>
-                                </div>
+                            <div class="col-12 mb-4">
+                                <label for="milestone_images">Upload Milestone Images</label>
+                                <input type="file" id="milestone_images" name="Images" class="form-control-file" accept="image/*" multiple />
+                                <small class="form-text text-muted">You can upload multiple images for this milestone.</small>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+
+                        <div class="text-right">
+                            <input type="hidden" name="UserId" value="@userId" />
+                            <button type="submit" class="btn btn-primary">Submit Idea <i class="fas fa-paper-plane ml-2"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
