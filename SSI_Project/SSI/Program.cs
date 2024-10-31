@@ -44,7 +44,7 @@ namespace SSI
             .AddCookie(options =>
             {
                 options.LoginPath = "/login";
-                options.LogoutPath = "";
+                options.LogoutPath = "/logout";
                 options.AccessDeniedPath = "";
                 options.SlidingExpiration = true;
                 options.Cookie.Name = "SSI";
