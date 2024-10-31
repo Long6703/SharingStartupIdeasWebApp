@@ -79,12 +79,24 @@
                     <div class="sidebar_wizard sidebar_category mt_25">
                         <h2>MileStones</h2>
                         <ul>
-                            <li><a href="blogs.html">Food <span>(04)</span></a></li>
-                            <li><a href="blogs.html">Drinks <span>(02)</span></a></li>
-                            <li><a href="blogs.html">Burger <span>(09)</span></a></li>
-                            <li><a href="blogs.html">Chicken <span>(14)</span></a></li>
-                            <li><a href="blogs.html">Pizza <span>(05)</span></a></li>
-                            <li><a href="blogs.html">Combo <span>(07)</span></a></li>
+                            @if (Model.Idea != null && Model.Idea.Ideadetails.Any())
+                            {
+                                int milestoneNumber = 1;
+                                foreach (var detail in Model.Idea.Ideadetails)
+                                {
+                                    <li>
+                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId })">
+                                            Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
+                                            <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
+                                        </a>
+                                    </li>
+                                    milestoneNumber++;
+                                }
+                            } else
+                            {
+                                <li>No milestones available</li>
+                            }
+                            
                         </ul>
                     </div>
                 </div>

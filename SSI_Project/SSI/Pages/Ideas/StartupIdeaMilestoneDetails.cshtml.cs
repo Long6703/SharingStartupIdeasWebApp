@@ -5,26 +5,30 @@ using SSI.Services.IService;
 
 namespace SSI.Pages.Ideas
 {
-    public class StartupIdeaDetailsModel : PageModel
+    public class StartupIdeaMilestoneDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;
-
-        public StartupIdeaDetailsModel(IIdeaService ideaService)
+        public StartupIdeaMilestoneDetailsModel(IIdeaService ideaService)
         {
             _ideaService = ideaService;
         }
-
+        public Ideadetail? MilestoneDetail { get; set; }
         public Idea? Idea { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Idea = await _ideaService.GetIdeaWithDetailsAsync(id);
+            // Retrieve the milestone detail by ID
+            MilestoneDetail = await _ideaService.GetMilestoneDetailByIdAsync(id);
+
+            if (MilestoneDetail == null)
+            {
+                return NotFound();
+            }
+            Idea = await _ideaService.GetIdeaWithDetailsAsync(MilestoneDetail.IdeaId);
 
             if (Idea == null)
             {
                 return NotFound();
             }
-            Idea.Ideadetails = Idea.Ideadetails.OrderBy(d => d.CreatedAt).ToList();
             return Page();
         }
     }

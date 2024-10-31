@@ -26,5 +26,9 @@ namespace SSI.Services.Service
         {
             return await _ideaRepository.GetIdeaWithDetailsAsync(ideaId);
         }
+        public async Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId)
+        {
+            return await _ideaRepository.GetMilestoneDetailByIdAsync(ideaDetailId);
+        }
     }
 }

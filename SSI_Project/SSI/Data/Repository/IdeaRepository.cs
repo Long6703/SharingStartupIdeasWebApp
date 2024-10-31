@@ -40,5 +40,13 @@ namespace SSI.Data.Repository
                         .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(i => i.IdeaId == ideaId);
         }
+        public async Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId)
+        {
+            return await _context.Ideadetails
+                .Include(d => d.Images)
+                .Include(d => d.Comments)
+                    .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(d => d.IdeaDetailId == ideaDetailId);
+        }
     }
 }
