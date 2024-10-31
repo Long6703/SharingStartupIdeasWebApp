@@ -38,7 +38,6 @@ namespace SSI.Data.Repository
         }
         public (Idea, int, List<Comment>) GetIdeaById(int id)
         {
-            // Retrieve the idea with basic relationships
             var idea = _context.Ideas
                 .Include(i => i.Category)
                 .Include(i => i.User)
@@ -46,16 +45,15 @@ namespace SSI.Data.Repository
 
             if (idea == null)
             {
-                return (null, 0, new List<Comment>()); // Return default values if idea is not found
+                return (null, 0, new List<Comment>()); 
             }
 
-            // Load additional related data for idea details and comments with users
             _context.Entry(idea)
                 .Collection(i => i.Ideadetails)
                 .Query()
                 .Include(d => d.Images)
                 .Include(d => d.Comments)
-                    .ThenInclude(c => c.User) // Include the User for each Comment
+                    .ThenInclude(c => c.User) 
                 .Load();
 
             int commentCount = idea.Ideadetails.SelectMany(d => d.Comments).Count();

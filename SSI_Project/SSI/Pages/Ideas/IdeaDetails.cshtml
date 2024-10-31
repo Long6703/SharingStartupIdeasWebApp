@@ -159,23 +159,12 @@
                                                     <i class="fas fa-star"></i>
                                                 </span>
                                             </p>
-                                            <form>
-                                                <div class="review_input_box">
-                                                    <label>Name *</label>
-                                                    <input type="text" placeholder="Name">
-                                                </div>
-                                                <div class="review_input_box">
-                                                    <label>Email *</label>
-                                                    <input type="email" placeholder="Email">
-                                                </div>
+                                            <form method="post" asp-page-handler="SubmitReview">
                                                 <div class="review_input_box">
                                                     <label>Write Review *</label>
-                                                    <textarea rows="5" placeholder="Write your review"></textarea>
+                                                    <textarea rows="5" name="ReviewContent" required></textarea>
                                                 </div>
-                                                <button type="submit" class="common_btn">
-                                                    Submit Review
-                                                    <span></span>
-                                                </button>
+                                                <button type="submit" class="common_btn">Submit Review</button>
                                             </form>
                                         </div>
                                     </div>

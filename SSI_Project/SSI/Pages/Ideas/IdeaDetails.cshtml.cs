@@ -25,5 +25,9 @@ namespace SSI.Pages.Ideas
             }
             return Page();
         }
+        public IActionResult SubmitComment(int userId)
+        {
+            return Page();
+        }
     }
 }
