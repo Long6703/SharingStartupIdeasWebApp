@@ -7,9 +7,17 @@ CREATE TABLE [user] (
     displayname NVARCHAR(50) NULL,
     email NVARCHAR(100) NOT NULL UNIQUE,
     password NVARCHAR(255) NOT NULL,
-    role NVARCHAR(20) CHECK (role IN ('admin', 'startup', 'investor')) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('active', 'inactive')) DEFAULT 'active',
-    created_at DATETIME DEFAULT GETDATE()
+    role NVARCHAR(20),
+	avatar_url VARCHAR(100) NULL,
+	bio NVARCHAR(500) NULL,
+    location NVARCHAR(100) NULL,
+    profession NVARCHAR(100) NULL,
+    website_url NVARCHAR(255) NULL,
+    linkedin_url NVARCHAR(255) NULL,
+    twitter_url NVARCHAR(255) NULL,
+    facebook_url NVARCHAR(255) NULL,
+    created_at DATETIME DEFAULT GETDATE(),
+	status NVARCHAR(20),
 );
 
 CREATE TABLE category (
@@ -24,7 +32,7 @@ CREATE TABLE idea (
     description TEXT NULL,
     category_id INT,
     created_at DATETIME DEFAULT GETDATE(),
-    status NVARCHAR(20) CHECK (status IN ('approved', 'pending', 'rejected')) DEFAULT 'pending',
+    status NVARCHAR(20),
     is_seeking_investment BIT DEFAULT 0,
     is_implement BIT DEFAULT 0,
     poster_img NVARCHAR(255),
@@ -65,7 +73,7 @@ CREATE TABLE investment_request (
     idea_id INT NOT NULL,
     user_id INT NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('approved', 'rejected', 'pending')) DEFAULT 'pending',
+    status NVARCHAR(20),
     created_at DATETIME DEFAULT GETDATE(),
     equity_percentage DECIMAL(5, 2) CHECK (equity_percentage BETWEEN 0 AND 100) NOT NULL,
     investment_period NVARCHAR(50) NOT NULL,
@@ -87,7 +95,7 @@ CREATE TABLE [transaction] (
     transaction_id INT PRIMARY KEY IDENTITY,
     investment_request_id INT NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('completed', 'pending', 'cancelled')) DEFAULT 'pending',
+    status NVARCHAR(20),
     created_at DATETIME DEFAULT GETDATE(),
     transaction_code NVARCHAR(50) UNIQUE,
     FOREIGN KEY (investment_request_id) REFERENCES investment_request(request_id)

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+//using SSI.Models;
 using SSI.Services.IService;
+using SSI.Services.Service;
 using SSI.Ultils.ViewModel;
 
 namespace SSI.Web.Client.Pages
@@ -12,26 +14,44 @@ namespace SSI.Web.Client.Pages
         private readonly IAccountService _accountService;
         [BindProperty]
         public RegisterViewModel RegisterViewModel { get; set; }
-        public RegisterModel(IAccountService accountService)
+        private readonly EmailService _emailService;
+        public RegisterModel(IAccountService accountService, EmailService emailService)
         {
             _accountService = accountService;
+            _emailService = emailService;
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             return Page();
         }
 
-        public IActionResult OnPost(string Role)
+        public async Task<IActionResult> OnPostAsync(string Role)
         {
-            if(!ModelState.IsValid)
+            Console.WriteLine("1");
+            ModelState.Remove("RegisterViewModel.Role");
+            ModelState.Remove("RegisterViewModel.Status");
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             RegisterViewModel.Role = Role;
-
-            _accountService.Register(RegisterViewModel);
+            await _accountService.Register(RegisterViewModel);
             return Page();
+        }
+
+        private async Task sendOTP(string email, string otp)
+        {
+            string subject = GenerateOTP();
+            string body = "Your OTP is: " + otp;
+            await _emailService.SendEmailAsync(email, subject, body);
+        }
+
+        private string GenerateOTP()
+        {
+            Random random = new Random();
+            int otp = random.Next(100000, 999999);
+            return otp.ToString();
         }
     }
 }

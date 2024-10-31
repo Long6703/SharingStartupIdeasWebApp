@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SSI.Data.IRepositoryBase;
+using SSI.Data.IRepository;
 using SSI.Data.Repository;
 using SSI.Models;
 using SSI.Services.IService;
@@ -15,6 +15,13 @@ namespace SSI.Services.Service
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
+        }
+
+        public UserViewModel Login(LoginViewModel loginViewModel)
+        {
+            var user = _accountRepository.LoginAsync(loginViewModel);
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+            return userViewModel;
         }
 
         public async Task Register(RegisterViewModel registerViewModel)

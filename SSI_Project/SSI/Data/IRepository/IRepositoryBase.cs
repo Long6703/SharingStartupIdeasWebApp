@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SSI.Data.IRepositoryBase
+namespace SSI.Data.IRepository
 {
     public interface IRepositoryBase<T> where T : class
     {
@@ -13,6 +13,6 @@ namespace SSI.Data.IRepositoryBase
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
-        Task SaveChangesAsync();
+        void SaveChanges();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SSI.Data.IRepositoryBase;
+using SSI.Data.IRepository;
 using SSI.Models;
 using System;
 using System.Collections.Generic;
@@ -40,9 +40,9 @@ namespace SSI.Data.Repository
             return await _dbset.FindAsync(id);
         }
 
-        public async Task SaveChangesAsync()
+        public void SaveChanges()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Update(T entity)

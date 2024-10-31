@@ -4,6 +4,13 @@ using SSI.Data;
 using SSI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SSI.Ultils.Mapper;
+using Microsoft.Extensions.Configuration;
+using SSI.Ultils;
+using SSI.Services.Service;
+using Microsoft.Data.SqlClient;
+using SSI.Services.IService;
+using SSI.Data.Repository;
+using SSI.Data.IRepository;
 namespace SSI
 {
     public class Program
@@ -17,8 +24,17 @@ namespace SSI
 
             builder.Services.AddDbContext<SSIV2Context>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+                       .EnableSensitiveDataLogging()
+                       .LogTo(Console.WriteLine);
             });
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+            builder.Services.AddAutoMapperConfig();
+            builder.Services.AddTransient<EmailService>();
+            builder.Services.AddTransient<CloudinaryService>();
+            builder.Services.AddRepository();
+            builder.Services.AddService();
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
@@ -30,9 +46,7 @@ namespace SSI
                 options.Cookie.Name = "SSI";
 
             });
-            builder.Services.AddRepository();
-            builder.Services.AddService();
-            builder.Services.AddAutoMapperConfig();
+
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

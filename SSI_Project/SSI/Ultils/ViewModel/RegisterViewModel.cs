@@ -1,5 +1,6 @@
 ﻿using static SSI.Ultils.Enums.Enums;
 using System.ComponentModel.DataAnnotations;
+using SSI.Ultils.Enums;
 
 namespace SSI.Ultils.ViewModel
 {
@@ -28,5 +29,7 @@ namespace SSI.Ultils.ViewModel
         public string ConfirmPassword { get; set; } = null!;
 
         public string Role { get; set; } = null!;
+
+        public StatusEnum Status { get; set; } = StatusEnum.Active;
     }
 }

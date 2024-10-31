@@ -1,5 +1,6 @@
-﻿using SSI.Data.IRepositoryBase;
+﻿using SSI.Data.IRepository;
 using SSI.Models;
+using SSI.Ultils.ViewModel;
 
 namespace SSI.Data.Repository
 {
@@ -9,10 +10,20 @@ namespace SSI.Data.Repository
         {
         }
 
+        public User LoginAsync(LoginViewModel loginViewModel)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == loginViewModel.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginViewModel.Password, user.Password))
+            {
+                return null;
+            }
+            return user;
+        }
+
         public async Task RegisterAsync(User user)
         {
             await AddAsync(user);
-            await SaveChangesAsync();
+            SaveChanges();
         }
     }
 }

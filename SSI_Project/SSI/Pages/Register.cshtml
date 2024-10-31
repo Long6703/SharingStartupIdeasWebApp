@@ -59,11 +59,12 @@
                             <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password...">
                             <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
                         </div>
+
                         <div class="col-6">
-                            <button class="common_btn" type="submit" name="Role" value="startup">Sign up as Founder</button>
+                            <button class="common_btn" name="Role" type="submit" value='founder'>Sign up as Founder</button>
                         </div>
                         <div class="col-6">
-                            <button class="common_btn" type="submit" name="Role" value="investor">Sign up as Investor</button>
+                            <button class="common_btn" name="Role" type="submit" value='investor'>Sign up as Investor</button>
                         </div>
                     </div>
                 </form>

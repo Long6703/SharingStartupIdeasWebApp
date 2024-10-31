@@ -1,6 +1,6 @@
 ﻿namespace SSI.Ultils.Enums
 {
-    public class Enums
+    public static class Enums
     {
         public enum StatusEnum
         {
