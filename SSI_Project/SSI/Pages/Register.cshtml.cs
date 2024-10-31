@@ -37,7 +37,7 @@ namespace SSI.Web.Client.Pages
 
             RegisterViewModel.Role = Role;
             await _accountService.Register(RegisterViewModel);
-            return Page();
+            return RedirectToPage("/Login");
         }
 
         private async Task sendOTP(string email, string otp)

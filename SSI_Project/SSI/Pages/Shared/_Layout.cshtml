@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using SSI.Ultils.ViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@using System.Text.Json
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,7 +31,22 @@
             <div class="row">
                 <div class="col-xl-6 col-md-6 d-none d-md-block">
                     <div class="header_left">
-                        <p><i class="fal fa-map-marker-alt"></i> Longnk.</p>
+                        @{
+                            var session = HttpContextAccessor.HttpContext.Session;
+                            string displayText = "<i class=\"fal fa-map-marker-alt\"></i> Longnk.";
+
+                            if (session.TryGetValue("UserSession", out var userBytes))
+                            {
+                                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+
+                                if (userViewModel != null && !string.IsNullOrEmpty(userViewModel.Displayname))
+                                {
+                                    displayText = $"<i class=\"fal fa-map-marker-alt\"></i> {userViewModel.Displayname}";
+                                }
+                            }
+                        }
+                        <p>@Html.Raw(displayText)</p>
                     </div>
                 </div>
                 <div class="col-xl-6 col-md-6">
@@ -128,11 +147,8 @@
                 </ul>
                 <ul class="menu_right">
                     <li>
-                        <a class="menu_order common_btn" href="menu_03.html">
-                            <span class="icon">
-                                <img src="~/assetsClient/images/cart_icon_2.png" alt="order" class="img-fluid w-100">
-                            </span>
-                            order now
+                        <a class="menu_order common_btn" asp-page="">
+                            login
                         </a>
                     </li>
                 </ul>

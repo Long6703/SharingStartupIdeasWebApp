@@ -34,6 +34,7 @@ namespace SSI
             builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.AddAutoMapperConfig();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddTransient<EmailService>();
             builder.Services.AddTransient<CloudinaryService>();
             builder.Services.AddRepository();
