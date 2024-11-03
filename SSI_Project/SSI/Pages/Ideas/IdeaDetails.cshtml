@@ -5,6 +5,10 @@
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
+@{
+    var sortedIdeaDetails = Model.Idea.Ideadetails.OrderBy(detail => detail.CreatedAt).ToList();
+    int updateCount = 1; 
+}
 
 <section class="breadcrumb_area" style="background: url('@Url.Content("https://alumni.arizona.edu/sites/default/files/styles/az_large/public/2022-07/is_your_idea_innovative.jpeg.webp?itok=F6C-r8q2")');">
     <div class="container">
@@ -32,25 +36,26 @@
         <div class="row">
             <div class="col-xl-4 col-md-8 col-lg-5 wow fadeInLeft">
                 <div class="menu_det_slider_area sticky_sidebar">
-                    <div class="row slider-for">
-                        @foreach(var detail in Model.Idea.Ideadetails){
-                            @foreach(var image in detail.Images){                          
+                    <div class="row">
+                        <!-- Large image display area, initially showing the first image -->
                         <div class="col-12">
                             <div class="details_large_img">
-                                <img src="@image.Url" alt="slider" class="img-fluid w-100">
+                                <img id="largeImage" src="@Model.Idea.Ideadetails.FirstOrDefault()?.Images.FirstOrDefault()?.Url" alt="slider" class="img-fluid w-100">
                             </div>
                         </div>
-                            }
-                        }
                     </div>
-                    <div class="row slider-nav">
-                        @foreach(var detail in Model.Idea.Ideadetails){
-                            @foreach(var image in detail.Images){
-                        <div class="col-xl-3">
-                            <div class="details_small_img">
-                                 <img src="@image.Url" alt="slider" class="img-fluid w-100">
-                            </div>
-                        </div>
+
+                    <div class="row slider-nav mt-3">
+                        @foreach (var detail in Model.Idea.Ideadetails)
+                        {
+                            @foreach (var image in detail.Images)
+                            {
+                                <div class="col-xl-3 col-4">
+                                    <div class="details_small_img">
+                                        <!-- Each small image has a click event to change the large image -->
+                                        <img src="@image.Url" alt="slider" class="img-fluid w-100 thumbnail-image" data-large="@image.Url">
+                                    </div>
+                                </div>
                             }
                         }
                     </div>
@@ -93,6 +98,15 @@
                         <p>Created By @Model.Idea.User.Displayname at @Model.Idea.CreatedAt</p>
                     </div>
                 </div>
+                <div class="sticky_sidebar">
+                    <div class="menu_details_offer">
+                        @foreach (var detail in sortedIdeaDetails)
+                            {
+                            <a class="">@($"Milestone {updateCount}")</a><br/>
+                            updateCount++;
+                            }
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row mt_120 xs_mt_100 wow fadeInUp">
@@ -100,11 +114,6 @@
                 <div class="menu_det_content_area">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
-                                    aria-selected="true">
-                                Description
-                            </button>
                             <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
                                     data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
                                     aria-selected="false">
@@ -113,20 +122,7 @@
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                             aria-labelledby="nav-home-tab" tabindex="0">
-                            <div class="menu_det_description">
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen
-                                    book. It has survived not only five centuries, but also the leap into electronic
-                                    typese
-                                    tting, remaining essentially unchanged. It was popularised in the 1960.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="nav-contact" role="tabpanel"
+                        <div class="tab-pane fade show active" id="nav-contact" role="tabpanel"
                              aria-labelledby="nav-contact-tab" tabindex="0">
                             <div class="menu_det_review_area">
                                 <div class="row">
@@ -136,7 +132,7 @@
                                         {
                                             <div class="single_review">
                                                 <div class="img">
-                                                    <img src="assets/images/client_img_1.png" alt="Reviewer" class="img-fluid w-100">
+                                                    <img src="@comment.User.AvatarUrl" alt="Reviewer" class="img-fluid w-100">
                                                 </div>
                                                 <div class="text">
                                                     <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
@@ -149,16 +145,6 @@
                                     <div class="col-lg-4">
                                         <div class="review_input_area">
                                             <h2>Write A Review</h2>
-                                            <p>
-                                                Select Your Rating :
-                                                <span>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </span>
-                                            </p>
                                             <form method="post" asp-page-handler="SubmitReview">
                                                 <div class="review_input_box">
                                                     <label>Write Review *</label>
@@ -345,4 +331,17 @@
             </div>
         </div>
     </div>
+    <script>
+        // JavaScript/jQuery to handle thumbnail clicks and update the large image
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add click event listeners to all thumbnail images
+            document.querySelectorAll('.thumbnail-image').forEach(thumbnail => {
+                thumbnail.addEventListener('click', function () {
+                    // Update the src of the large image with the clicked thumbnail's data-large attribute
+                    const largeImage = document.getElementById('largeImage');
+                    largeImage.src = this.getAttribute('data-large');
+                });
+            });
+        });
+    </script>
 </section>
