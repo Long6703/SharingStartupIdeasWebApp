@@ -41,28 +41,30 @@
             <div style="margin-top : -5%" class="sign_in_form">
                 <h2>Create Account</h2>
                 <p class="description">Please Enter your Email Address to Start your Online Application</p>
-                <form action="#">
+                <form method="post">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <input type="text" placeholder="Fast Name">
-                        </div>
-                        <div class="col-md-12">
-                            <input type="text" placeholder="Last Name">
+                            <input asp-for="RegisterViewModel.DisplayName" class="form-control" placeholder="Display Name...">
+                            <span asp-validation-for="RegisterViewModel.DisplayName" class="text-danger"></span>
                         </div>
                         <div class="col-xl-12">
-                            <input type="email" placeholder="Email...">
+                            <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="Email...">
+                            <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
                         </div>
                         <div class="col-md-12">
-                            <input type="password" placeholder="Password...">
+                            <input asp-for="RegisterViewModel.Password" type="password" class="form-control" placeholder="Password...">
+                            <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
                         </div>
                         <div class="col-md-12">
-                            <input type="password" placeholder="Confirm Password...">
+                            <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password...">
+                            <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-6">
+                            <button class="common_btn" name="Role" type="submit" value='founder'>Sign up as Founder</button>
                         </div>
                         <div class="col-6">
-                            <button class="common_btn" type="submit">sign up as founder</button>
-                        </div>
-                        <div class="col-6">
-                            <button class="common_btn" type="submit">sign up as investor</button>
+                            <button class="common_btn" name="Role" type="submit" value='investor'>Sign up as Investor</button>
                         </div>
                     </div>
                 </form>
@@ -126,3 +128,7 @@
 <script src="assetsClient/js/jquery.animatedheadline.min.js"></script>
 <!--script/custom js-->
 <script src="assetsClient/js/script.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

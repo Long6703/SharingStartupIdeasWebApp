@@ -40,9 +40,9 @@ namespace SSI.Data.Repository
             return await _dbset.FindAsync(id);
         }
 
-        public async Task SaveChangesAsync()
+        public void SaveChanges()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void Update(T entity)

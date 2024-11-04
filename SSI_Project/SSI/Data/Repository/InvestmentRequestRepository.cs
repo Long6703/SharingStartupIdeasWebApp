@@ -11,7 +11,7 @@ namespace SSI.Data.Repository
         public async Task AddInvestmentRequestAsync(Models.InvestmentRequest investReq)
         {
             await AddAsync(investReq);
-            await SaveChangesAsync();
+            SaveChanges();
         }
         public async Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync()
         {

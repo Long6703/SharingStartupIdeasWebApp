@@ -1,0 +1,66 @@
+﻿@page "{id:int}"
+@model SSI.Pages.Ideas.StartupIdeaMilestoneDetailsModel
+@{
+    ViewData["Title"] = "Milestone Details";
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+<section class="blog_details mt_120 xs_mt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 wow fadeInLeft">
+                <div class="blog_details_img">
+                    <img src="~/images/@Model.Idea?.PosterImg" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
+                </div>
+                <div class="blog_details_text">
+                    <h2>@Model.Idea?.Title</h2>
+                    <p>
+                        @Model.Idea?.Description
+                    </p>
+                    @if (Model.MilestoneDetail != null)
+                    {
+                        <div class="col-lg-8 wow fadeInLeft">
+                            <div class="blog_details_text">
+                                <p>@Model.MilestoneDetail.Content</p>
+                            </div>
+                            <div class="blog_details_img">
+                                @foreach (var image in Model.MilestoneDetail.Images)
+                                {
+                                    <img src="~/images/@image.Url" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
+                                }
+                            </div>
+                            
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 wow fadeInRight">
+                <div class="blog_sidebar sticky_sidebar">
+                    <div class="sidebar_wizard sidebar_category mt_25">
+                        <h2>MileStones</h2>
+                        <ul>
+                            @if (Model.Idea != null && Model.Idea.Ideadetails.Any())
+                            {
+                                int milestoneNumber = 1;
+                                foreach (var detail in Model.Idea.Ideadetails)
+                                {
+                                    <li>
+                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId })">
+                                            Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
+                                            <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
+                                        </a>
+                                    </li>
+                                    milestoneNumber++;
+                                }
+                            }
+                            else
+                            {
+                                <li>No milestones available</li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
