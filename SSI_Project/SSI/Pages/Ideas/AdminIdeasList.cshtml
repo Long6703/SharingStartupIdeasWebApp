@@ -1,24 +1,24 @@
 ﻿@page
-@model SSI.Pages.Admin.AdminModel
+@model SSI.Pages.Ideas.AdminIdeasListModel
 @{
-    Layout = "_LayoutAdmin";
+    Layout = "_LauoutAdmin";
 }
 
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+
 <div class="container-fluid">
 
-    <!-- start  -->
+
     <div class="row">
         <div class="col-12">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h4 class="header-title mb-3">Founders List</h4>
+                <h4 class="header-title mb-3">Ideas List</h4>
                 <a href="pages-information-details.html">
                     <button class="btn btn-icon btn-warning"><i class="fas fa-plus"></i></button>
                 </a>
             </div>
         </div>
     </div>
-    <!-- end row -->
 
     <div class="row">
         <div class="col-12">
@@ -30,47 +30,49 @@
                         <tr>
                             <th></th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th> <!-- Moved the Age column header here -->
-                            <th>Action</th> <!-- This is the new empty header for Status -->
-                        </tr>
+                            <th>Title</th>
+                            <th>Cattegory</th>
+                            <th>Start date</th>
+                            <th>Status</th>
+                            <th></th>
                     </thead>
 
                     <tbody>
-
-                        @foreach (var u in Model.Users)
+                        @foreach(var i in Model.Ideas)
                         {
                             <tr>
-                                <td class="row-number">@u.UserId</td>
-                                <td>@u.Displayname</td>
-                                <td>@u.Email</td>
-                                <td>@u.Role</td>
-                                <td>@u.Status</td>
+                                <td class="row-number">@i.PosterImg</td>
+                                <td>@i.User.Displayname</td>
+                                <td>@i.Title</td>
+                                <td>@i.Category</td>
+                                <td>@i.CreatedAt</td>
+                                <td>@i.Status</td>
                                 <td>
-                                    <form method="post">
-                                        <input type="hidden" name="id" value="@u.UserId" />
-                                        <button type="submit" class="btn btn-icon btn-danger" name="action" value="Lock">
-                                            <i class="fas fa-times"></i>
+                                    <a href="pages-information-details.html">
+                                        <button class="btn btn-icon btn-warning">
+                                            <i class="fas fa-eye"></i>
                                         </button>
-                                        <button type="submit" class="btn btn-icon btn-primary" name="action" value="UnLock">
-                                            <i class="far fa-heart"></i>
-                                        </button>
-                                    </form>
-
-
+                                    </a>
+                                    <button class="btn btn-icon btn-danger" onclick="lockAccount(this)">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-primary"
+                                            onclick="activateAccount(this)">
+                                        <i class="far fa-heart"></i>
+                                    </button>
                                 </td>
                             </tr>
-
                         }
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
+    <!-- end row -->
 
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

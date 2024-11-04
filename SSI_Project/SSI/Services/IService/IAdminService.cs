@@ -8,6 +8,8 @@ namespace SSI.Services.IService
         IEnumerable<Models.User> GetAllUsers();
         IEnumerable<Models.User> GetFounders();
         IEnumerable<Models.User> GetInvestors();
-        
+
+        void LockAccount(int id);
+        void UnlockAccount(int id);
     }
 }

@@ -4,5 +4,7 @@
     {
         IEnumerable<Models.User> GetAllUsers();
 
+        void LockAccount(int id);
+        void UnlockAccount(int id);
     }
 }

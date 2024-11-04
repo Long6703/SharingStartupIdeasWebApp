@@ -26,5 +26,15 @@ namespace SSI.Services.Service
         {
             return _adminRepository.GetAllUsers().Where(u => u.Role == "investor");
         }
+
+        public void LockAccount(int id)
+        {
+            _adminRepository.LockAccount(id);
+        }
+
+        public void UnlockAccount(int id)
+        {
+            _adminRepository.UnlockAccount(id);
+        }
     }
 }

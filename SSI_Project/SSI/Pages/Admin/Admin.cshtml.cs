@@ -18,5 +18,18 @@ namespace SSI.Pages.Admin
         {
             Users = _adminService.GetAllUsers();
         }
+
+        public IActionResult OnPost(int id, string action)
+        {
+            if (action.Equals("Lock"))
+            {
+                _adminService.LockAccount(id);
+            }
+            else
+            {
+                _adminService.UnlockAccount(id);
+            }
+            return RedirectToPage();
+        }
     }
 }
