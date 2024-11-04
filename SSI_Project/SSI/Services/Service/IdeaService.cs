@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SSI.Services.Service
 {
@@ -41,6 +42,10 @@ namespace SSI.Services.Service
         public (Idea,int, List<Comment>) GetIdeaById(int id)
         {
             return _ideaRepository.GetIdeaById(id);
+        }
+        public (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId)
+        {
+            return _ideaRepository.GetMilestoneDetailsById(milestoneId);
         }
     }
 }

@@ -46,16 +46,29 @@
                     </div>
 
                     <div class="row slider-nav mt-3">
-                        @foreach (var detail in Model.Idea.Ideadetails)
+                        @if (Model.SelectedMilestone != null)
                         {
-                            @foreach (var image in detail.Images)
+                            @foreach (var image in Model.SelectedMilestone.Images)
                             {
                                 <div class="col-xl-3 col-4">
                                     <div class="details_small_img">
-                                        <!-- Each small image has a click event to change the large image -->
                                         <img src="@image.Url" alt="slider" class="img-fluid w-100 thumbnail-image" data-large="@image.Url">
                                     </div>
                                 </div>
+                            }
+                        }
+                        else
+                        {
+                            foreach (var detail in Model.Idea.Ideadetails)
+                            {
+                                @foreach (var image in detail.Images)
+                                {
+                                    <div class="col-xl-3 col-4">
+                                        <div class="details_small_img">
+                                            <img src="@image.Url" alt="slider" class="img-fluid w-100 thumbnail-image" data-large="@image.Url">
+                                        </div>
+                                    </div>
+                                }
                             }
                         }
                     </div>
@@ -73,6 +86,13 @@
                             @Model.Idea.Description
                         </p>
                     </div>
+                    @if (Model.SelectedMilestone != null)
+                    {
+                        <div class="details_short_description">
+                        <h3>Milestone Content</h3>
+                        <p>@Model.SelectedMilestone.Content</p>
+                        </div>
+                    }
 
                     <div class="details_cart_btn">
                         <a class="common_btn" href="#">
@@ -101,12 +121,19 @@
                 <div class="sticky_sidebar">
                     <div class="menu_details_offer">
                         @foreach (var detail in sortedIdeaDetails)
-                            {
-                            <a class="">@($"Milestone {updateCount}")</a><br/>
+                        {
+                            <form method="post" asp-page-handler="Milestone">
+                                <input type="hidden" name="milestoneId" value="@detail.IdeaDetailId" />
+                                <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" /> <!-- Adding the IdeaId -->
+                                <button type="submit" class="milestone-button">@($"Milestone {updateCount}")</button>
+                            </form>
+
+                            <br />
                             updateCount++;
-                            }
+                        }
                     </div>
                 </div>
+                
             </div>
         </div>
         <div class="row mt_120 xs_mt_100 wow fadeInUp">
@@ -128,7 +155,9 @@
                                 <div class="row">
                                     <div class="col-lg-8">
                                         <h2>(@Model.CommentCount) Reviews</h2>
-                                        @foreach (var comment in Model.Comments)
+                                        @foreach (var comment in (Model.SelectedMilestone != null ? Model.MilestoneComments : Model.Comments)
+                                        .Skip((Model.CurrentPage - 1) * Model.CommentsPerPage)
+                                        .Take(Model.CommentsPerPage))
                                         {
                                             <div class="single_review">
                                                 <div class="img">
@@ -136,12 +165,28 @@
                                                 </div>
                                                 <div class="text">
                                                     <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
-                                                    <span class="rating"></span>
                                                     <p>@comment.Content</p>
                                                 </div>
                                             </div>
                                         }
+
+                                        <!-- Pagination Buttons -->
+                                        <div class="pagination">
+                                            @for (int i = 1; i <= Model.TotalPages; i++)
+                                            {
+                                                <form method="post" asp-page-handler="ChangePage" class="d-inline">
+                                                    <input type="hidden" name="milestoneId" value="@(Model.SelectedMilestone?.IdeaDetailId ?? 0)" />
+                                                    <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" />
+                                                    <input type="hidden" name="page" value="@i" />
+                                                    <button type="submit" class="btn @(Model.CurrentPage == i ? "btn-primary" : "btn-light")">
+                                                        @i
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+
                                     </div>
+                                   
                                     <div class="col-lg-4">
                                         <div class="review_input_area">
                                             <h2>Write A Review</h2>
@@ -345,3 +390,5 @@
         });
     </script>
 </section>
+
+

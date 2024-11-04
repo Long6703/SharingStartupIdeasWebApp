@@ -97,5 +97,21 @@ namespace SSI.Data.Repository
 
             return (idea, commentCount, comments);
         }
+        public (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId)
+        {
+            var detail = _context.Ideadetails
+                .Include(d => d.Images)
+                .Include(d => d.Comments)
+                    .ThenInclude(c => c.User)
+                .FirstOrDefault(d => d.IdeaDetailId == milestoneId);
+
+            if (detail == null)
+            {
+                return (null, new List<Comment>());
+            }
+
+            var comments = detail.Comments.ToList();
+            return (detail, comments);
+        }
     }
 }
