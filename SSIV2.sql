@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-create database SSIV;
-=======
+
 USE [master]
 IF EXISTS (SELECT [name] FROM master.dbo.sysdatabases WHERE name = N'SSIV2')
 BEGIN
@@ -8,8 +6,8 @@ BEGIN
 	ALTER DATABASE [SSIV2] SET ONLINE;
 	DROP DATABASE [SSIV2];
 END
-create database SSIV2;
->>>>>>> ce8a878aa7d3059d0d36c24535068277226b5da5
+create database SSIV;
+
 
 use SSIV;
 
@@ -43,11 +41,7 @@ CREATE TABLE idea (
     description TEXT NULL,
     category_id INT,
     created_at DATETIME DEFAULT GETDATE(),
-<<<<<<< HEAD
-    status NVARCHAR(20) CHECK (status IN ('completed','approved', 'pending', 'rejected')) DEFAULT 'pending',
-=======
     status NVARCHAR(20),
->>>>>>> ce8a878aa7d3059d0d36c24535068277226b5da5
     is_seeking_investment BIT DEFAULT 0,
     is_implement BIT DEFAULT 0,
     poster_img NVARCHAR(255),

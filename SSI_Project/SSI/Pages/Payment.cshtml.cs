@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
+using SSI.Ultils.ViewModel;
 using SSI.ViewModel;
+using System.Text.Json;
 
 namespace SSI.Pages
 {
@@ -20,21 +22,29 @@ namespace SSI.Pages
             _vnPayService = vnPayService;
         }
 
-        // GET method to show payment details and total amount
+        
         public async Task<IActionResult> OnGetAsync()
         {
             return await HandlePaymentAsync();
         }
         public async Task<IActionResult> HandlePaymentAsync()
         {
-            var username = HttpContext.Session.GetString("user");
-            // get user by username
+            byte[] userBytes;
+            var name = "";
+            var email = "";
+            if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                name = userViewModel.Displayname;
+                email = userViewModel.Email;
+            }
             var vnPayModel = new VnPaymentRequestModel
             {
                 Amount = Amount,
                 CreatedDate = DateTime.Now,
                 Description = "Thanh toan investment request thanh cong!",
-                FullName = "Chu Tran Duc Tung - ductung@gmail.com",// user name + email
+                FullName = name+" - "+email,
                 OrderId = RequestId
             };
             return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));

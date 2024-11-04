@@ -55,7 +55,7 @@
                             <div class="invoice_logo">
                                 <img src="assetsClient/images/logo.png" alt="logo" class="img-fluid w-100">
                             </div>
-                            <div class="text">
+                            <div class="text" style="width=150px">
                                 <h2>Invesment Request</h2>
                                 <p>Request Id: @Model.InvestmentRequest.RequestId</p>
                                 <p>Date: @Model.InvestmentRequest.CreatedAt</p>
@@ -68,19 +68,22 @@
                         <div class="dashboard_invoice_header">
                             <div class="text">
                                 <h2>Request To Idea</h2>
-                                
-                                <p>
+                                <p>User: <a href="">@Model.InvestmentRequest.Idea.User.Displayname</a></p>
+                                <p>Title: @Model.InvestmentRequest.Idea.Title</p>
+                                <p>Description: @Model.InvestmentRequest.Idea.Description</p>
+                                <p>Date: @Model.InvestmentRequest.Idea.CreatedAt</p>
+                                <p>Category: @Model.InvestmentRequest.Idea.Category.Name</p>
+                                <img src="@Model.InvestmentRequest.Idea.PosterImg" />
                             </div>
                             <div class="text">
-                                @if (Model.Transaction != null)
+                                @if (Model.InvestmentRequest.Transactions != null)
                                 {
-                                    foreach (var trans in Model.Transaction)
+                                    foreach (var trans in Model.InvestmentRequest.Transactions)
                                     {
                                         <h2>Transaction</h2>
                                         <ul>
                                             <li><span>Amount:</span> @trans.Amount</li>
                                             <li><span>Date:</span> @trans.CreatedAt</li>
-
                                         </ul>
                                     }
 

@@ -1,12 +1,15 @@
-﻿using SSI.Data.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SSI.Data.IRepository;
 using SSI.Models;
 
 namespace SSI.Data.Repository
 {
     public class InvestmentRequestRepository : RepositoryBase<Models.InvestmentRequest>, IInvestmentRequestRepository
     {
+        private readonly SSIV2Context _context;
         public InvestmentRequestRepository(SSIV2Context context) : base(context)
         {
+            _context = context;
         }
         public async Task AddInvestmentRequestAsync(Models.InvestmentRequest investReq)
         {
@@ -17,13 +20,18 @@ namespace SSI.Data.Repository
         {
             return await Task.FromResult(GetAll());
         }
-        public async Task<Models.InvestmentRequest> GetInvestmentRequestByIdAsync(int id)
+        public async Task<Models.InvestmentRequest?> GetInvestmentRequestByIdAsync(int id)
         {
-            return await GetByIdAsync(id);
+            return await _context.InvestmentRequests.
+                Include(i => i.Idea).
+                    ThenInclude(c=>c.User).
+                Include(i=>i.Idea).
+                    ThenInclude(c=>c.Category).
+                Include(i => i.Transactions).FirstOrDefaultAsync(i => i.RequestId == id);
         }
         public async Task<IQueryable<Models.InvestmentRequest>> GetInvestmentRequestByInvestorIdAsync(int investorId)
         {
-            return await Task.FromResult(_dbset.Where(t => t.UserId == investorId));
+            return await Task.FromResult(_dbset.Include(t=>t.Idea).Include(t => t.Transactions).Where(t => t.UserId == investorId));
         }
         public async Task DeleteInvestmentRequestAsync(int requestId)
         {

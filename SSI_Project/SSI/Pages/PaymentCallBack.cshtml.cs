@@ -11,7 +11,7 @@ namespace SSI.Pages
         private readonly ITransactionService _transactionService;
         private readonly IInvestmentRequestService _investReqService;
 
-        // Properties to hold transaction details
+        
         public string Result { get; set; } = string.Empty;
         public decimal Amount { get; set; }
         public string PaymentMethod { get; set; } = string.Empty;
@@ -41,14 +41,12 @@ namespace SSI.Pages
             {
                 Result = $"Thanh toán VNPay thành công";
 
-                // Assign transaction details to properties for displaying on the view
                 Amount = Convert.ToDecimal(response.Amount);
                 PaymentMethod = response.PaymentMethod;
                 TransactionDate = DateTime.Now;
 
                 var username = HttpContext.Session.GetString("user");
 
-                // Save transaction to the database
                 var transaction = new Models.Transaction
                 {
                     InvestmentRequestId = response.OrderId,
@@ -62,7 +60,6 @@ namespace SSI.Pages
                 await _investReqService.UpdateInvestmentRequestAsync(invesReq);
                 await _transactionService.AddTransactionAsync(transaction);
             }
-
             return Page();
         }
     }

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
 
 namespace SSI.Pages
 {
@@ -19,12 +21,18 @@ namespace SSI.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var username = HttpContext.Session.GetString("user");
-            //get userid by username
-            var investorId = 2; 
+            byte[] userBytes;
+            int investorId = 0;
+            if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                investorId = userViewModel.UserId;
+            }
+            
             var investRequests = await _investReqService.GetInvestmentRequestByInvestorIdAsync(investorId);
             InvestmentRequests = investRequests.ToList();
-            //get all list idea để sang so sánh in ra tên idea
+            
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(int id)

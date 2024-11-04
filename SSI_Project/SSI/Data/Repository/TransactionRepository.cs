@@ -13,7 +13,7 @@ namespace SSI.Data.Repository
         {
             await AddAsync(transaction);
 
-            await SaveChangesAsync();
+            SaveChanges();
         }
         public async Task<IQueryable<Models.Transaction>> GetAllTransactionAsync()
         {

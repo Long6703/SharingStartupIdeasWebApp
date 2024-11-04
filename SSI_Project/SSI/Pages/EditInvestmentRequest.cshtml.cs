@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
-
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
 namespace SSI.Pages
 {
     public class EditInvestmentRequestModel : PageModel
@@ -40,27 +41,27 @@ namespace SSI.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            // Ensure model is valid before proceeding
-            
-
-            // Create a new InvestmentRequest model
+            byte[] userBytes;
+            int userId = 0;
+            if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                userId = userViewModel.UserId;
+            }
             var investReq = new Models.InvestmentRequest
             {
                 RequestId = RequestId,
                 IdeaId = IdeaId,
-                UserId = 2,  // Static value for now, replace with logged-in user ID in the future
+                UserId = userId,  
                 Amount = Amount,
                 Status = "pending",
                 CreatedAt = DateTime.Now,
                 EquityPercentage = EquityPercentage,
-                InvestmentPeriod = InvestmentPeriod,  // Value from the form
+                InvestmentPeriod = InvestmentPeriod,  
                 Description = Description
             };
-
-            // Call the service to save the investment request
             await _investReqService.UpdateInvestmentRequestAsync(investReq);
-
-            // Redirect to Index page after successful submission
             return RedirectToPage("/ManageRequestInvestor");
         }
     }

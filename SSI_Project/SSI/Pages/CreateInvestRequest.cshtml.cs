@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
-using System.Threading.Tasks;
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
 
 namespace SSI.Pages
 {
@@ -40,12 +41,18 @@ namespace SSI.Pages
             {
                 return Page();
             }
-            var username = HttpContext.Session.GetString("user");
-            //get userid by username
+            byte[] userBytes;
+            int userId=0;
+            if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                userId = userViewModel.UserId; 
+            }
             var investReq = new Models.InvestmentRequest
             {
                 IdeaId = IdeaId,
-                UserId = 2,
+                UserId = userId,
                 Amount = Amount,
                 Status = "pending",
                 CreatedAt = DateTime.Now,

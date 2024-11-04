@@ -17,14 +17,11 @@ namespace SSI.Pages
         }
 
         public Models.InvestmentRequest InvestmentRequest { get; set; }
-        //public Models.Idea Idea { get; set; }
-        public List<Models.Transaction> Transaction { get; set; }
+        
         public async Task<IActionResult> OnGetAsync(int RequestId)
         {
             InvestmentRequest = await _investmentRequestService.GetInvestmentRequestByIdAsync(RequestId);
-            //Idea = get idea by ideaId;
-            //get transaction by requestid
-            Transaction = InvestmentRequest.Transactions.ToList();
+            
             if (InvestmentRequest == null)
             {
                 return NotFound();
