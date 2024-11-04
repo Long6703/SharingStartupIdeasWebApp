@@ -1,7 +1,13 @@
-﻿namespace SSI.Services.IService
+﻿using Microsoft.EntityFrameworkCore;
+using SSI.Models;
+
+namespace SSI.Services.IService
 {
     public interface IAdminService
     {
-        List<Models.User> GetAllUsers();
+        IEnumerable<Models.User> GetAllUsers();
+        IEnumerable<Models.User> GetFounders();
+        IEnumerable<Models.User> GetInvestors();
+        
     }
 }

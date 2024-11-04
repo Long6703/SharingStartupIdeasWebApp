@@ -1,22 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SSI.Models;
 using SSI.Services.IService;
 
 namespace SSI.Pages.Admin
 {
-    public class AdminModel : PageModel
+    public class InvestorModel : PageModel
     {
         private readonly IAdminService _adminService;
-        public AdminModel(IAdminService adminService)
+        public InvestorModel(IAdminService adminService)
         {
             _adminService = adminService;
         }
+        public IEnumerable<Models.User> Users { get; set; } = new List<Models.User>();
 
-        public IEnumerable<User> Users { get; set; } = new List<User>();
         public void OnGet()
         {
-            Users = _adminService.GetAllUsers();
+            Users = _adminService.GetInvestors();
         }
     }
 }

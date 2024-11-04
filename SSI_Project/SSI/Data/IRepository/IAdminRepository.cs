@@ -2,6 +2,7 @@
 {
     public interface IAdminRepository
     {
-        List<Models.User> GetAllUsers();
+        IEnumerable<Models.User> GetAllUsers();
+
     }
 }

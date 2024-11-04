@@ -11,10 +11,11 @@ namespace SSI.Data.Repository
             _context = context;
         }
 
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _context.Users.ToList();
         }
 
+       
     }
 }

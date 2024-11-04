@@ -12,9 +12,19 @@ namespace SSI.Services.Service
             _adminRepository = adminRepository;
         }
         
-        public List<User> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _adminRepository.GetAllUsers();
+        }
+
+        public IEnumerable<User> GetFounders()
+        {
+            return _adminRepository.GetAllUsers().Where(u => u.Role == "startup");
+        }
+
+        public IEnumerable<User> GetInvestors()
+        {
+            return _adminRepository.GetAllUsers().Where(u => u.Role == "investor");
         }
     }
 }

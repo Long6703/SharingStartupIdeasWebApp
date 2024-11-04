@@ -1,0 +1,72 @@
+﻿@page
+@model SSI.Pages.Admin.InvestorModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+
+    <!-- start  -->
+    <div class="row">
+        <div class="col-12">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 class="header-title mb-3">Founders List</h4>
+                <a href="pages-information-details.html">
+                    <button class="btn btn-icon btn-warning"><i class="fas fa-plus"></i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="mt-5">
+                <table id="datatable-buttons"
+                       class="table table-striped table-bordered dt-responsive nowrap"
+                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th> <!-- Moved the Age column header here -->
+                            <th>Action</th> <!-- This is the new empty header for Status -->
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var u in Model.Users)
+                        {
+                            <tr>
+                                <td class="row-number">@u.UserId</td>
+                                <td>@u.Displayname</td>
+                                <td>@u.Email</td>
+                                <td>@u.Role</td>
+                                <td class="status">Active</td> <!-- Moved Age value here -->
+                                <td>
+                                    <a href="" >
+                                        <button class="btn btn-icon btn-warning"><i class="fas fa-wrench"></i></button>
+                                    </a>
+                                    <button class="btn btn-icon btn-danger" onclick="lockAccount(this)">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button class="btn btn-icon btn-primary"
+                                            onclick="activateAccount(this)">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </td> <!-- Added three buttons here -->
+                            </tr>
+
+                        }
+                        <!-- Continue for the remaining rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+</div>
