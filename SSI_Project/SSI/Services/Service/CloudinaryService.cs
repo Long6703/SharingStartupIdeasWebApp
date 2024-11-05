@@ -24,7 +24,7 @@ namespace SSI.Services.Service
             var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(filePath),
-                Transformation = new Transformation().Crop("fill").Gravity("face").Width(500).Height(500) // Tùy chỉnh kích thước ảnh
+                Transformation = new Transformation().Crop("fill").Gravity("face").Width(500).Height(500)
             };
 
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);

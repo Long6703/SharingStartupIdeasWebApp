@@ -3,6 +3,48 @@
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
+<head>
+    <style>
+        .idea-status {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+            .idea-status.pending {
+                background-color: #e0f0ff;
+                color: #007bff;
+            }
+
+            .idea-status.approved {
+                background-color: #e0ffe0;
+                color: #28a745;
+            }
+
+            .idea-status.rejected {
+                background-color: #ffe0e0;
+                color: #dc3545;
+            }
+    </style>
+</head>
+<section class="breadcrumb_area" style="background: url(~/assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>List Ideas</h1>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">List Ideas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section class="dashboard pt_120 xs_pt_80">
     <div class="container">
         <div class="row">
@@ -64,12 +106,14 @@
                                             <a href="@Url.Page("StartupIdeaDetails", new { id = idea.IdeaId })">
                                                 @idea.Title
                                             </a>
-                                            <span>@idea.CreatedAt</span>
+                                            
+                                            <br />
+                                            <span class="idea-status @idea.Status.ToLower()">@idea.Status</span>
+                                            
                                         </h4>
+                                        <span>@idea.CreatedAt</span>
                                         <h5>@idea.Category.Name</h5>
-                                        <p>
-                                            @idea.Description
-                                        </p>
+                                        <p>@idea.Description</p>
                                     </div>
                                 </div>
                             }

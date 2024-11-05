@@ -35,44 +35,7 @@
                     }
                     
                 </div>
-                <div class="blog_det_comment_area menu_det_review_area mt_80">
-                    @foreach (var detail in Model.Idea?.Ideadetails)
-                    {
-                        <h2>(03) Comments</h2>
-                        @foreach (var comment in detail.Comments)
-                        {
-                            <div class="single_review">
-
-                                <div class="img">
-                                    <img src="~/assetsClient/images/client_img_1.png" alt="Reviewer" class="img-fluid w-100">
-                                </div>
-                                <div class="text">
-                                    <h4>@comment.User.Displayname <span>@comment.CreatedAt</span></h4>
-                                    <p>
-                                        @comment.Content
-                                    </p>
-                                    <a href="#"><i class="far fa-reply"></i> Reply</a>
-                                </div>
-                            </div>
-                        }
-                    }
-                    
-                    @* <div class="single_review reply">
-                        <div class="img">
-                            <img src="assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
-                        </div>
-                        <div class="text">
-                            <h4>Sinthis Mou <span>May 8, 2024</span></h4>
-                            <p>
-                                Lorem ipsum is simply free text used by copytyping refreshing.
-                                Neque
-                                porro est is a rem ipsum qu
-                                ia qued inventore veritatis et quasi architecto beatae
-                            </p>
-                            <a href="#"><i class="far fa-reply"></i> Reply</a>
-                        </div>
-                    </div> *@
-                </div>
+                
             </div>
             <div class="col-lg-4 col-md-8 wow fadeInRight">
                 <div class="blog_sidebar sticky_sidebar">

@@ -1,0 +1,165 @@
+﻿@page
+@using SSI.Ultils.ViewModel
+@inject IHttpContextAccessor HttpContextAccessor
+@using System.Text.Json
+@model SSI.Pages.Ideas.UpdateIdeaDetailsModel
+@{
+}
+<head>
+    <style>
+        .preview-container {
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            padding: 20px; 
+            background-color: #f8f9fa; 
+            margin-top: 15px;
+        }
+
+        .remove-image-btn {
+            font-size: 18px;
+            line-height: 1;
+            text-align: center;
+        }
+
+        .image-preview-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        img {
+            transition: transform 0.2s; /* Smooth scale transition */
+        }
+
+            img:hover {
+                transform: scale(1.05); /* Slightly enlarge image on hover */
+            }
+    </style>
+
+</head>
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Update Idea</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Update Idea</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="contact_us pt_120 xs_pt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 wow fadeInLeft">
+                
+                <div class="contact_form">
+                    <h2>Update Idea</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="IdeaId" value="@Model.IdeaId" />
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="DetailContent">Detail Content</label>
+                                <textarea id="DetailContent" name="NewIdeaDetail.Content" class="form-control" rows="3" required>@Model.NewIdeaDetail.Content</textarea>
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label for="milestone_images">Upload Milestone Images</label>
+                                <input type="file" id="milestone_images" name="Images" class="form-control-file" accept="image/*" multiple onchange="previewImages(event)" />
+                                <small class="form-text text-muted">You can upload multiple images for this milestone.</small>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit Milestone <i class="fas fa-paper-plane ml-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight">
+                <div class="contact_img preview-container" id="previewContainer">
+                    <p>No images uploaded yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    let selectedFiles = []; // Array to hold the selected files
+
+    function previewImages(event) {
+        const previewContainer = document.getElementById('previewContainer');
+        previewContainer.innerHTML = ''; // Clear existing previews
+
+        const files = event.target.files;
+        selectedFiles = Array.from(files); // Store files in selectedFiles array
+
+        if (selectedFiles.length === 0) {
+            previewContainer.innerHTML = '<p>No images uploaded yet.</p>';
+            return;
+        }
+
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'image-preview-wrapper';
+                imgDiv.style.position = 'relative';
+                imgDiv.style.display = 'inline-block';
+                imgDiv.style.margin = '5px';
+
+                // Create image element
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Preview';
+                img.className = 'img-fluid';
+                img.style.maxWidth = '150px';
+                img.style.maxHeight = '150px';
+                img.style.border = '1px solid #ddd';
+                img.style.borderRadius = '5px';
+                img.style.padding = '5px';
+
+                // Create remove button
+                const removeButton = document.createElement('button');
+                removeButton.innerHTML = '&times;';
+                removeButton.className = 'remove-image-btn';
+                removeButton.style.position = 'absolute';
+                removeButton.style.top = '5px';
+                removeButton.style.right = '5px';
+                removeButton.style.background = '#f00';
+                removeButton.style.color = '#fff';
+                removeButton.style.border = 'none';
+                removeButton.style.borderRadius = '50%';
+                removeButton.style.width = '25px';
+                removeButton.style.height = '25px';
+                removeButton.style.cursor = 'pointer';
+
+                removeButton.onclick = function () {
+                    imgDiv.remove(); // Remove image preview from UI
+                    selectedFiles.splice(index, 1); // Remove from selectedFiles array
+                    updateFileInput(event.target); // Update the file input element
+
+                    // Check if there are any files left and update the message accordingly
+                    if (selectedFiles.length === 0) {
+                        previewContainer.innerHTML = '<p>No images uploaded yet.</p>';
+                    }
+                };
+
+                // Append elements
+                imgDiv.appendChild(img);
+                imgDiv.appendChild(removeButton);
+                previewContainer.appendChild(imgDiv);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function updateFileInput(fileInput) {
+        const dataTransfer = new DataTransfer(); // Create a new DataTransfer object
+        selectedFiles.forEach(file => dataTransfer.items.add(file)); // Add remaining files to DataTransfer
+        fileInput.files = dataTransfer.files; // Update the input files
+    }
+</script>

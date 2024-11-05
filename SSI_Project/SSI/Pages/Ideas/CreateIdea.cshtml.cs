@@ -65,7 +65,7 @@ namespace SSI.Pages.Ideas
             {
                 // Tạo đối tượng Idea và gán các thuộc tính
                 Idea.UserId = userId;
-                Idea.Status = "Pending";
+                Idea.Status = "pending";
                 Idea.CreatedAt = DateTime.UtcNow;
 
                 // 1. Xử lý Poster Image cho Idea
