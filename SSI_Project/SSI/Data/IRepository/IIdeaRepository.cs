@@ -16,5 +16,6 @@ namespace SSI.Data.IRepository
         (Idea,int, List<Comment>) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
         (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId);
+        void AddComment(Comment comment);
     }
 }

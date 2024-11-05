@@ -113,5 +113,10 @@ namespace SSI.Data.Repository
             var comments = detail.Comments.ToList();
             return (detail, comments);
         }
+        public void AddComment(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+        }
     }
 }

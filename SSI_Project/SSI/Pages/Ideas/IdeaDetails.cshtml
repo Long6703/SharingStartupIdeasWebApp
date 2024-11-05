@@ -1,4 +1,5 @@
 ﻿@page
+@using SSI.Models
 @model SSI.Pages.Ideas.IdeaDetailsModel
 @{
 }
@@ -8,6 +9,7 @@
 @{
     var sortedIdeaDetails = Model.Idea.Ideadetails.OrderBy(detail => detail.CreatedAt).ToList();
     int updateCount = 1; 
+    var selectedMilestone = ViewData["SelectedMilestone"] as Ideadetail;
 }
 
 <section class="breadcrumb_area" style="background: url('@Url.Content("https://alumni.arizona.edu/sites/default/files/styles/az_large/public/2022-07/is_your_idea_innovative.jpeg.webp?itok=F6C-r8q2")');">
@@ -124,7 +126,7 @@
                         {
                             <form method="post" asp-page-handler="Milestone">
                                 <input type="hidden" name="milestoneId" value="@detail.IdeaDetailId" />
-                                <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" /> <!-- Adding the IdeaId -->
+                                <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" /> 
                                 <button type="submit" class="milestone-button">@($"Milestone {updateCount}")</button>
                             </form>
 
@@ -156,16 +158,57 @@
                                     <div class="col-lg-8">
                                         <h2>(@Model.CommentCount) Reviews</h2>
                                         @foreach (var comment in (Model.SelectedMilestone != null ? Model.MilestoneComments : Model.Comments)
+                                        .Where(c => c.ParentId == null)  
                                         .Skip((Model.CurrentPage - 1) * Model.CommentsPerPage)
                                         .Take(Model.CommentsPerPage))
                                         {
                                             <div class="single_review">
-                                                <div class="img">
-                                                    <img src="@comment.User.AvatarUrl" alt="Reviewer" class="img-fluid w-100">
-                                                </div>
+                                                @if (comment.User.AvatarUrl!=null)
+                                                {
+                                                    <div class="img">
+                                                        <img src="@comment.User.AvatarUrl" alt="Reviewer" class="img-fluid w-100">
+                                                    </div>
+                                                }                                               
                                                 <div class="text">
-                                                    <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
-                                                    <p>@comment.Content</p>
+                                                        <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
+                                                        <p>@comment.Content</p>
+                                                        <button class="reply-button" data-comment-id="@comment.CommentId"><i class="far fa-reply">Reply</i></button>
+                                                   
+                                                    <!-- Form trả lời bình luận -->
+                                                    <div class="reply-form" id="reply-form-@comment.CommentId" style="display:none;">
+                                                        <form method="post" asp-page-handler="SubmitReply">
+                                                            <div class="review_input_box">
+                                                                <label>Write Your Reply *</label>
+                                                                <textarea rows="2" name="ReplyContent" required></textarea>
+                                                            </div>
+                                                            <input type="hidden" name="ParentId" value="@comment.CommentId" />
+                                                            <input type="hidden" name="IdeaDetailId" value="@comment.IdeaDetailId" />
+                                                            <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
+                                                            <button type="submit" class="common_btn">Submit Reply</button>
+                                                        </form>
+                                                    </div>
+
+                                                    <!-- Hiển thị các câu trả lời cho bình luận -->
+                                                    @if (comment.InverseParent != null && comment.InverseParent.Any())
+                                                    {
+                                                        <div class="replies">
+                                                            @foreach (var reply in comment.InverseParent)
+                                                            {
+                                                                <div class="reply">
+                                                                    @if (reply.User.AvatarUrl != null)
+                                                                    {
+                                                                        <div class="img">
+                                                                            <img src="@reply.User.AvatarUrl" class="img-fluid">
+                                                                        </div>
+                                                                    }                                                                   
+                                                                    <div class="text">
+                                                                        <h5>@(reply.User?.Displayname ?? "Unknown User") replyed @reply.ParentId <span>@reply.CreatedAt</span></h5>
+                                                                        <p>@reply.Content</p>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         }
@@ -184,7 +227,6 @@
                                                 </form>
                                             }
                                         </div>
-
                                     </div>
                                    
                                     <div class="col-lg-4">
@@ -195,6 +237,8 @@
                                                     <label>Write Review *</label>
                                                     <textarea rows="5" name="ReviewContent" required></textarea>
                                                 </div>
+                                                <input type="hidden" name="milestoneId" value="@selectedMilestone?.IdeaDetailId" />
+                                                <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
                                                 <button type="submit" class="common_btn">Submit Review</button>
                                             </form>
                                         </div>
@@ -385,6 +429,15 @@
                     // Update the src of the large image with the clicked thumbnail's data-large attribute
                     const largeImage = document.getElementById('largeImage');
                     largeImage.src = this.getAttribute('data-large');
+                });
+            });
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const commentId = this.getAttribute('data-comment-id');
+                    const replyForm = document.getElementById(`reply-form-${commentId}`);
+                    if (replyForm) {
+                        replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+                    }
                 });
             });
         });

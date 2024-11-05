@@ -39,13 +39,17 @@ namespace SSI.Services.Service
         {
             return _ideaRepository.SearchIdeas(searchTerm, categoryId);
         }
-        public (Idea,int, List<Comment>) GetIdeaById(int id)
+        public (Idea, int, List<Comment>) GetIdeaById(int id)
         {
             return _ideaRepository.GetIdeaById(id);
         }
         public (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId)
         {
             return _ideaRepository.GetMilestoneDetailsById(milestoneId);
+        }
+        public void AddComment(Comment comment)
+        {
+            _ideaRepository.AddComment(comment);
         }
     }
 }
