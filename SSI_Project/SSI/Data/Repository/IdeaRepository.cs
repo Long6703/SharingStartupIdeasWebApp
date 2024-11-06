@@ -58,6 +58,7 @@ namespace SSI.Data.Repository
                 .Include(i => i.Category)
                 .Include(i => i.Ideadetails)
                 .ThenInclude(d=>d.Images)
+                .Where(i=>i.Status.ToLower()=="approved")
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -117,6 +118,35 @@ namespace SSI.Data.Repository
         {
             _context.Comments.Add(comment);
             _context.SaveChanges();
+        }
+        public List<Idea> RelatedIdea(int ideaId)
+        {
+            var idea = _context.Ideas.Where(i=>i.IdeaId == ideaId).FirstOrDefault();
+            var rerelatedIdeas = _context.Ideas.Where(i=>i.CategoryId==idea.CategoryId).Where(i=>i.IdeaId!=idea.IdeaId).Where(i=>i.Status.ToLower()=="approved").ToList();
+            return rerelatedIdeas.ToList();
+        }
+        public void AddIdeasToInterestList(IdeaInterest ideaInterest)
+        {
+            _context.IdeaInterests.Add(ideaInterest);
+            _context.SaveChanges();
+        }
+        public bool IsIdeaInInterestList(int ideaId, int userId)
+        {
+            return _context.IdeaInterests.Any(i => i.IdeaId == ideaId && i.UserId == userId);
+        }
+        public List<IdeaInterest> GetInterestList(int userId)
+        {
+            var interestList = _context.IdeaInterests.Include(i=>i.Idea).ThenInclude(idea=>idea.Category).Where(i=>i.UserId == userId).ToList();
+            return interestList;
+        }
+        public void DeleteInterest(int interestId)
+        {
+            var interest = _context.IdeaInterests.Find(interestId);
+            if (interest != null)
+            {
+                _context.IdeaInterests.Remove(interest);
+                _context.SaveChanges();
+            }
         }
     }
 }

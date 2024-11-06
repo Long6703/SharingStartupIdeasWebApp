@@ -51,5 +51,25 @@ namespace SSI.Services.Service
         {
             _ideaRepository.AddComment(comment);
         }
+        public List<Idea> RelatedIdea(int ideaId)
+        {
+            return _ideaRepository.RelatedIdea(ideaId);
+        }
+        public void AddIdeasToInterestList(IdeaInterest ideaInterest)
+        {
+            _ideaRepository.AddIdeasToInterestList(ideaInterest);
+        }
+        public bool IsIdeaInInterestList(int ideaId, int userId)
+        {
+            return _ideaRepository.IsIdeaInInterestList(ideaId, userId);
+        }
+        public List<IdeaInterest> GetInterestList(int userId)
+        {
+            return _ideaRepository.GetInterestList(userId);
+        }
+        public void DeleteInterest(int interestId)
+        {
+            _ideaRepository.DeleteInterest(interestId);
+        }
     }
 }

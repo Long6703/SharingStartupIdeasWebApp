@@ -17,5 +17,10 @@ namespace SSI.Data.IRepository
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
         (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId);
         void AddComment(Comment comment);
+        List<Idea> RelatedIdea(int ideaId);
+        void AddIdeasToInterestList(IdeaInterest ideaInterest);
+        bool IsIdeaInInterestList(int ideaId, int userId);
+        List<IdeaInterest> GetInterestList(int userId);
+        void DeleteInterest(int interestId);
     }
 }
