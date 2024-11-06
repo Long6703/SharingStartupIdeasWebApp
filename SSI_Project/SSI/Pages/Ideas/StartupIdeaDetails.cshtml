@@ -16,31 +16,12 @@
                     <p>
                         @Model.Idea?.Description
                     </p>
-                    @foreach (var detail in Model.Idea?.Ideadetails)
-                    {
-                        <p>
-                            @detail.Content
-                        </p>
-                        <div class="row mb_45">
-                            <div class="col-xl-6 col-sm-6">
-                                <div class="details_center_img">
-                                    @foreach (var image in detail.Images)
-                                    {
-                                        <img src="~/images/@image.Url" alt="Image for @Model.Idea?.Title"
-                                             class="img-fluid w-100">
-                                    }    
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    
                 </div>
-                
             </div>
             <div class="col-lg-4 col-md-8 wow fadeInRight">
                 <div class="blog_sidebar sticky_sidebar">
                     <div class="sidebar_wizard sidebar_category mt_25">
-                        <h2>MileStones</h2>
+                        <h2>Milestones</h2>
                         <ul>
                             @if (Model.Idea != null && Model.Idea.Ideadetails.Any())
                             {
@@ -48,18 +29,18 @@
                                 foreach (var detail in Model.Idea.Ideadetails)
                                 {
                                     <li>
-                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId })">
+                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId, ideaId = Model.Idea.IdeaId })">
                                             Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
                                             <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
                                         </a>
                                     </li>
                                     milestoneNumber++;
                                 }
-                            } else
+                            }
+                            else
                             {
                                 <li>No milestones available</li>
                             }
-                            
                         </ul>
                     </div>
                 </div>

@@ -10,8 +10,8 @@
         .preview-container {
             border: 2px dashed #007bff;
             border-radius: 8px;
-            padding: 20px; 
-            background-color: #f8f9fa; 
+            padding: 20px;
+            background-color: #f8f9fa;
             margin-top: 15px;
         }
 
@@ -55,12 +55,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-8 wow fadeInLeft">
-                
+
                 <div class="contact_form">
                     <h2>Update Idea</h2>
                     <form method="post" enctype="multipart/form-data">
                         <input type="hidden" asp-for="IdeaId" value="@Model.IdeaId" />
-
                         <div class="row">
                             <div class="col-12 mb-3">
                                 <label for="DetailContent">Detail Content</label>
@@ -86,6 +85,7 @@
         </div>
     </div>
 </section>
+
 <script>
     let selectedFiles = []; // Array to hold the selected files
 

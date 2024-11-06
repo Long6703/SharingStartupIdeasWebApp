@@ -12,6 +12,7 @@ namespace SSI.Pages.Ideas
     {
         private readonly IIdeaService _ideaService;
         private readonly ICategoryService _categoryService;
+        private readonly CloudinaryService _cloudinaryService;
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<CreateIdeaModel> _logger;
 
@@ -22,18 +23,20 @@ namespace SSI.Pages.Ideas
         public Ideadetail Ideadetail { get; set; }
 
         [BindProperty]
-        public IFormFile PosterImage { get; set; }  // Single image for poster_img
+        public IFormFile PosterImage { get; set; }
 
         [BindProperty]
-        public List<IFormFile> Images { get; set; }  // Multiple images for Ideadetail
+        public List<IFormFile> Images { get; set; }
 
         public List<Category> Categories { get; set; }
 
         public CreateIdeaModel(IIdeaService ideaService, ICategoryService categoryService,
-                               IWebHostEnvironment environment, ILogger<CreateIdeaModel> logger)
+                               CloudinaryService cloudinaryService, IWebHostEnvironment environment,
+                               ILogger<CreateIdeaModel> logger)
         {
             _ideaService = ideaService;
             _categoryService = categoryService;
+            _cloudinaryService = cloudinaryService;
             _environment = environment;
             _logger = logger;
         }
@@ -55,71 +58,62 @@ namespace SSI.Pages.Ideas
                     userId = userViewModel.UserId;
                 }
             }
-            //    if (!ModelState.IsValid)
-            //{
-            //    Categories = _categoryService.GetAllCategories();
-            //    return Page();
-            //}
 
             try
             {
-                // Tạo đối tượng Idea và gán các thuộc tính
                 Idea.UserId = userId;
                 Idea.Status = "pending";
                 Idea.CreatedAt = DateTime.UtcNow;
 
-                // 1. Xử lý Poster Image cho Idea
+                // Upload Poster Image to Cloudinary using temporary file path
                 if (PosterImage != null && PosterImage.Length > 0)
                 {
-                    var posterFileName = Guid.NewGuid() + Path.GetExtension(PosterImage.FileName);
-                    var posterPath = Path.Combine(_environment.WebRootPath, "images", posterFileName);
-
-                    using (var stream = new FileStream(posterPath, FileMode.Create))
+                    var tempPosterPath = Path.GetTempFileName(); // Create a temporary file path
+                    using (var stream = new FileStream(tempPosterPath, FileMode.Create))
                     {
                         await PosterImage.CopyToAsync(stream);
                     }
 
-                    Idea.PosterImg = posterFileName;
+                    // Upload to Cloudinary and delete the temporary file
+                    Idea.PosterImg = await _cloudinaryService.UploadImageAsync(tempPosterPath);
+                    System.IO.File.Delete(tempPosterPath); // Delete temp file after upload
                 }
 
-                // Lưu Idea vào database trước để lấy IdeaId
                 await _ideaService.CreateIdeaAsync(Idea);
 
-                // 2. Xử lý và lưu các hình ảnh cho Ideadetail
                 Ideadetail.CreatedAt = DateTime.UtcNow;
-                Ideadetail.IdeaId = Idea.IdeaId; // Gán IdeaId vừa tạo vào Ideadetail
+                Ideadetail.IdeaId = Idea.IdeaId;
 
-                // Danh sách hình ảnh để lưu vào cơ sở dữ liệu
                 List<Image> imagesToSave = new List<Image>();
-                var imagesDirectory = Path.Combine(_environment.WebRootPath, "images");
 
+                // Upload additional images to Cloudinary using temporary file paths
                 foreach (var formFile in Images)
                 {
                     if (formFile.Length > 0)
                     {
-                        var fileName = Guid.NewGuid() + Path.GetExtension(formFile.FileName);
-                        var filePath = Path.Combine(imagesDirectory, fileName);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        var tempImagePath = Path.GetTempFileName(); // Create a temporary file path
+                        using (var stream = new FileStream(tempImagePath, FileMode.Create))
                         {
                             await formFile.CopyToAsync(stream);
                         }
 
-                        // Thêm hình ảnh vào danh sách để lưu vào cơ sở dữ liệu
-                        imagesToSave.Add(new Image { Url = fileName, IdeaDetailId = Ideadetail.IdeaDetailId });
+                        // Upload to Cloudinary and delete the temporary file
+                        var imageUrl = await _cloudinaryService.UploadImageAsync(tempImagePath);
+                        imagesToSave.Add(new Image { Url = imageUrl, IdeaDetailId = Ideadetail.IdeaDetailId });
+                        System.IO.File.Delete(tempImagePath); // Delete temp file after upload
                     }
                 }
 
-                // Lưu chi tiết ý tưởng và hình ảnh
                 await _ideaService.CreateIdeaWithDetailAsync(Ideadetail);
 
+                // Save image URLs to the database
                 foreach (var image in imagesToSave)
                 {
                     image.IdeaDetailId = Ideadetail.IdeaDetailId;
                     await _ideaService.CreateImageAsync(image);
                 }
 
-                return RedirectToPage("StartupIdeaList");
+                return RedirectToPage("/Ideas/StartupIdeaList", new { id = userId });
             }
             catch (Exception ex)
             {
@@ -129,5 +123,6 @@ namespace SSI.Pages.Ideas
                 return Page();
             }
         }
+
     }
 }

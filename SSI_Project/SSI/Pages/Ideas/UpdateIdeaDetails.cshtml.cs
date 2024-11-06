@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using SSI.Models;
 using SSI.Services.IService;
+using SSI.Services.Service;
+using SSI.Ultils.ViewModel;
 using System.IO;
+using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
     public class UpdateIdeaDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;
+        private readonly CloudinaryService _cloudinaryService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public UpdateIdeaDetailsModel(IIdeaService ideaService, IWebHostEnvironment webHostEnvironment)
-        {
-            _ideaService = ideaService;
-            _webHostEnvironment = webHostEnvironment;
-        }
+        private readonly ILogger<UpdateIdeaDetailsModel> _logger;
 
         [BindProperty]
         public Ideadetail NewIdeaDetail { get; set; } = new Ideadetail();
@@ -26,54 +24,52 @@ namespace SSI.Pages.Ideas
 
         public int IdeaId { get; set; }
 
+        public UpdateIdeaDetailsModel(IIdeaService ideaService, CloudinaryService cloudinaryService,
+                                       IWebHostEnvironment webHostEnvironment, ILogger<UpdateIdeaDetailsModel> logger)
+        {
+            _ideaService = ideaService;
+            _cloudinaryService = cloudinaryService;
+            _webHostEnvironment = webHostEnvironment;
+            _logger = logger;
+        }
+
         public async Task<IActionResult> OnGetAsync(int ideaId)
         {
-            // Set the IdeaId for the new milestone
             IdeaId = ideaId;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int ideaId)
         {
-            // Nếu model không hợp lệ, trả về trang hiện tại với thông báo lỗi
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
-            // Thiết lập các thuộc tính cho NewIdeaDetail
             NewIdeaDetail.IdeaId = ideaId;
             NewIdeaDetail.CreatedAt = DateTime.UtcNow;
 
-            // Xử lý upload hình ảnh
             var imageList = new List<Image>();
+
             if (Images != null && Images.Count > 0)
             {
-                var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-
                 foreach (var formFile in Images)
                 {
                     if (formFile.Length > 0)
                     {
-                        var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(formFile.FileName)}";
-                        var filePath = Path.Combine(uploadFolder, fileName);
-
                         try
                         {
-                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            // Tạo file tạm thời để upload lên Cloudinary
+                            var tempImagePath = Path.GetTempFileName(); // Create a temporary file path
+                            using (var stream = new FileStream(tempImagePath, FileMode.Create))
                             {
                                 await formFile.CopyToAsync(stream);
                             }
 
-                            // Thêm hình ảnh vào danh sách
-                            imageList.Add(new Image
-                            {
-                                Url = $"/images/{fileName}"
-                            });
+                            // Upload ảnh lên Cloudinary và xóa file tạm
+                            var imageUrl = await _cloudinaryService.UploadImageAsync(tempImagePath);
+                            imageList.Add(new Image { Url = imageUrl });
+
+                            System.IO.File.Delete(tempImagePath); // Xóa file tạm sau khi upload
                         }
                         catch (Exception ex)
                         {
-                            // Log lỗi nếu có vấn đề trong khi upload file
+                            _logger.LogError(ex, "An error occurred while uploading image.");
                             ModelState.AddModelError("", "Could not upload image: " + ex.Message);
                             return Page();
                         }
@@ -81,13 +77,22 @@ namespace SSI.Pages.Ideas
                 }
             }
 
-            // Gán danh sách hình ảnh vào NewIdeaDetail
             NewIdeaDetail.Images = imageList;
 
-            // Lưu mới chi tiết ý tưởng vào cơ sở dữ liệu
-            
-            await _ideaService.CreateIdeaWithDetailAsync(NewIdeaDetail);
-            return RedirectToPage("/Ideas/StartupIdeaMilestoneDetails", new { id = ideaId });
+            try
+            {
+                // Lưu chi tiết ý tưởng vào cơ sở dữ liệu
+                await _ideaService.CreateIdeaWithDetailAsync(NewIdeaDetail);
+
+                // Trả về trang chi tiết ý tưởng
+                return RedirectToPage("/Ideas/StartupIdeaDetails", new { id = ideaId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while updating idea details.");
+                ModelState.AddModelError("", "An error occurred while processing your request. Please try again.");
+                return Page();
+            }
         }
     }
 }

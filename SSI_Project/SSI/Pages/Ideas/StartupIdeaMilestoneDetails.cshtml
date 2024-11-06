@@ -24,7 +24,7 @@
                 </div>
             ");
 
-                // Gọi lại hàm để hiển thị các reply của reply hiện tại
+                // Recursively display replies of the current reply
                 content.AppendHtml(DisplayReplies(reply.InverseParent));
             }
 
@@ -41,9 +41,7 @@
                 </div>
                 <div class="blog_details_text">
                     <h2>@Model.Idea?.Title</h2>
-                    <p>
-                        @Model.Idea?.Description
-                    </p>
+                    <p>@Model.Idea?.Description</p>
                     @if (Model.MilestoneDetail != null)
                     {
                         <div class="col-lg-8 wow fadeInLeft">
@@ -56,7 +54,6 @@
                                     <img src="~/images/@image.Url" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
                                 }
                             </div>
-                            
                         </div>
                     }
                 </div>
@@ -84,48 +81,53 @@
                             @if (@Model.CurrentPage > 1)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, page = @Model.CurrentPage - 1 })">Previous</a>
+                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, ideaId = @Model.Idea?.IdeaId, page = @Model.CurrentPage - 1 })">Previous</a>
                                 </li>
                             }
 
                             @for (int i = 1; i <= @Model.TotalPages; i++)
                             {
                                 <li class="page-item @(@Model.CurrentPage == i ? "active" : "")">
-                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, page = i })">@i</a>
+                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, ideaId = @Model.Idea?.IdeaId, page = i })">@i</a>
                                 </li>
                             }
 
                             @if (@Model.CurrentPage < @Model.TotalPages)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, page = @Model.CurrentPage + 1 })">Next</a>
+                                    <a class="page-link" href="@Url.Page("StartupIdeaMilestoneDetails", new { id = @Model.MilestoneDetail?.IdeaDetailId, ideaId = @Model.Idea?.IdeaId, page = @Model.CurrentPage + 1 })">Next</a>
                                 </li>
                             }
                         </ul>
                     </nav>
                 </div>
             </div>
-            
+
             <div class="col-lg-4 col-md-8 wow fadeInRight">
                 <div class="blog_sidebar sticky_sidebar">
                     <div class="sidebar_wizard sidebar_category mt_25">
-                        <h2>MileStones</h2>
+                        <h2>Milestones</h2>
 
-                        <!-- Update Milestone Button -->
-                        <div class="text-right mb-3">
-                            <a asp-page="/Ideas/UpdateIdeaDetails" asp-route-id="@Model.Idea.IdeaId" class="btn btn-primary">
-                                Update Milestone
-                            </a>
-                        </div>
+                        <!-- Update Milestone Button with ideaId -->
+                        @if(Model.Idea?.Status.ToLower() == "approved")
+                        {
+                            <div class="text-right mb-3">
+                                <a asp-page="/Ideas/UpdateIdeaDetails" asp-route-id="@Model.MilestoneDetail?.IdeaDetailId" asp-route-ideaId="@Model.Idea?.IdeaId" class="btn btn-primary">
+                                    Update Milestone
+                                </a>
+                            </div>
+                        }
+                        
 
                         <ul>
                             @if (Model.Idea != null && Model.Idea.Ideadetails.Any())
                             {
                                 int milestoneNumber = 1;
-                                foreach (var detail in Model.Idea.Ideadetails)
+                                // Sort milestones by CreatedAt in ascending order
+                                foreach (var detail in Model.Idea.Ideadetails.OrderBy(d => d.CreatedAt))
                                 {
                                     <li>
-                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId })">
+                                        <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId, ideaId = Model.Idea?.IdeaId })">
                                             Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
                                             <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
                                         </a>

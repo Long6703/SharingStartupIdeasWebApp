@@ -50,6 +50,7 @@ namespace SSI.Data.Repository
                 .Include(d => d.Images)
                 .Include(d => d.Comments)
                     .ThenInclude(c => c.User)
+                    .OrderByDescending(d => d.CreatedAt)
                 .FirstOrDefaultAsync(d => d.IdeaDetailId == ideaDetailId);
         }
         public List<Idea> SearchIdeas(string searchTerm, int? categoryId)
