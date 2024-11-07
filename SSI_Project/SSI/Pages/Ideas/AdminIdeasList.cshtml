@@ -1,24 +1,24 @@
 ﻿@page
 @model SSI.Pages.Ideas.AdminIdeasListModel
 @{
-    Layout = "_LauoutAdmin";
+    Layout = "_LayoutAdmin";
 }
+
 
 <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
 
 <div class="container-fluid">
 
-
+    <!-- start  -->
     <div class="row">
         <div class="col-12">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h4 class="header-title mb-3">Ideas List</h4>
-                <a href="pages-information-details.html">
-                    <button class="btn btn-icon btn-warning"><i class="fas fa-plus"></i></button>
-                </a>
+                
             </div>
         </div>
     </div>
+    <!-- end row -->
 
     <div class="row">
         <div class="col-12">
@@ -29,41 +29,47 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
+                            <th>Founder</th>
                             <th>Title</th>
-                            <th>Cattegory</th>
-                            <th>Start date</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Category</th>
+                            <th>Created At</th>
+                            <th>Status</th> <!-- Moved the Age column header here -->
+                            <th>Action</th> <!-- This is the new empty header for Status -->
+                        </tr>
                     </thead>
 
                     <tbody>
-                        @foreach(var i in Model.Ideas)
+                        @foreach(var idea in Model.Ideas)
                         {
                             <tr>
-                                <td class="row-number">@i.PosterImg</td>
-                                <td>@i.User.Displayname</td>
-                                <td>@i.Title</td>
-                                <td>@i.Category</td>
-                                <td>@i.CreatedAt</td>
-                                <td>@i.Status</td>
+                                <td class="row-number">@idea.IdeaId</td>
+                                <td>@idea.User?.Displayname</td>
+                                <td>@idea.Title</td>
+                                <td>@idea.Category.Name</td>
+                                <td>@idea.CreatedAt</td>
+                                <td>@idea.Status</td> <!-- Moved Age value here -->
                                 <td>
-                                    <a href="pages-information-details.html">
-                                        <button class="btn btn-icon btn-warning">
-                                            <i class="fas fa-eye"></i>
+                                    <form method="post">
+                                        <input type="hidden" name="id" value="@idea.IdeaId" />
+                                        <a href="">
+                                            <button class="btn btn-icon btn-warning" type="submit" name="action" value="View">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </a>
+
+                                        <button class="btn btn-icon btn-danger" type="submit" name="action" value="Reject" @((idea.Status == "approved" || idea.Status == "rejected") ? "disabled" : "")>
+                                            <i class="fas fa-times"></i>
                                         </button>
-                                    </a>
-                                    <button class="btn btn-icon btn-danger" onclick="lockAccount(this)">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                    <button class="btn btn-icon btn-primary"
-                                            onclick="activateAccount(this)">
-                                        <i class="far fa-heart"></i>
-                                    </button>
-                                </td>
+                                        <button class="btn btn-icon btn-primary" type="submit" name="action" value="Approve" @((idea.Status == "approved" || idea.Status == "rejected") ? "disabled" : "")>
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </form>
+                                    
+                                </td> <!-- Added three buttons here -->
                             </tr>
                         }
 
+                        <!-- Continue for the remaining rows -->
                     </tbody>
                 </table>
             </div>
@@ -72,7 +78,6 @@
     <!-- end row -->
 
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

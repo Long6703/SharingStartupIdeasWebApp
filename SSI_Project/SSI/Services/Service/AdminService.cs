@@ -17,6 +17,11 @@ namespace SSI.Services.Service
             return _adminRepository.GetAllUsers();
         }
 
+        public Category GetCategory(int id)
+        {
+            return _adminRepository.GetCategory(id);
+        }
+
         public IEnumerable<User> GetFounders()
         {
             return _adminRepository.GetAllUsers().Where(u => u.Role == "startup");
@@ -25,6 +30,21 @@ namespace SSI.Services.Service
         public IEnumerable<User> GetInvestors()
         {
             return _adminRepository.GetAllUsers().Where(u => u.Role == "investor");
+        }
+
+        public decimal GetTotalAmountByUserId(int userId)
+        {
+            return _adminRepository.GetTotalAmount(userId);
+        }
+
+        public int GetTotalIdeasByUserId(int userId)
+        {
+            return _adminRepository.GetTotalIdeasByUserId(userId);
+        }
+
+        public User GetUser(int id)
+        {
+            return _adminRepository.GetUser(id);
         }
 
         public void LockAccount(int id)

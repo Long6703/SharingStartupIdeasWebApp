@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SSI.Models;
 using SSI.Data;
 using SSI.Services;
+using SSI.Services.Service;
 namespace SSI
 {
     public class Program
@@ -19,7 +20,7 @@ namespace SSI
             });
             builder.Services.AddRepository();
             builder.Services.AddService();
-
+            builder.Services.AddTransient<AdminEmailService>();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

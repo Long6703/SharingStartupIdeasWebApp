@@ -38,5 +38,32 @@ namespace SSI.Data.Repository
             }
             _context.SaveChanges();
         }
+
+        public Models.User GetUser(int id) 
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            return user;
+        }
+
+        public Category GetCategory(int id)
+        {
+            var category = _context.Categories.FirstOrDefault(c => c.CategoryId == id);
+            return category;
+        }
+
+        public decimal GetTotalAmount(int id)
+        {
+            return _context.InvestmentRequests.Where(i => i.UserId == id && i.Status == "approved").Sum(i => i.Amount);
+        }
+
+        public int GetTotalIdeasByUserId(int userId)
+        {
+            var totalIdeas = _context.InvestmentRequests
+            .Where(ir => ir.UserId == userId && ir.Status == "approved")
+            .Select(ir => ir.IdeaId) 
+            .Distinct() 
+            .Count();
+            return totalIdeas;
+        }
     }
 }

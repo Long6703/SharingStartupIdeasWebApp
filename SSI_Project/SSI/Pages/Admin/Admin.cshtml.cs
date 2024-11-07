@@ -19,17 +19,47 @@ namespace SSI.Pages.Admin
             Users = _adminService.GetAllUsers();
         }
 
-        public IActionResult OnPost(int id, string action)
+        public IActionResult OnPost(int id, string action, string nAc)
         {
-            if (action.Equals("Lock"))
+            
+
+            if (!string.IsNullOrEmpty(nAc))
             {
-                _adminService.LockAccount(id);
+                FilterUsers(nAc);
             }
             else
             {
-                _adminService.UnlockAccount(id);
+                if (action.Equals("Lock"))
+                {
+                    _adminService.LockAccount(id);
+
+                }else if (action.Equals("View"))
+                {
+                    return RedirectToPage("AdminUserDetails", new {id = id});
+                }
+                else
+                {
+                    _adminService.UnlockAccount(id);
+                }
+                return RedirectToPage();
             }
-            return RedirectToPage();
+            return  Page();
+        }
+
+        private void FilterUsers(string nAc)
+        {
+            if (nAc.Equals("Total"))
+            {
+                Users = _adminService.GetAllUsers(); 
+            }
+            else if (nAc.Equals("Investor"))
+            {
+                Users = _adminService.GetInvestors();
+            }
+            else if (nAc.Equals("Founder"))
+            {
+                Users = _adminService.GetFounders();
+            }
         }
     }
 }

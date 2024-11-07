@@ -1,0 +1,191 @@
+﻿@page
+@model SSI.Pages.Ideas.IdeaDetailsModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-12">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 class="header-title mb-3">Idea Details</h4>
+                <a href="pages-information-details.html">
+                    <button class="btn btn-icon btn-warning"><i class="">Back</i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+            <!-- Filter Buttons and Search Bar -->
+            <div class="d-flex justify-content-between mb-3">
+
+                <div id="datatable-search-container"></div>
+            </div>
+
+            <!-- DataTable -->
+            <section class="chef_details_area pt_120 xs_pt_100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-6 wow fadeInLeft">
+                            <div class="chefs_details_img">
+                                <img src="" alt="chef" class="img-fluid w-100">
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-12 wow fadeInRight">
+                            <div class="chefs_description">
+                                @if (Model.User.Role == "startup")
+                                {
+                                    <h5>Founder</h5>
+                                }
+                                @if (Model.User.Role == "investor")
+                                {
+                                    <h5>Investor</h5>
+                                }
+                                <h2>Nathaneal Down</h2>
+                                <p>
+                                    Modern an unknown printer took a galley of type and scrambled it to make a type one
+                                    specimen bookIt hasey survived not only five centuries, but also the leap into electronic
+                                    typesetting, remaining essentially unch anged. It was popularised in tf Letraset sheets
+                                    containing.Pizzhen an unknown printer took.
+                                </p>
+                                <ul class="chef_address">
+                                    <li>
+                                        <span>
+                                            <img src="assetsClient/images/location_1.png" alt="location" class="img-fluid w-100">
+                                        </span>
+                                        Lawrence Moreno935-9940 Tortor.
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <img src="assetsClient/images/call_3.jpg" alt="location" class="img-fluid w-100">
+                                        </span>
+                                        +3584573968749
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <img src="assetsClient/images/sms_1.png" alt="location" class="img-fluid w-100">
+                                        </span>
+                                        info@gmail.com
+                                    </li>
+                                </ul>
+                                <h3>Social Media</h3>
+                                <ul class="chef_social_icon d-flex flex-wrap">
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a class="instagram" href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a class="youtube" href="#"><i class="fab fa-youtube"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row wow fadeInUp">
+                        <div class="col-xl-12">
+                            <div class="chef_details_text">
+                                <h2>Personal Information</h2>
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                                    been the industry's standard dummy text ever since the 1500s, when an unknown
+                                    took a galley of type and scrambled it to make a type specimen book. It has survived not
+                                    only five centuries,Lorem Ipsum is simply dummy text of the printing and typesetting in
+                                    ry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                                    unknown printe took a galley of type and scrambled it to make a type
+                                    specimen book. It has survived not only five centuries,
+                                </p>
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                                    been the industry's standard dummy text ever since the 1500s, when an unknown
+                                    took a galley of type and scrambled it to make a type specimen book.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt_70">
+                        <div class="col-xxl-5 col-lg-6 wow fadeInUp">
+                            <div class="chefs_details_dish">
+                                <h2>Signature Dish</h2>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <a href="menu_details.html" class="chef_dish_img">
+                                            <img src="assetsClient/images/dish_1.jpg" alt="img" class="img-fluid w-100">
+                                            <h5>Chicken</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="menu_details.html" class="chef_dish_img">
+                                            <img src="assetsClient/images/dish_2.jpg" alt="img" class="img-fluid w-100">
+                                            <h5>Salad</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="menu_details.html" class="chef_dish_img">
+                                            <img src="assetsClient/images/dish_3.jpg" alt="img" class="img-fluid w-100">
+                                            <h5>Sweet Cake</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="menu_details.html" class="chef_dish_img">
+                                            <img src="assetsClient/images/dish_4.jpg" alt="img" class="img-fluid w-100">
+                                            <h5>Burger</h5>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xxl-7 col-lg-6 wow fadeInUp">
+                            <div class="chefs_details_skills">
+                                <h2>Professional Skills</h2>
+                                <p>
+                                    Modern Ipsum is simply dummy text of the printing and typesetting industry
+                                    Lorem Ipsum has been the industry's standard.
+                                </p>
+
+                                <div class="team_skills_bar_single">
+                                    <h4>General Knowledge</h4>
+                                    <div id="bar1" class="barfiller">
+                                        <div class="tipWrap">
+                                            <span class="tip"></span>
+                                        </div>
+                                        <span class="fill" data-percentage="85"></span>
+                                    </div>
+                                </div>
+                                <div class="team_skills_bar_single">
+                                    <h4>Signature Dishes</h4>
+                                    <div id="bar2" class="barfiller">
+                                        <div class="tipWrap">
+                                            <span class="tip"></span>
+                                        </div>
+                                        <span class="fill" data-percentage="80"></span>
+                                    </div>
+                                </div>
+                                <div class="team_skills_bar_single">
+                                    <h4>Customer Satisfied</h4>
+                                    <div id="bar3" class="barfiller">
+                                        <div class="tipWrap">
+                                            <span class="tip"></span>
+                                        </div>
+                                        <span class="fill" data-percentage="90"></span>
+                                    </div>
+                                </div>
+                                <div class="team_skills_bar_single">
+                                    <h4>Communication Skills</h4>
+                                    <div id="bar4" class="barfiller">
+                                        <div class="tipWrap">
+                                            <span class="tip"></span>
+                                        </div>
+                                        <span class="fill" data-percentage="70"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

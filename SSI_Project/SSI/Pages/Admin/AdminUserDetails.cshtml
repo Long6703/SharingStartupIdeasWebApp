@@ -1,0 +1,90 @@
+﻿@page
+@model SSI.Pages.Admin.UserDetailsModel
+@{
+    Layout = "_LayoutAdmin";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 class="header-title mb-3">User Details</h4>
+                <a href="@Url.Page("/Admin/Admin")">
+                    <button class="btn btn-icon btn-warning" type="submit"><i class="">Back</i></button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <!-- Filter Buttons and Search Bar -->
+            <div class="d-flex justify-content-between mb-3">
+                
+                <div id="datatable-search-container"></div>
+            </div>
+
+            <!-- DataTable -->
+            <section class="chef_details_area pt_120 xs_pt_100" style="padding-top: 60px; padding-bottom: 60px;">
+                <div class="container">
+                    <div class="row wow fadeInUp">
+                        <div class="col-xl-12">
+                            <div class="chef_details_text">
+                                <h2 style="font-size: 28px; font-weight: 600; color: #333; margin-bottom: 20px;">Personal Information</h2>
+                                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-weight: 600; color: #333; width: 150px;">Name:</th>
+                                        <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 16px; color: #555;">@Model.User.Displayname</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-weight: 600; color: #333;">Email:</th>
+                                        <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 16px; color: #555;">@Model.User.Email</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-weight: 600; color: #333;">Role:</th>
+                                        <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 16px; color: #555;">@Model.User.Role</td>
+                                    </tr>
+                                    @if (Model.User.Role == "investor")
+                                    {
+                                        <tr>
+                                            <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-weight: 600; color: #333;">Total Amount Invest:</th>
+                                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 16px; color: #555;">@Model.TotalAmountInvest</td>
+                                        </tr>
+                                        <tr>
+                                            <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-weight: 600; color: #333;">Total Idea Invest:</th>
+                                            <td style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 16px; color: #555;">@Model.TotalIdeasCount</td>
+                                        </tr>
+                                    }
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @if(Model.User.Role != "admin")
+                                    {
+                    <div class="row mt_70">
+                        <div class="col-xxl-5 col-lg-6 wow fadeInUp">
+                            <div class="chefs_details_dish">
+                                <h2 style="font-size: 28px; font-weight: 600; color: #333; margin-bottom: 20px;">List Ideas:</h2>
+                                <div class="row">
+                                    
+                                        @foreach (var i in Model.User.Ideas)
+                                        {
+                                            <div class="col-sm-6">
+                                                <a href="menu_details.html" class="chef_dish_img">
+
+                                                    <h5>@i.Title</h5>
+                                                    
+                                                </a>
+                                            </div>
+                                        }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    }
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>

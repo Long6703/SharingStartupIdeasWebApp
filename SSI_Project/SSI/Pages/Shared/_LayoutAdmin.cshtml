@@ -285,36 +285,29 @@
                   
 
                     <li>
-                        <a href="javascript: void(0);">
+                        <a href="@Url.Page("/Admin/Admin")">
                             <i class="ti-light-bulb"></i>
                             <span> User Management</span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="@Url.Page("./Founder")">Founder</a></li>
-                            <li><a href="@Url.Page("./Investor")">Investor</a></li>
-                        </ul>
                     </li>
 
                     <li>
-                        <a href="@Url.Page("./AdminIdeas")">
-                            <i class="ti-paint-bucket"></i>
-                            <span> Ideas Management</span>
-                            <span class="badge badge-primary float-right">11</span>
+                        <a href="@Url.Page("/Ideas/AdminIdeasList")">
+                            <i class="ti-paint-bucket"></i> Ideas Management
                         </a>
                     </li>
                     <li>
-                        <a href="pages-transaction.html">
+                        <a href="@Url.Page("/Transactions/AdminTransactionsList")">
                             <i class="fas fa-wallet"></i>
                             <span> Transactions Management</span>
-                            <span class="badge badge-primary float-right">16</span>
+                            <span class="badge badge-primary float-right"></span>
                         </a>
                     </li>
                     
                 </ul>
 
             </div>
-            <!-- End Sidebar -->
 
             <div class="clearfix"></div>
 
@@ -430,41 +423,10 @@
 
     <!-- App js -->
     <script src="~/assets/js/app.min.js"></script>
-    @* <script>
-        function lockAccount(button) {
-            // Find the parent row of the clicked button
-            var row = button.closest('tr');
-            // Find the Status column (assumed to be the 5th column with class 'status')
-            var statusCell = row.querySelector('.status');
-            // Change the Status to "Locked"
-            statusCell.innerText = 'Locked';
-        }
-        function activateAccount(button) {
-            // Find the parent row of the clicked button
-            var row = button.closest('tr');
-            // Find the Status column (assumed to be the 5th column with class 'status')
-            var statusCell = row.querySelector('.status');
-            // Change the Status to "Active"
-            statusCell.innerText = 'Active';
-        }
-        function updateRowNumbers() {
-            // Get all the rows in the table body
-            var rows = document.querySelectorAll("#datatable-buttons tbody tr");
-            // Loop through each row and set the row number
-            rows.forEach(function (row, index) {
-                // Get the first cell (where the row number should be displayed)
-                var rowNumberCell = row.querySelector('.row-number');
-                // Set the row number (index + 1 to make it 1-based)
-                rowNumberCell.innerText = index + 1;
-            });
-        }
-
-        // Call the function to update row numbers when the page loads
-        document.addEventListener("DOMContentLoaded", updateRowNumbers);
-    </script> *@
+   
 </body>
 
 
-<!-- Mirrored from coderthemes.com/simple/layouts/vertical/tables-advanced.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 28 Aug 2024 07:26:18 GMT -->
+
 
 </html>
