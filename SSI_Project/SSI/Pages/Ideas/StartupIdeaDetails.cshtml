@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-8 wow fadeInLeft">
                 <div class="blog_details_img">
-                    <img src="~/images/@Model.Idea?.PosterImg" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
+                    <img src="@Model.Idea?.PosterImg" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
                 </div>
                 <div class="blog_details_text">
                     <h2>@Model.Idea?.Title</h2>
@@ -31,7 +31,6 @@
                                     <li>
                                         <a href="@Url.Page("StartupIdeaMilestoneDetails", new { id = detail.IdeaDetailId, ideaId = Model.Idea.IdeaId })">
                                             Milestone @milestoneNumber: @detail.CreatedAt?.ToString("MMMM dd, yyyy")
-                                            <span>@detail.Content.Substring(0, Math.Min(detail.Content.Length, 30))...</span>
                                         </a>
                                     </li>
                                     milestoneNumber++;

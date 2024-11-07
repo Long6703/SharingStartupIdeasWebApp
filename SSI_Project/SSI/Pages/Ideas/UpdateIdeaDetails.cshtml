@@ -137,13 +137,14 @@
                 removeButton.style.cursor = 'pointer';
 
                 removeButton.onclick = function () {
-                    imgDiv.remove(); // Remove image preview from UI
-                    selectedFiles.splice(index, 1); // Remove from selectedFiles array
-                    updateFileInput(event.target); // Update the file input element
-
-                    // Check if there are any files left and update the message accordingly
-                    if (selectedFiles.length === 0) {
-                        previewContainer.innerHTML = '<p>No images uploaded yet.</p>';
+                    const fileIndex = selectedFiles.indexOf(file);
+                    if (fileIndex > -1) {
+                        selectedFiles.splice(fileIndex, 1);
+                        updateFileInput(event.target);
+                        imgDiv.remove();
+                        if (selectedFiles.length === 0) {
+                            previewContainer.innerHTML = '<p>No images uploaded yet.</p>';
+                        }
                     }
                 };
 
@@ -162,4 +163,5 @@
         selectedFiles.forEach(file => dataTransfer.items.add(file)); // Add remaining files to DataTransfer
         fileInput.files = dataTransfer.files; // Update the input files
     }
+
 </script>
