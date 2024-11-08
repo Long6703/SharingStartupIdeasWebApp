@@ -115,5 +115,10 @@ namespace SSI.Data.Repository
             await _context.Images.AddAsync(image);
             await _context.SaveChangesAsync();
         }
+        public async Task AddCommentAsync(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+        }
     }
 }

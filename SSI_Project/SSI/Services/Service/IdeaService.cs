@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SSI.Services.Service
 {
@@ -56,6 +57,10 @@ namespace SSI.Services.Service
         public async Task CreateImageAsync(Image image)
         {
             await _ideaRepository.CreateImageAsync(image);
+        }
+        public async Task AddCommentAsync(Comment comment)
+        {
+            await _ideaRepository.AddCommentAsync(comment);
         }
     }
 }

@@ -18,5 +18,6 @@ namespace SSI.Services.IService
         Task CreateIdeaAsync(Idea idea);
         Task CreateIdeaWithDetailAsync(Ideadetail ideaDetails);
         Task CreateImageAsync(Image image);
+        Task AddCommentAsync(Comment comment);
     }
 }

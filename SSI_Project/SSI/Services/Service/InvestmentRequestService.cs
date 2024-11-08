@@ -1,4 +1,6 @@
 ﻿using SSI.Data.IRepository;
+using SSI.Data.Repository;
+using SSI.Models;
 using SSI.Services.IService;
 
 namespace SSI.Services.Service
@@ -15,6 +17,10 @@ namespace SSI.Services.Service
         public async Task AddInvestmentRequestAsync(Models.InvestmentRequest investReq)
         {
             await _investmentRequestRepository.AddInvestmentRequestAsync(investReq);
+        }
+        public async Task<IEnumerable<Idea>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId, int pageNumber, int pageSize)
+        {
+            return await _investmentRequestRepository.GetIdeasWithInvestmentRequestsByFounderAsync(founderUserId, pageNumber, pageSize);
         }
     }
 }
