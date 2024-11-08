@@ -10,6 +10,10 @@ namespace SSI.Pages.Ideas
     {
         private readonly IIdeaService _ideaService;
         public List<IdeaInterest> InterestList { get; set; } = new();
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1; 
+        public int PageSize { get; set; } = 6; 
+        public int TotalPages { get; set; } 
         public InterestListModel(IIdeaService ideaService)
         {
             _ideaService = ideaService;
@@ -29,7 +33,14 @@ namespace SSI.Pages.Ideas
             {
                 return RedirectToPage("/Login");
             }
-            InterestList = _ideaService.GetInterestList(user.UserId);
+            var allInterests = _ideaService.GetInterestList(user.UserId);
+            TotalPages = (int)Math.Ceiling(allInterests.Count / (double)PageSize);
+
+            InterestList = allInterests
+                .Skip((PageNumber - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
             return Page();
         }
         public IActionResult OnPostDelete(int interestId)

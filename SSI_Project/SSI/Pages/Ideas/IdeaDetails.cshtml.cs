@@ -133,7 +133,6 @@ namespace SSI.Pages.Ideas
             foreach (var reply in parentComment.InverseParent)
             {
                 allReplies.Add(reply);
-                // Recursively add replies to this reply
                 allReplies.AddRange(GetNestedReplies(reply));
             }
             return allReplies;

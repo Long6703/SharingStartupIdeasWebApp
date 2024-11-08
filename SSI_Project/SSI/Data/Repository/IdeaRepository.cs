@@ -148,5 +148,44 @@ namespace SSI.Data.Repository
                 _context.SaveChanges();
             }
         }
+        public Dictionary<string, int> countNumber()
+        {
+            int numOfUser = _context.Users.Count();
+            int numOfInvestor = _context.Users.Where(u=>u.Role.ToLower()== "investor").Count();
+            int numOfStartup = _context.Users.Where(u => u.Role.ToLower() == "startup").Count();
+            int numOfIdeas = _context.Ideas.Count();
+            int numOfIdeaIsSeeking = _context.Ideas.Where(i=>i.IsSeekingInvestment==true).Count();
+            int numOfIdeaImplement = _context.Ideas.Where(i=>i.IsImplement==true).Count();
+            return new Dictionary<string, int>
+                {
+                    { "numOfUser", numOfUser },
+                    { "numOfInvestor", numOfInvestor },
+                    { "numOfStartup", numOfStartup },
+                    { "numOfIdeas", numOfIdeas },
+                    { "numOfIdeaIsSeeking", numOfIdeaIsSeeking },
+                    {"numOfIdeaImplement", numOfIdeaImplement }
+
+                };
+        }
+        public List<User> ProminentInvestor()
+        {
+            var prominentInvestorIds = _context.InvestmentRequests
+     .GroupBy(ir => ir.UserId) 
+     .OrderByDescending(g => g.Count()) 
+     .Take(4) 
+     .Select(g => g.Key) 
+     .ToList();
+
+            
+            var prominentInvestors = _context.Users
+                .Where(u => prominentInvestorIds.Contains(u.UserId))
+                .ToList();
+            return prominentInvestors;
+        }
+        public List<Idea> GetNewIdea()
+        {
+            var newIdea = _context.Ideas.Include(i=>i.Category).Include(i=>i.User).OrderByDescending(i=>i.CreatedAt).Take(3).ToList();
+            return newIdea;
+        }
     }
 }

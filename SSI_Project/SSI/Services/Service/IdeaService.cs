@@ -71,5 +71,17 @@ namespace SSI.Services.Service
         {
             _ideaRepository.DeleteInterest(interestId);
         }
+        public Dictionary<string, int> countNumber()
+        {
+            return _ideaRepository.countNumber();
+        }
+        public List<User> ProminentInvestor()
+        {
+            return _ideaRepository.ProminentInvestor();
+        }
+        public List<Idea> GetNewIdea()
+        {
+            return _ideaRepository.GetNewIdea();
+        }
     }
 }

@@ -1,11 +1,29 @@
 ﻿@page
 @using SSI.Models
+@using System.Web
 @model SSI.Pages.Ideas.IdeaDetailsModel
 @{
+    var description = Model.Idea.Description;
+    var sentencePattern = @"(?<=[\.!\?])\s+(?=[A-Z])"; 
+    var sentences = System.Text.RegularExpressions.Regex.Split(description, sentencePattern);
+    var chunkedDescription = new List<string>();
+    int chunkSize = 5;
+
+    for (int i = 0; i < sentences.Length; i += chunkSize)
+    {
+        var chunk = string.Join(" ", sentences.Skip(i).Take(chunkSize));
+        chunkedDescription.Add(chunk);
+    }
 }
+
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
+@{
+    var ideaUrl = Url.Page("IdeaDetails", new { id = Model.Idea.IdeaId });
+    var fullUrl = $"{Request.Scheme}://{Request.Host}{ideaUrl}";
+}
+
 @{
 
     int updateCount = 1; 
@@ -108,17 +126,40 @@
                     <p class="rating">
                         <span>Comments (@Model.CommentCount)</span>
                     </p>
-                    <div class="details_short_description">
-                        <h3>Description</h3>
-                        <p>
-                            @Model.Idea.Description
-                        </p>
+                    <h3>Description</h3>
+                    <div class="" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                        @for (int i = 0; i < chunkedDescription.Count; i++)
+                        {
+                            <p>@chunkedDescription[i]</p>
+                            @if (i < chunkedDescription.Count - 1)
+                            {
+                                <img src="@Model.Idea.PosterImg" alt="Description Image" class="img-fluid" style="margin: 10px 0;">
+                            }
+                        }
                     </div>
                     @if (Model.SelectedMilestone != null)
                     {
-                        <div class="details_short_description">
                         <h3>Milestone Content</h3>
-                        <p>@Model.SelectedMilestone.Content</p>
+                        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+
+                            @{
+                                var contentSentences = Model.SelectedMilestone.Content.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                                var images = Model.SelectedMilestone.Images.ToList(); // Chuyển ICollection<Image> thành List<Image>
+                                var imageIndex = 0;
+                                var totalImages = images.Count;
+                            }
+
+                            @for (int i = 0; i < sentences.Length; i++)
+                            {
+                                <p>@sentences[i].Trim()</p>
+                                @if ((i + 1) % 5 == 0 && imageIndex < totalImages)
+                                {
+                                    <br />
+                                    <img src="@images[imageIndex].Url" alt="Milestone Image" class="img-fluid w-100 thumbnail-image">
+                                    <br />
+                                    imageIndex++; // Tăng chỉ số hình ảnh sau khi sử dụng
+                                }
+                            }
                         </div>
                     }
 
@@ -144,9 +185,14 @@
                         </div>
                     }
                     </div>
+
                     <ul class="share">
                         <li>Share with friends:</li>
-                        <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                        <li>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=@HttpUtility.UrlEncode(fullUrl)" target="_blank">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                        </li>
                         <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fab fa-behance" aria-hidden="true"></i></a></li>
@@ -231,12 +277,12 @@
                                                     @foreach (var reply in Model.GetNestedReplies(comment))
                                                     {
                                                         <div class="reply" style="margin-left: 20px;">
-                                                            @if (reply.User.AvatarUrl != null)
+                                                            @* @if (reply.User.AvatarUrl != null)
                                                             {
                                                                 <div class="img">
                                                                     <img src="@reply.User.AvatarUrl" class="img-fluid">
                                                                 </div>
-                                                            }
+                                                            } *@
                                                             <div class="text">
                                                                 <h5>@(reply.User?.Displayname ?? "Unknown User") replied to @reply.Parent?.User?.Displayname <span>@reply.CreatedAt</span></h5>
                                                                 <p>@reply.Content</p>

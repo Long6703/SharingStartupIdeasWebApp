@@ -22,5 +22,8 @@ namespace SSI.Data.IRepository
         bool IsIdeaInInterestList(int ideaId, int userId);
         List<IdeaInterest> GetInterestList(int userId);
         void DeleteInterest(int interestId);
+        Dictionary<string, int> countNumber();
+        List<User> ProminentInvestor();
+        List<Idea> GetNewIdea();
     }
 }
