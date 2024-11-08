@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>personal info</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">blog details</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
+                <div class="dashboard_sidebar">
+                    <div class="dashboard_sidebar_user">
+                        <div class="img">
+                            <img src="assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
+                            <label for="profile_photo"><i class="far fa-camera"></i></label>
+                            <input type="file" id="profile_photo" hidden>
+                        </div>
+                        <h3>Addition Smith</h3>
+                        <p>Paris, France</p>
+                    </div>
+                    <div class="dashboard_sidebar_menu">
+                        <ul>
+                            <li>
+                                <a class="active" href="dashboard.html">
+                                    <i class="fas fa-user"></i> Personal
+                                    Info
+                                </a>
+                            </li>
+                            <li>
+                                <a href="dashboard_change_password.html">
+                                    <i class="fas fa-key"></i> Change
+                                    Password
+                                </a>
+                            </li>
+                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+</section>
+

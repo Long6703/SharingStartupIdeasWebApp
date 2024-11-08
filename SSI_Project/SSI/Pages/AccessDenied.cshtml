@@ -1,5 +1,5 @@
-﻿@page "/login"
-@model SSI.Pages.LoginModel
+﻿@page "/accessdenied"
+@model SSI.Pages.AccessDeniedModel
 @{
     Layout = null;
 }
@@ -41,46 +41,15 @@
     <div class="row justify-content-center">
         <div class="col-xl-12 col-md-10 col-lg-10 wow fadeInRight">
             <div style="margin-top : -10%" class="sign_in_form">
-                <h2>Welcome back, sign in</h2>
-                <p class="description">Sign in to your account and make recharges. payments and bookings faster</p>
-                <form method="post">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Email" type="text" placeholder="Enter your email...">
-                        </div>
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Password" type="password" placeholder="Enter your password...">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="sign_in_check_area">
-                                <a asp-page="/ForgotPassword">Forget Password?</a>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button class="common_btn" type="submit">sign in</button>
+                <div class="bg-light d-flex justify-content-center align-items-center vh-80">
+                    <div class="text-center p-5 border rounded-3 shadow-sm bg-white">
+                        <h1 class="text-danger mb-3"><i class="bi bi-exclamation-triangle-fill"></i> Access Denied</h1>
+                        <p class="lead">You do not have permission to access this page.</p>
+                        <div class="col-xl-12">
+                            <a asp-page="Index" class="common_btn" style="color: black; display: inline-block; padding: 10px 20px; background-color: #f0f0f0; text-decoration: none;">Go to Home Page</a>
                         </div>
                     </div>
-                </form>
-                <p class="or">or</p>
-                <ul>
-                    <li>
-                        <a asp-page-handler="LoginGoogle">
-                            <span>
-                                <img src="assetsClient/images/google_icon.svg" alt="google" class="img-fluid w-100">
-                            </span>
-                            Google
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>
-                                <img src="assetsClient/images/fb_icon.svg" alt="facebook" class="img-fluid w-100">
-                            </span>
-                            facebook
-                        </a>
-                    </li>
-                </ul>
-                <p class="dont_account">Don’t have an account? <a asp-page="Register">Sign Up</a></p>
+                </div>
             </div>
         </div>
     </div>

@@ -30,6 +30,8 @@ namespace SSI.Ultils.ViewModel
 
         public string Role { get; set; } = null!;
 
+        public string verifyCode { get; set; } = null!;
+
         public StatusEnum Status { get; set; } = StatusEnum.Active;
     }
 }

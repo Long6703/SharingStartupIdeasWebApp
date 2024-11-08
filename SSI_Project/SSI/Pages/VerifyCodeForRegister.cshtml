@@ -1,8 +1,10 @@
-﻿@page "/login"
-@model SSI.Pages.LoginModel
+﻿@page
+@model SSI.Pages.VerifyCodeForRegisterModel
+
 @{
     Layout = null;
 }
+
 <link rel="icon" type="image/png" href="assetsClient/images/favicon.png">
 <link rel="stylesheet" href="assetsClient/css/all.min.css">
 <link rel="stylesheet" href="assetsClient/css/bootstrap.min.css">
@@ -39,48 +41,26 @@
 
 <section class="sign_up sign_in full-screen-section">
     <div class="row justify-content-center">
-        <div class="col-xl-12 col-md-10 col-lg-10 wow fadeInRight">
-            <div style="margin-top : -10%" class="sign_in_form">
-                <h2>Welcome back, sign in</h2>
-                <p class="description">Sign in to your account and make recharges. payments and bookings faster</p>
-                <form method="post">
+        <div class="col-xl-12 col-md-10 col-lg-6 wow fadeInRight">
+            <div style="margin-top: -15%" class="sign_in_form">
+                <h2>Hi, @Model.registerViewModel.DisplayName !!!! </h2>
+                <form method="post" >
+                    <h4>We have sent the verification code to your email, please enter the code here</h4>
                     <div class="row">
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Email" type="text" placeholder="Enter your email...">
-                        </div>
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Password" type="password" placeholder="Enter your password...">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="sign_in_check_area">
-                                <a asp-page="/ForgotPassword">Forget Password?</a>
-                            </div>
+                        <div class="col-xl-12">
+                            <input style="margin-bottom: 20px;" name="code" type="text" placeholder="Enter Your Code...">
+                            @if (Model.ErrorMessage != null)
+                            {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <span style="padding: 5px;" class="text-danger text-center">@Model.ErrorMessage</span>
+                                </div>
+                            }
                         </div>
                         <div class="col-12">
-                            <button class="common_btn" type="submit">sign in</button>
+                            <button class="common_btn" type="submit">verify</button>
                         </div>
                     </div>
                 </form>
-                <p class="or">or</p>
-                <ul>
-                    <li>
-                        <a asp-page-handler="LoginGoogle">
-                            <span>
-                                <img src="assetsClient/images/google_icon.svg" alt="google" class="img-fluid w-100">
-                            </span>
-                            Google
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>
-                                <img src="assetsClient/images/fb_icon.svg" alt="facebook" class="img-fluid w-100">
-                            </span>
-                            facebook
-                        </a>
-                    </li>
-                </ul>
-                <p class="dont_account">Don’t have an account? <a asp-page="Register">Sign Up</a></p>
             </div>
         </div>
     </div>

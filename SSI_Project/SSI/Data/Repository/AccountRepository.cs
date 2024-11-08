@@ -10,6 +10,24 @@ namespace SSI.Data.Repository
         {
         }
 
+        public bool ChangePasswordAsync(string newpassword, string userEmail)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newpassword);
+            SaveChanges();
+            return true;
+        }
+
+        public bool CheckEmail(string email)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            return user != null;
+        }
+
         public User LoginAsync(LoginViewModel loginViewModel)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == loginViewModel.Email);
@@ -24,6 +42,11 @@ namespace SSI.Data.Repository
         {
             await AddAsync(user);
             SaveChanges();
+        }
+
+        public Task UpdateProfileAsync(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

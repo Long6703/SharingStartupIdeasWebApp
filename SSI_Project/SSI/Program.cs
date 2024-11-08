@@ -3,6 +3,7 @@ using SSI.Models;
 using SSI.Data;
 using SSI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+//using Microsoft.AspNetCore.Authentication.Google;
 using SSI.Ultils.Mapper;
 using Microsoft.Extensions.Configuration;
 using SSI.Ultils;
@@ -11,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using SSI.Services.IService;
 using SSI.Data.Repository;
 using SSI.Data.IRepository;
+using Microsoft.AspNetCore.Authentication.Google;
 namespace SSI
 {
     public class Program
@@ -40,15 +42,26 @@ namespace SSI
             builder.Services.AddRepository();
             builder.Services.AddService();
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
             .AddCookie(options =>
             {
                 options.LoginPath = "/login";
                 options.LogoutPath = "/logout";
-                options.AccessDeniedPath = "";
-                options.SlidingExpiration = true;
+                options.AccessDeniedPath = "/accessdenied";
                 options.Cookie.Name = "SSI";
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 
+            })
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
             });
             builder.Services.AddSession(options =>
             {
@@ -56,6 +69,7 @@ namespace SSI
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -67,15 +81,10 @@ namespace SSI
 
             app.UseStaticFiles();
             app.UseSession();
-
             app.UseRouting();
-
-            // Apply authentication and authorization middleware
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapRazorPages();
-
             app.Run();
         }
     }

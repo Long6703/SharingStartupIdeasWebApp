@@ -1,5 +1,5 @@
 ﻿@page "/register"
-@model SSI.Web.Client.Pages.RegisterModel
+@model SSI.Pages.RegisterModel
 @{
     Layout = null;
 }
@@ -43,29 +43,33 @@
                 <p class="description">Please Enter your Email Address to Start your Online Application</p>
                 <form method="post">
                     <div class="row justify-content-center">
-                        <div class="col-md-12">
+                        <div class="col-xl-12">
                             <input asp-for="RegisterViewModel.DisplayName" class="form-control" placeholder="Display Name...">
                             <span asp-validation-for="RegisterViewModel.DisplayName" class="text-danger"></span>
                         </div>
                         <div class="col-xl-12">
                             <input asp-for="RegisterViewModel.Email" class="form-control" placeholder="Email...">
                             <span asp-validation-for="RegisterViewModel.Email" class="text-danger"></span>
+                            @if (Model.ErrorMessage != null)
+                            {
+                                <div class="col-12 d-flex justify-content-center">
+                                    <span style="padding: 5px;" class="text-danger text-center">@Model.ErrorMessage</span>
+                                </div>
+                            }
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-xl-12">
                             <input asp-for="RegisterViewModel.Password" type="password" class="form-control" placeholder="Password...">
                             <span asp-validation-for="RegisterViewModel.Password" class="text-danger"></span>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-xl-12">
                             <input asp-for="RegisterViewModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password...">
                             <span asp-validation-for="RegisterViewModel.ConfirmPassword" class="text-danger"></span>
                         </div>
 
-                        <div class="col-6">
-                            <button class="common_btn" name="Role" type="submit" value='founder'>Sign up as Founder</button>
+                        <div class="col-xl-12">
+                            <button class="common_btn" value='investor'>Register</button>
                         </div>
-                        <div class="col-6">
-                            <button class="common_btn" name="Role" type="submit" value='investor'>Sign up as Investor</button>
-                        </div>
+
                     </div>
                 </form>
                 <p class="or">or</p>
@@ -87,7 +91,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class="dont_account">Have an account? <a asp-page="/Login">Sign in</a></p>
+                <p class="dont_account">Have an account? <a asp-page="Login">Sign in</a></p>
             </div>
         </div>
     </div>

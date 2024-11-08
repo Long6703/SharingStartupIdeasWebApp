@@ -1,5 +1,5 @@
-﻿@page "/login"
-@model SSI.Pages.LoginModel
+﻿@page
+@model SSI.Pages.SelectRoleModel
 @{
     Layout = null;
 }
@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="assetsClient/css/animated_barfiller.css">
 <link rel="stylesheet" href="assetsClient/css/style.css">
 <link rel="stylesheet" href="assetsClient/css/responsive.css">
-
 <style>
     html, body {
         height: 100%;
@@ -36,56 +35,27 @@
     }
 
 </style>
-
 <section class="sign_up sign_in full-screen-section">
     <div class="row justify-content-center">
-        <div class="col-xl-12 col-md-10 col-lg-10 wow fadeInRight">
-            <div style="margin-top : -10%" class="sign_in_form">
-                <h2>Welcome back, sign in</h2>
-                <p class="description">Sign in to your account and make recharges. payments and bookings faster</p>
+        <div class="col-xl-12 col-md-10 col-lg-6 wow fadeInRight">
+            <div style="margin-top: -15%" class="sign_in_form">
+                <h2>Hi, @Model.registerViewModel.DisplayName !!!! </h2>
                 <form method="post">
+                    <h2>What role do you use our platform for ?</h2>
+                    <p class="description">Please select the role you want to continue registering into the system.</p>
                     <div class="row">
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Email" type="text" placeholder="Enter your email...">
+                        <div class="col-6">
+                            <button value="founder" class="common_btn" type="submit">founder</button>
                         </div>
-                        <div class="col-md-12">
-                            <input asp-for="LoginViewModel.Password" type="password" placeholder="Enter your password...">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="sign_in_check_area">
-                                <a asp-page="/ForgotPassword">Forget Password?</a>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button class="common_btn" type="submit">sign in</button>
+                        <div class="col-6">
+                            <button value="investor" class="common_btn" type="submit">investor</button>
                         </div>
                     </div>
                 </form>
-                <p class="or">or</p>
-                <ul>
-                    <li>
-                        <a asp-page-handler="LoginGoogle">
-                            <span>
-                                <img src="assetsClient/images/google_icon.svg" alt="google" class="img-fluid w-100">
-                            </span>
-                            Google
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span>
-                                <img src="assetsClient/images/fb_icon.svg" alt="facebook" class="img-fluid w-100">
-                            </span>
-                            facebook
-                        </a>
-                    </li>
-                </ul>
-                <p class="dont_account">Don’t have an account? <a asp-page="Register">Sign Up</a></p>
             </div>
         </div>
     </div>
 </section>
-
 <script src="assetsClient/js/jquery-3.7.1.min.js"></script>
 <!--bootstrap js-->
 <script src="assetsClient/js/bootstrap.bundle.min.js"></script>

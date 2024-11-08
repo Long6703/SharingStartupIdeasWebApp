@@ -6,8 +6,9 @@ using SSI.Services.IService;
 using SSI.Ultils.ViewModel;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.Google;
 
-namespace SSI.Web.Client.Pages
+namespace SSI.Pages
 {
     public class LoginModel : PageModel
     {
@@ -51,6 +52,12 @@ namespace SSI.Web.Client.Pages
             Console.WriteLine("Login success-----------------------------------------------------------------------------------------");
 
             return RedirectToPage("/Index");
+        }
+        public async Task<IActionResult> OnGetLoginGoogle()
+        {
+            var redirectUrl = Url.Page("/GoogleResponse");
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
     }
 }

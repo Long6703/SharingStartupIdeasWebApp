@@ -17,6 +17,16 @@ namespace SSI.Services.Service
             _mapper = mapper;
         }
 
+        public bool ChangePassword(string newpassword, string userEmail)
+        {
+            return _accountRepository.ChangePasswordAsync(newpassword, userEmail);
+        }
+
+        public bool CheckEmail(string email)
+        {
+            return _accountRepository.CheckEmail(email);
+        }
+
         public UserViewModel Login(LoginViewModel loginViewModel)
         {
             var user = _accountRepository.LoginAsync(loginViewModel);
@@ -30,5 +40,9 @@ namespace SSI.Services.Service
             await _accountRepository.RegisterAsync(user);
         }
 
+        public Task UpdateProfile(UserViewModel userViewModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
