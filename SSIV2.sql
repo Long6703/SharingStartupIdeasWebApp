@@ -11,7 +11,14 @@ CREATE TABLE [user] (
     status NVARCHAR(20) CHECK (status IN ('active', 'inactive')) DEFAULT 'active',
     created_at DATETIME DEFAULT GETDATE()
 );
-
+select * from [user]
+INSERT INTO [user] (displayname, email, password, role, status)
+VALUES 
+('Alice Johnson', 'alice.johnson@example.com', 'hashed_password_1', 'admin', 'active'),
+('Bob Smith', 'bob.smith@example.com', 'hashed_password_2', 'startup', 'active'),
+('Charlie Brown', 'charlie.brown@example.com', 'hashed_password_3', 'investor', 'inactive'),
+('Diana Prince', 'diana.prince@example.com', 'hashed_password_4', 'startup', 'active'),
+('Ethan Hunt', 'ethan.hunt@example.com', 'hashed_password_5', 'admin', 'inactive');
 CREATE TABLE category (
     category_id INT PRIMARY KEY IDENTITY,
     name NVARCHAR(50) NOT NULL UNIQUE
