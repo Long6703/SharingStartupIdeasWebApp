@@ -149,9 +149,9 @@
                                 var totalImages = images.Count;
                             }
 
-                            @for (int i = 0; i < sentences.Length; i++)
+                            @for (int i = 0; i < contentSentences.Length; i++)
                             {
-                                <p>@sentences[i].Trim()</p>
+                                <p>@contentSentences[i].Trim()</p>
                                 @if ((i + 1) % 5 == 0 && imageIndex < totalImages)
                                 {
                                     <br />
