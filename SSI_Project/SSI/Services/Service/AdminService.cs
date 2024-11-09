@@ -11,7 +11,17 @@ namespace SSI.Services.Service
         { 
             _adminRepository = adminRepository;
         }
-        
+
+        public int CountNoRejecrInvest(int investorId)
+        {
+            return _adminRepository.CountNoRejecrInvest(investorId);
+        }
+
+        public int CountNoSuccesInvest(int investorId)
+        {
+            return _adminRepository.CountNoSuccesInvest(investorId);
+        }
+
         public IEnumerable<User> GetAllUsers()
         {
             return _adminRepository.GetAllUsers();
@@ -32,16 +42,7 @@ namespace SSI.Services.Service
             return _adminRepository.GetAllUsers().Where(u => u.Role == "investor");
         }
 
-        public decimal GetTotalAmountByUserId(int userId)
-        {
-            return _adminRepository.GetTotalAmount(userId);
-        }
-
-        public int GetTotalIdeasByUserId(int userId)
-        {
-            return _adminRepository.GetTotalIdeasByUserId(userId);
-        }
-
+    
         public User GetUser(int id)
         {
             return _adminRepository.GetUser(id);
@@ -50,6 +51,11 @@ namespace SSI.Services.Service
         public void LockAccount(int id)
         {
             _adminRepository.LockAccount(id);
+        }
+
+        public decimal SumAmountInvest(int investorId)
+        {
+            return _adminRepository.SumAmountInvest(investorId);
         }
 
         public void UnlockAccount(int id)

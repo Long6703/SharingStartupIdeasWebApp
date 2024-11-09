@@ -13,7 +13,10 @@ namespace SSI.Services.IService
         void LockAccount(int id);
         void UnlockAccount(int id);
 
-        decimal GetTotalAmountByUserId(int userId);
-        int GetTotalIdeasByUserId(int userId);
+        int CountNoSuccesInvest(int investorId);
+
+        int CountNoRejecrInvest(int investorId);
+        decimal SumAmountInvest(int investorId);
+
     }
 }

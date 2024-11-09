@@ -35,6 +35,7 @@ namespace SSI.Pages.Admin
 
                 }else if (action.Equals("View"))
                 {
+                   
                     return RedirectToPage("AdminUserDetails", new {id = id});
                 }
                 else
@@ -61,5 +62,7 @@ namespace SSI.Pages.Admin
                 Users = _adminService.GetFounders();
             }
         }
+
+     
     }
 }

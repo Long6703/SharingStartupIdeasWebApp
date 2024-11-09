@@ -11,9 +11,22 @@ namespace SSI.Services.IService
         Models.Idea GetIdeaById(int ideasId); 
         Models.InvestmentRequest GetInvestmentRequestById(int id);
 
-        ICollection<Ideadetail> GetIdeaDetailById(int id);
+
         ICollection<Image> GetImagesById(int id);
 
-        ICollection<Idea> GetIdeasByUser(int id);
+        ICollection<Idea> GetIdeasByFounder(int id);
+
+        ICollection<Idea> GetIdeasByInvestore(int id);
+
+        //ideadetials
+        ICollection<Ideadetail> GetIdeadetailsByIdeaId(int IdeaId);
+        ICollection<Image> GetImages(int ideaDetailsId);
+
+        public int CountIdeaDetailByIdeaId(int ideId);
+
+        public Models.Category GetCategoryById(int id);
+
+
+
     }
 }

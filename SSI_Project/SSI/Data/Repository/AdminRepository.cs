@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSI.Data.IRepository;
 using SSI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSI.Data.Repository
 {
@@ -51,19 +52,33 @@ namespace SSI.Data.Repository
             return category;
         }
 
-        public decimal GetTotalAmount(int id)
+        public int CountNoSuccesInvest(int userId)
         {
-            return _context.InvestmentRequests.Where(i => i.UserId == id && i.Status == "approved").Sum(i => i.Amount);
+            var count = (from i in _context.InvestmentRequests 
+                         join t in _context.Transactions on i.RequestId equals t.InvestmentRequestId
+                        where i.UserId == userId && i.Status == "approved" && t.Status == "completed"
+                         select i).Count();
+            return count;               
         }
 
-        public int GetTotalIdeasByUserId(int userId)
+        public int CountNoRejecrInvest(int userId)
         {
-            var totalIdeas = _context.InvestmentRequests
-            .Where(ir => ir.UserId == userId && ir.Status == "approved")
-            .Select(ir => ir.IdeaId) 
-            .Distinct() 
-            .Count();
-            return totalIdeas;
+            var count = (from i in _context.InvestmentRequests
+                         where i.UserId == userId && i.Status == "rejected"
+                         select i).Count();
+            return count;
+        }
+
+        public decimal SumAmountInvest(int investorId)
+        {
+            var total = (from iv in _context.InvestmentRequests
+                         join t in _context.Transactions on iv.RequestId equals t.InvestmentRequestId
+                         where iv.UserId == investorId
+                            && iv.Status == "approved"
+                            && t.Status == "completed"
+                         select t.Amount
+                         ).Sum();
+            return total;
         }
     }
 }

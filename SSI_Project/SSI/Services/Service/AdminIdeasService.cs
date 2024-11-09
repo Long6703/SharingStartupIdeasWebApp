@@ -22,19 +22,23 @@ namespace SSI.Services.Service
             return _repository.GetIdeaById(ideasId);
         }
 
-        public ICollection<Ideadetail> GetIdeaDetailById(int id)
-        {
-            return _repository.GetIdeaDetailByIdeaId(id);
-        }
+
+
+        
 
         public IEnumerable<Idea> GetIdeas()
         {
             return _repository.GetIdeas();
         }
 
-        public ICollection<Idea> GetIdeasByUser(int id)
+        public ICollection<Idea> GetIdeasByFounder(int id)
         {
-            return _repository.GetIdeasByUser(id);
+            return _repository.GetIdeasByFounder(id);
+        }
+
+        public ICollection<Idea> GetIdeasByInvestore(int id)
+        {
+            return _repository.GetIdeasByInvestore(id);
         }
 
         public ICollection<Image> GetImagesById(int id)
@@ -52,6 +56,26 @@ namespace SSI.Services.Service
             _repository.RejectIdeas(ideasId);
         }
 
+        //ideadetails
 
+        public ICollection<Ideadetail> GetIdeadetailsByIdeaId(int IdeaId)
+        {
+            return _repository.GetIdeadetailsByIdeaId(IdeaId);
+        }
+
+        public ICollection<Image> GetImages(int ideaDetailsId)
+        {
+            return _repository.GetImages(ideaDetailsId);
+        }
+
+        public int CountIdeaDetailByIdeaId(int ideId)
+        {
+            return _repository.CountIdeaDetailByIdeaId(ideId);
+        }
+
+        public Models.Category GetCategoryById(int ideId)
+        {
+            return _repository.GetCategoryById(ideId);
+        }
     }
 }

@@ -11,10 +11,21 @@ namespace SSI.Data.IRepository
 
         Models.InvestmentRequest GetInvestmentById(int id);
         
-        ICollection<Ideadetail> GetIdeaDetailByIdeaId(int id);
+
         ICollection<Image> GetImagesByIdDetail(int id);
 
-        ICollection<Idea> GetIdeasByUser(int userId);
+        ICollection<Idea> GetIdeasByFounder(int userId);
+
+        ICollection<Idea> GetIdeasByInvestore(int userId);
+
+        //ideadetail
+
+        ICollection<Ideadetail> GetIdeadetailsByIdeaId(int id);
+        ICollection<Image> GetImages(int ideaDetailsId);
+
+        public int CountIdeaDetailByIdeaId(int ideId);
+
+        public Models.Category GetCategoryById(int id);
     }
 
 }

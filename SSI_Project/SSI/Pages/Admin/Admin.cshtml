@@ -15,96 +15,184 @@
         </div>
     </div>
 
-    <!-- Buttons and Table -->
-    <div class="row">
-        <div class="col-12">
-            <!-- Filter Buttons and Search Bar -->
-            <div class="d-flex justify-content-between mb-3">
-                <form method="post" class="d-flex" id="filterButtons">
-                    <button class="btn btn-icon btn-warning mx-1" value="Total" name="nAc"><i>Total</i></button>
-                    <button class="btn btn-icon btn-warning mx-1" value="Investor" name="nAc"><i>Investor</i></button>
-                    <button class="btn btn-icon btn-warning mx-1" value="Founder" name="nAc"><i>Founder</i></button>
-                </form>
-                <div id="datatable-search-container"></div>
+    <div class="d-flex justify-content-between mb-3">
+        <form method="post" class="d-flex" id="filterButtons">
+            <button class="btn btn-icon btn-warning mx-1" value="Total" name="nAc"><i>Total</i></button>
+            <button class="btn btn-icon btn-warning mx-1" value="Investor" name="nAc"><i>Investor</i></button>
+            <button class="btn btn-icon btn-warning mx-1" value="Founder" name="nAc"><i>Founder</i></button>
+        </form>
+        <div id="datatable-search-container">
+            <div id="datatable-buttons_filter" class="dataTables_filter">
+                <label>Search:
+                    <input type="search" id="userSearch" class="form-control form-control-sm" placeholder="Search users..." aria-controls="datatable-buttons">
+                </label>
             </div>
+        </div>
+    </div>
 
-            <!-- DataTable -->
-            <div class="mt-5">
-                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var u in Model.Users)
+    <!-- User List with Pagination -->
+    <div class="row" id="userList">
+        @foreach (var i in Model.Users)
+        {
+            <div class="col-lg-4 user-card" data-displayname="@i.Displayname" data-email="@i.Email" data-role="@i.Role">
+                <div class="text-center card-box ribbon-box">
+                    <div class="member-card">
+                        @if(i.Role == "admin")
                         {
-                            <tr>
-                                <td class="row-number">@u.UserId</td>
-                                <td>@u.Displayname</td>
-                                <td>@u.Email</td>
-                                <td>@u.Role</td>
-                                <td>@u.Status</td>
-                                <td>
-                                    <form method="post">
-                                        <input type="hidden" name="id" value="@u.UserId" />
-                                            <button class="btn btn-icon btn-warning" type="submit" name="action" value="View">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        <button type="submit" class="btn btn-icon btn-danger" name="action" value="Lock" @(u.Status == "inactive" ? "disabled" : "")><i class="fas fa-times"></i></button>
-                                        <button type="submit" class="btn btn-icon btn-primary" name="action" value="UnLock" @(u.Status == "active" ? "disabled" : "")><i class="far fa-heart"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <div class="ribbon-rounded bg-danger">@i.Role</div>
                         }
-                    </tbody>
-                </table>
+                        else if(i.Role == "investor")
+                        {
+                            <div class="ribbon-rounded bg-warning">@i.Role</div>
+                        }
+                        else
+                        {
+                            <div class="ribbon-rounded bg-teal">Founder</div>
+                        }
+                        <div class="avatar-xl member-thumb mx-auto">
+                            <img src="@i.AvatarUrl" class="rounded-circle img-thumbnail" alt="profile-image">
+                            <i class="mdi mdi-information-outline member-star text-success" title="verified user"></i>
+                        </div>
+
+                        <div class="mt-3">
+                            <h5 class="mt-2">@i.Displayname</h5>
+                        </div>
+                        <div class="mt-3">
+                        @{
+                            string bio = i.Bio.Length > 100 ? i.Bio.Substring(0, 100) + "..." : i.Bio;
+                        }
+                        <p class="text-muted font-13">
+                            @bio
+                        </p>
+                        </div>
+
+                        <form method="post">
+                            <input type="hidden" name="id" value="@i.UserId" />
+                            @if (i.Status == "active")
+                            {
+                                <button type="submit" class="btn btn-danger btn-sm mt-2 mr-1" name="action" value="Lock">Lock</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-primary btn-sm mt-2 mr-1" name="action" value="UnLock">UnLock</button>
+                            }
+                            <button type="submit" class="btn btn-primary btn-sm mt-2" name="action" value="View">View Profile</button>
+                        </form>
+                         <ul class="social-links list-inline mt-4 pt-2 mb-0">
+                                            <li class="list-inline-item">
+                                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@i.FacebookUrl" data-original-title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@i.TwitterUrl" data-original-title="Twitter"><i class="fab fa-twitter"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="@i.LinkedinUrl" data-original-title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                            </li>
+                         </ul>
+                    </div>
+                </div>
             </div>
+        }
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                    <!-- Pagination items will be injected here -->
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
 
-<!-- DataTables and jQuery Scripts -->
+<!-- jQuery Library -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<!-- Search and Pagination Script -->
 <script>
     $(document).ready(function () {
-        $.fn.dataTable.ext.errMode = 'none';
+        var itemsPerPage = 5; // Number of cards per page
+        var totalItems = $(".user-card").length;
+        var totalPages = Math.ceil(totalItems / itemsPerPage);
 
-        // Initialize DataTable
-        if (!$.fn.DataTable.isDataTable('#datatable-buttons')) {
-            var table = $('#datatable-buttons').DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "ordering": true,
-                "info": true,
-                "searching": true
-            });
-
-            // Move the search bar to a custom container
-            $('#datatable-search-container').html($('#datatable-buttons_filter'));
+        function showPage(page) {
+            $(".user-card").hide();  // Hide all items
+            $(".user-card").slice((page - 1) * itemsPerPage, page * itemsPerPage).show();  // Show only the items for the current page
         }
+
+        function renderPagination() {
+            $("#pagination").empty();
+            $("#pagination").append(`
+                <li class="page-item"><a class="page-link" href="#" data-page="prev">&laquo;</a></li>
+            `);
+            for (var i = 1; i <= totalPages; i++) {
+                $("#pagination").append(`
+                    <li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>
+                `);
+            }
+            $("#pagination").append(`
+                <li class="page-item"><a class="page-link" href="#" data-page="next">&raquo;</a></li>
+            `);
+        }
+
+        function setActivePage(page) {
+            $("#pagination .page-item").removeClass("active");
+            $(`#pagination .page-item:has([data-page="${page}"])`).addClass("active");
+        }
+
+        function filterUsers(searchTerm) {
+            $(".user-card").each(function () {
+                var displayName = $(this).data("displayname").toLowerCase();
+                var email = $(this).data("email").toLowerCase();
+                var role = $(this).data("role").toLowerCase();
+                if (displayName.includes(searchTerm) || email.includes(searchTerm) || role.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // Initial load
+        showPage(1);
+        renderPagination();
+        setActivePage(1);
+
+        // Add click event for pagination
+        $("#pagination").on("click", ".page-link", function (e) {
+            e.preventDefault();
+            var selectedPage = $(this).data("page");
+            var currentPage = $("#pagination .page-item.active .page-link").data("page");
+            
+            if (selectedPage === "prev") {
+                selectedPage = currentPage > 1 ? currentPage - 1 : 1;
+            } else if (selectedPage === "next") {
+                selectedPage = currentPage < totalPages ? currentPage + 1 : totalPages;
+            } else {
+                selectedPage = parseInt(selectedPage);
+            }
+            
+            showPage(selectedPage);
+            setActivePage(selectedPage);
+        });
+
+        // Search filter
+        $("#userSearch").on("input", function () {
+            var searchTerm = $(this).val().toLowerCase();
+            filterUsers(searchTerm);
+        });
     });
 </script>
 
-<!-- Custom CSS -->
+<!-- Custom CSS for Card Layout and Pagination Styling -->
 <style>
-    /* Align buttons to the left and search bar to the right */
-    .d-flex.justify-content-between {
-        align-items: center;
+    .pagination {
+        cursor: pointer;
     }
-
-    #filterButtons {
-        margin-right: auto;
+    .pagination .active .page-link {
+        background-color: #007bff;
+        color: white;
     }
-
-        #filterButtons .btn {
-            margin-right: 5px;
-        }
 </style>

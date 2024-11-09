@@ -31,7 +31,7 @@ namespace SSI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =(local); database = SSIV2;uid=sa;pwd=123;");
+                optionsBuilder.UseSqlServer("Server=(local);Database=SSIV2;UID=sa;PWD=123;TrustServerCertificate=True");
             }
         }
 
@@ -41,7 +41,7 @@ namespace SSI.Models
             {
                 entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B321D6217")
+                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B7CC2DE55")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -76,18 +76,18 @@ namespace SSI.Models
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.IdeaDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__comment__idea_de__6383C8BA");
+                    .HasConstraintName("FK__comment__idea_de__5EBF139D");
 
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK__comment__parent___656C112C");
+                    .HasConstraintName("FK__comment__parent___60A75C0F");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__comment__user_id__6477ECF3");
+                    .HasConstraintName("FK__comment__user_id__5FB337D6");
             });
 
             modelBuilder.Entity<Idea>(entity =>
@@ -121,8 +121,7 @@ namespace SSI.Models
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(20)
-                    .HasColumnName("status")
-                    .HasDefaultValueSql("('pending')");
+                    .HasColumnName("status");
 
                 entity.Property(e => e.Title)
                     .HasMaxLength(255)
@@ -133,19 +132,19 @@ namespace SSI.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Ideas)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__idea__category_i__59063A47");
+                    .HasConstraintName("FK__idea__category_i__5441852A");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ideas)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea__user_id__5812160E");
+                    .HasConstraintName("FK__idea__user_id__534D60F1");
             });
 
             modelBuilder.Entity<IdeaInterest>(entity =>
             {
                 entity.HasKey(e => e.InterestId)
-                    .HasName("PK__idea_int__0F5A1FAD3A755CA5");
+                    .HasName("PK__idea_int__0F5A1FAD7D1A901F");
 
                 entity.ToTable("idea_interest");
 
@@ -164,13 +163,13 @@ namespace SSI.Models
                     .WithMany(p => p.IdeaInterests)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea_inte__idea___71D1E811");
+                    .HasConstraintName("FK__idea_inte__idea___6B24EA82");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.IdeaInterests)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea_inte__user___70DDC3D8");
+                    .HasConstraintName("FK__idea_inte__user___6A30C649");
             });
 
             modelBuilder.Entity<Ideadetail>(entity =>
@@ -194,7 +193,7 @@ namespace SSI.Models
                     .WithMany(p => p.Ideadetails)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ideadetai__idea___5CD6CB2B");
+                    .HasConstraintName("FK__ideadetai__idea___5812160E");
             });
 
             modelBuilder.Entity<Image>(entity =>
@@ -213,13 +212,13 @@ namespace SSI.Models
                     .WithMany(p => p.Images)
                     .HasForeignKey(d => d.IdeaDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__image__idea_deta__5FB337D6");
+                    .HasConstraintName("FK__image__idea_deta__5AEE82B9");
             });
 
             modelBuilder.Entity<InvestmentRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__investme__18D3B90F4FAC354C");
+                    .HasName("PK__investme__18D3B90FDB4EE0C8");
 
                 entity.ToTable("investment_request");
 
@@ -250,8 +249,7 @@ namespace SSI.Models
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(20)
-                    .HasColumnName("status")
-                    .HasDefaultValueSql("('pending')");
+                    .HasColumnName("status");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -259,20 +257,20 @@ namespace SSI.Models
                     .WithMany(p => p.InvestmentRequests)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__investmen__idea___6C190EBB");
+                    .HasConstraintName("FK__investmen__idea___656C112C");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.InvestmentRequests)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__investmen__user___6D0D32F4");
+                    .HasConstraintName("FK__investmen__user___66603565");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("transaction");
 
-                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BE5630E254")
+                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BEC2746C14")
                     .IsUnique();
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
@@ -290,8 +288,7 @@ namespace SSI.Models
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(20)
-                    .HasColumnName("status")
-                    .HasDefaultValueSql("('pending')");
+                    .HasColumnName("status");
 
                 entity.Property(e => e.TransactionCode)
                     .HasMaxLength(50)
@@ -301,17 +298,26 @@ namespace SSI.Models
                     .WithMany(p => p.Transactions)
                     .HasForeignKey(d => d.InvestmentRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__transacti__inves__787EE5A0");
+                    .HasConstraintName("FK__transacti__inves__6FE99F9F");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164D31555C0")
+                entity.HasIndex(e => e.Email, "UQ__user__AB6E616400C3E7EA")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.AvatarUrl)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("avatar_url");
+
+                entity.Property(e => e.Bio)
+                    .HasMaxLength(500)
+                    .HasColumnName("bio");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
@@ -326,9 +332,25 @@ namespace SSI.Models
                     .HasMaxLength(100)
                     .HasColumnName("email");
 
+                entity.Property(e => e.FacebookUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("facebook_url");
+
+                entity.Property(e => e.LinkedinUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("linkedin_url");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(100)
+                    .HasColumnName("location");
+
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)
                     .HasColumnName("password");
+
+                entity.Property(e => e.Profession)
+                    .HasMaxLength(100)
+                    .HasColumnName("profession");
 
                 entity.Property(e => e.Role)
                     .HasMaxLength(20)
@@ -336,8 +358,15 @@ namespace SSI.Models
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(20)
-                    .HasColumnName("status")
-                    .HasDefaultValueSql("('active')");
+                    .HasColumnName("status");
+
+                entity.Property(e => e.TwitterUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("twitter_url");
+
+                entity.Property(e => e.WebsiteUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("website_url");
             });
 
             OnModelCreatingPartial(modelBuilder);

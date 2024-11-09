@@ -7,7 +7,12 @@
         Models.Category GetCategory(int id);
         void LockAccount(int id);
         void UnlockAccount(int id);
-        decimal GetTotalAmount(int id);
-        int GetTotalIdeasByUserId(int userId);
+
+        int CountNoSuccesInvest(int userId);
+
+        int CountNoRejecrInvest(int userId);
+        decimal SumAmountInvest(int investorId);
+
+
     }
 }
