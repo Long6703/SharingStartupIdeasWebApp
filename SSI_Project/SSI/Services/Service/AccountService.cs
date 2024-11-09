@@ -27,6 +27,11 @@ namespace SSI.Services.Service
             return _accountRepository.CheckEmail(email);
         }
 
+        public bool CheckPassword(string email, string password)
+        {
+            return _accountRepository.CheckPassword(email, password);
+        }
+
         public UserViewModel GetUserByEmail(string email)
         {
             return _accountRepository.GetUserByEmail(email);

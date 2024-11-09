@@ -10,5 +10,6 @@ namespace SSI.Services.IService
         Task<bool> UpdateProfile(UserViewModel userViewModel);
         bool ChangePassword(string newpassword, string userEmail);
         UserViewModel GetUserByEmail(string email);
+        bool CheckPassword(string email, string password);
     }
 }

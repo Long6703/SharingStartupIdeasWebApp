@@ -57,6 +57,7 @@ namespace SSI
                 options.Cookie.Name = "SSI";
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 
                 options.Events = new CookieAuthenticationEvents
                 {

@@ -31,6 +31,12 @@ namespace SSI.Data.Repository
             return user != null;
         }
 
+        public bool CheckPassword(string email, string password)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            return user != null && BCrypt.Net.BCrypt.Verify(password, user.Password);
+        }
+
         public UserViewModel GetUserByEmail(string email)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == email);

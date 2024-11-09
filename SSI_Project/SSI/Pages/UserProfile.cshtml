@@ -6,8 +6,7 @@
 
 <div class="col-xl-9 col-lg-8 wow fadeInRight">
     <div class="dashboard_content">
-        <p class="welcome">@Model.userViewModel.Displayname</p>
-        <h2 class="dashboard_title">Welcome To My Profile</h2>
+        <h2 class="dashboard_title">@Model.userViewModel.Displayname - @Model.userViewModel.Role?.ToUpper()</h2>
 
         <div class="dashboard_profile_info">
             <div class="row mt_15">
@@ -25,6 +24,7 @@
                     <li><span>Email:</span> @Model.userViewModel.Email</li>
                     <li><span>Location:</span> @Model.userViewModel.Location</li>
                     <li><span>Profession:</span> @Model.userViewModel.Profession</li>
+                    <li><span>Bank Information:</span> @Model.userViewModel.BankAccountNumber - @Model.userViewModel.BankName</li>
                 </ul>
             </div>
         </div>

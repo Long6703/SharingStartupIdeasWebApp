@@ -8,42 +8,43 @@
     <div class="dashboard_content">
         <div class="dashboard_profile_info">
             <div class="dashboard_profile_info_edit">
-                <h2>Edit Information <a href="">Cancel</a></h2>
-                <form class="info_edit_form">
+                <h2>Edit Information <a href="#">Cancel</a></h2>
+                <form class="info_edit_form" method="post">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" placeholder="Name">
+                            <input type="text" name="Displayname" placeholder="Name" value="@Model.userViewModel.Displayname">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" placeholder="Email">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" placeholder="+880 Enter phone number">
-                        </div>
-                        <div class="col-md-6">
-                            <select class="select_2">
-                                <option value="">select country</option>
-                                <option value="">thailand</option>
-                                <option value="">korea</option>
-                                <option value="">singapore</option>
-                                <option value="">london</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <select class="select_2">
-                                <option value="">City</option>
-                                <option value="">thailand</option>
-                                <option value="">korea</option>
-                                <option value="">singapore</option>
-                                <option value="">london</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" placeholder="Zip code">
+                            <input type="email" name="Email" placeholder="Email" value="@Model.userViewModel.Email" disabled>
                         </div>
                         <div class="col-md-12">
-                            <textarea rows="6"
-                                      placeholder="441, 4th street, Washington DC, USA"></textarea>
+                            <textarea style="text-align: left; direction: ltr;" rows="12" name="Bio" placeholder="Your Bio">@Model.userViewModel.Bio</textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Location" placeholder="Location" value="@Model.userViewModel.Location">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Profession" placeholder="Profession" value="@Model.userViewModel.Profession">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="WebsiteUrl" placeholder="Website URL" value="@Model.userViewModel.WebsiteUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="LinkedinUrl" placeholder="LinkedIn URL" value="@Model.userViewModel.LinkedinUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="TwitterUrl" placeholder="Twitter URL" value="@Model.userViewModel.TwitterUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="FacebookUrl" placeholder="Facebook URL" value="@Model.userViewModel.FacebookUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="BankAccountNumber" placeholder="Back Account Number" value="@Model.userViewModel.BankAccountNumber">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="BankName" placeholder="Bank Name" value="@Model.userViewModel.BankName">
+                        </div>
+                        <div class="col-md-12">
                             <button type="submit" class="common_btn">
                                 Save Profile
                                 <span></span>

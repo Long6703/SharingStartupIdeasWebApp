@@ -11,7 +11,7 @@ namespace SSI.Pages
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Login");
         }
     }
 }
