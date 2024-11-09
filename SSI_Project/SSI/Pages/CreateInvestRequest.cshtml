@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-6 wow fadeInLeft">
                     <div class="reservation_img">
-                        <img src="assetsClient/images/reservation_img_2.jpg" alt="reservation" class="img-fluid w-100">
+                    <img src="https://dpilaw.vn/wp-content/uploads/2021/06/dau-tu-nuoc-ngoai.jpg" alt="reservation" class="img-fluid w-100">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInRight">
@@ -43,17 +43,18 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="reservation_form_input">
-                                    <input type="hidden" name="IdeaId" placeholder="Idea ID" required>
+                                    <input type="number" name="Amount" placeholder="Investment Amount" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="reservation_form_input">
-                                    <input type="number" name="Amount" placeholder="Investment Amount" required step="0.01">
+                                    <input type="hidden" name="IdeaId" placeholder="Idea ID" required value="@Model.IdeaId">
                                 </div>
                             </div>
+                            
                             <div class="col-md-6">
                                 <div class="reservation_form_input">
-                                    <input type="number" name="EquityPercentage" placeholder="Equity Percentage" required step="0.01">
+                                    <input type="number" name="EquityPercentage" placeholder="Equity Percentage" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

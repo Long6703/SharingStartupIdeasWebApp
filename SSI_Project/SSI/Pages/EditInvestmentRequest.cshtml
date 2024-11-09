@@ -1,0 +1,250 @@
+﻿@page
+@model SSI.Pages.EditInvestmentRequestModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!--==========================
+    BREADCRUMB AREA START
+===========================-->
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Update Invest Request</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Update Invest Request</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--==========================
+    RESERVATION PAGE START
+===========================-->
+<section class="reservation_page pt_120 xs_pt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInLeft">
+                <div class="reservation_img">
+                    <img src="assetsClient/images/reservation_img_2.jpg" alt="reservation" class="img-fluid w-100">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight">
+                <div class="reservation_form">
+                    <h2>Update INVEST REQUEST</h2>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="number" name="Amount" placeholder="Investment Amount" required value="@Model.InvestmentRequests.Amount">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="hidden" name="IdeaId" placeholder="Idea ID" required value="@Model.InvestmentRequests.IdeaId">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="number" name="EquityPercentage" placeholder="Equity Percentage" required value="@Model.InvestmentRequests.EquityPercentage">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="text" name="InvestmentPeriod" placeholder="Investment Period" required value="@Model.InvestmentRequests.InvestmentPeriod">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="reservation_form_input">
+                                    <textarea name="Description" rows="7" placeholder="Description" value="@Model.InvestmentRequests.Description">@Model.InvestmentRequests.Description</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="common_btn" type="submit">Update Investment Request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    RESERVATION PAGE END
+===========================-->
+<!--==========================
+    GALLERY START
+===========================-->
+<section class="gallery mt_120 xs_mt_100">
+    <div class="row gallery_slider">
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_1.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_2.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_3.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_4.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 wow fadeInUp">
+            <div class="gallery_item">
+                <img src="assetsClient/images/gallery_img_3.jpg" alt="gallery" class="img-fluid w-100">
+                <div class="text">
+                    <a class="title" href="menu_details.html">Breakfast Burritos</a>
+                    <p>Breakfast item</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    GALLERY END
+===========================-->
+<!--==========================
+    BRANCH 2 START
+===========================-->
+<section class="branch_area_2 mt_90 xs_mt_65">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 wow fadeInUp">
+                <div class="single_branch_2">
+                    <h4>United States</h4>
+                    <h2>NEW YORK</h2>
+                    <p class="branch_2_mail_call">12/4, Barbican, London EC2Y 8DS</p>
+                    <a class="branch_2_mail_call"
+                       href="mailto:RESTINAsupport@gmail.com">RESTINAsupport@gmail.com</a>
+                    <a class="branch_2_mail_call" href="callto:+8803566598356">+88 0356 6598 356</a>
+                    <a class="read_btn" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Read More <i class="far fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 wow fadeInUp">
+                <div class="single_branch_2">
+                    <h4>Afghanistan</h4>
+                    <h2>Kabul</h2>
+                    <p class="branch_2_mail_call">12/4, Barbican, London EC2Y 8DS</p>
+                    <a class="branch_2_mail_call"
+                       href="mailto:RESTINAsupport@gmail.com">RESTINAsupport@gmail.com</a>
+                    <a class="branch_2_mail_call" href="callto:+8803566598356">+88 0356 6598 356</a>
+                    <a class="read_btn" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Read More <i class="far fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 wow fadeInUp">
+                <div class="single_branch_2">
+                    <h4>Thimphu</h4>
+                    <h2>Bhutan</h2>
+                    <p class="branch_2_mail_call">12/4, Barbican, London EC2Y 8DS</p>
+                    <a class="branch_2_mail_call"
+                       href="mailto:RESTINAsupport@gmail.com">RESTINAsupport@gmail.com</a>
+                    <a class="branch_2_mail_call" href="callto:+8803566598356">+88 0356 6598 356</a>
+                    <a class="read_btn" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Read More <i class="far fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 wow fadeInUp">
+                <div class="single_branch_2">
+                    <h4>South Africa</h4>
+                    <h2>Pretoria</h2>
+                    <p class="branch_2_mail_call">12/4, Barbican, London EC2Y 8DS</p>
+                    <a class="branch_2_mail_call"
+                       href="mailto:RESTINAsupport@gmail.com">RESTINAsupport@gmail.com</a>
+                    <a class="branch_2_mail_call" href="callto:+8803566598356">+88 0356 6598 356</a>
+                    <a class="read_btn" href="#" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Read More <i class="far fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BRANCH POPUT START -->
+<div class="branch_popup cart_popup">
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fal fa-times"></i>
+                    </button>
+                    <div class="branch_popup_img">
+                        <img src="assetsClient/images/branch_popup_img.jpg" alt="menu" class="img-fluid w-100">
+                    </div>
+                    <div class="branch_popup_text">
+                        <a href="#" class="title">singapore Branchr</a>
+                        <p class="description">
+                            There are many variations of passages of Lorem Ipsum available, but
+                            the majority have suffered alteration in some form by injected humour.or randomised
+                            words.
+                        </p>
+                        <a class="branch_call_mail" href="callto:990123456789">
+                            <i class="fas fa-phone-alt"></i> +990
+                            123 456 789
+                        </a>
+                        <a class="branch_call_mail" href="mailto:support@RESTINAgmail.com">
+                            <i class="fas fa-envelope"></i>support@RESTINAgmail.com
+                        </a>
+                        <p class="branch_call_mail">
+                            <i class="fas fa-map-marker-alt"></i> City Tower New York,
+                            United States
+                        </p>
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="branch_popup_map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.619899862254!2d103.79044271166414!3d1.404353861389994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da13d9102adcaf%3A0xb414fac8a43b1b91!2sSingapore%20Zoo!5e0!3m2!1sen!2sbd!4v1700396748481!5m2!1sen!2sbd"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BRANCH POPUT END -->
+<!--==========================
+    BRANCH 2 END
+===========================-->

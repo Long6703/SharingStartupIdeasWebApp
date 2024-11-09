@@ -1,15 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SSI.Models;
 using SSI.Services.IService;
 using SSI.Ultils.ViewModel;
 using System.Text.Json;
-
 namespace SSI.Pages
 {
-    public class CreateInvestRequestModel : PageModel
+    public class EditInvestmentRequestModel : PageModel
     {
-        private readonly ILogger<CreateInvestRequestModel> _logger;
+        private readonly ILogger<EditInvestmentRequestModel> _logger;
         private readonly IInvestmentRequestService _investReqService;
+        public EditInvestmentRequestModel(ILogger<EditInvestmentRequestModel> logger, IInvestmentRequestService investReqService)
+        {
+            _logger = logger;
+            _investReqService = investReqService;
+        }
+        [BindProperty]
+        public int RequestId { get; set; }
         [BindProperty]
         public decimal Amount { get; set; }
 
@@ -24,43 +31,37 @@ namespace SSI.Pages
 
         [BindProperty]
         public string? Description { get; set; }
-
-        public CreateInvestRequestModel(ILogger<CreateInvestRequestModel> logger, IInvestmentRequestService investReqService)
+        [BindProperty]
+        public Models.InvestmentRequest InvestmentRequests { get; set; }
+        public async Task OnGetAsync(int requestId)
         {
-            _logger = logger;
-            _investReqService = investReqService;
+            RequestId = requestId;
+            var investRequests = await _investReqService.GetInvestmentRequestByIdAsync(RequestId);
+            InvestmentRequests = investRequests;
         }
-        public void OnGet(int ideaId)
-        {
-            IdeaId = ideaId;
-        }
-
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
             byte[] userBytes;
-            int userId=0;
+            int userId = 0;
             if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
             {
                 var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
                 var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
-                userId = userViewModel.UserId; 
+                userId = userViewModel.UserId;
             }
             var investReq = new Models.InvestmentRequest
             {
+                RequestId = RequestId,
                 IdeaId = IdeaId,
-                UserId = userId,
+                UserId = userId,  
                 Amount = Amount,
                 Status = "pending",
                 CreatedAt = DateTime.Now,
                 EquityPercentage = EquityPercentage,
-                InvestmentPeriod = InvestmentPeriod,
+                InvestmentPeriod = InvestmentPeriod,  
                 Description = Description
             };
-            await _investReqService.AddInvestmentRequestAsync(investReq);
+            await _investReqService.UpdateInvestmentRequestAsync(investReq);
             return RedirectToPage("/ManageRequestInvestor");
         }
     }
