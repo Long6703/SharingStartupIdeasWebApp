@@ -50,6 +50,12 @@
                         </div>
                         <div class="col-md-12">
                             <input asp-for="LoginViewModel.Password" type="password" placeholder="Enter your password...">
+                            <div class="col-12 text-center">
+                                @if (Model.message != null)
+                                {
+                                    <p class="text-danger">@Model.message</p>
+                                }
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <div class="sign_in_check_area">
@@ -64,7 +70,7 @@
                 <p class="or">or</p>
                 <ul class="list-unstyled d-flex justify-content-center">
                     <li>
-                        <a href="#" class="d-flex align-items-center">
+                        <a asp-page-handler="LoginGoogle" class="d-flex align-items-center">
                             <span class="me-2">
                                 <img src="assetsClient/images/google_icon.svg" alt="google" class="img-fluid w-100">
                             </span>

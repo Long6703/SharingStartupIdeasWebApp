@@ -47,11 +47,11 @@ namespace SSI.Data.Repository
         public User LoginAsync(LoginViewModel loginViewModel)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == loginViewModel.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(loginViewModel.Password, user.Password))
+            if (user != null && BCrypt.Net.BCrypt.Verify(loginViewModel.Password, user.Password))
             {
-                return null;
+                return user;
             }
-            return user;
+            return null;
         }
 
         public async Task RegisterAsync(User user)
