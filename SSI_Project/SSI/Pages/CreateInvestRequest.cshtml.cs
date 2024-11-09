@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace SSI.Pages
 {
+    [Authorize(Roles = "investor")]
     public class CreateInvestRequestModel : PageModel
     {
         private readonly ILogger<CreateInvestRequestModel> _logger;
@@ -30,11 +32,12 @@ namespace SSI.Pages
             _logger = logger;
             _investReqService = investReqService;
         }
+        
         public void OnGet(int ideaId)
         {
             IdeaId = ideaId;
         }
-
+        
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

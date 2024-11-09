@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SSI.Models;
@@ -8,6 +9,7 @@ using System.Text.Json;
 
 namespace SSI.Pages
 {
+    [Authorize(Roles = "investor")]
     public class ManageRequestInvestorModel : PageModel
     {
         private readonly ILogger<ManageRequestInvestorModel> _logger;

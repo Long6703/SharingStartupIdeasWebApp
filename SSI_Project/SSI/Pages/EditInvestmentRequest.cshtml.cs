@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -6,6 +7,7 @@ using SSI.Ultils.ViewModel;
 using System.Text.Json;
 namespace SSI.Pages
 {
+    [Authorize(Roles = "investor")]
     public class EditInvestmentRequestModel : PageModel
     {
         private readonly ILogger<EditInvestmentRequestModel> _logger;
