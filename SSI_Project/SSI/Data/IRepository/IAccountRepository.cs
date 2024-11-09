@@ -11,8 +11,10 @@ namespace SSI.Data.IRepository
 
         bool CheckEmail(string email);
 
-        Task UpdateProfileAsync(User user);
+        Task<bool> UpdateProfileAsync(UserViewModel userViewModel);
 
         bool ChangePasswordAsync(string newpassword, string userEmail);
+
+        UserViewModel GetUserByEmail(string email);
     }
 }

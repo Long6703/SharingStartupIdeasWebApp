@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SSI.Models
 {
-    public partial class SSIV2Context : DbContext
+    public partial class SSIV3Context : DbContext
     {
-        public SSIV2Context()
+        public SSIV3Context()
         {
         }
 
-        public SSIV2Context(DbContextOptions<SSIV2Context> options)
+        public SSIV3Context(DbContextOptions<SSIV3Context> options)
             : base(options)
         {
         }
@@ -28,7 +28,11 @@ namespace SSI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server =(local); database =SSIV3;uid=sa;pwd=123;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +41,7 @@ namespace SSI.Models
             {
                 entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name, "UQ__category__72E12F1BCCF49190")
+                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B7A9DEDE3")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -112,7 +116,7 @@ namespace SSI.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.PosterImg)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("poster_img");
 
                 entity.Property(e => e.Status)
@@ -140,7 +144,7 @@ namespace SSI.Models
             modelBuilder.Entity<IdeaInterest>(entity =>
             {
                 entity.HasKey(e => e.InterestId)
-                    .HasName("PK__idea_int__0F5A1FAD21716FEA");
+                    .HasName("PK__idea_int__0F5A1FAD01E1BE36");
 
                 entity.ToTable("idea_interest");
 
@@ -201,7 +205,7 @@ namespace SSI.Models
                 entity.Property(e => e.IdeaDetailId).HasColumnName("idea_detail_id");
 
                 entity.Property(e => e.Url)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("url");
 
                 entity.HasOne(d => d.IdeaDetail)
@@ -214,7 +218,7 @@ namespace SSI.Models
             modelBuilder.Entity<InvestmentRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__investme__18D3B90F0121D679");
+                    .HasName("PK__investme__18D3B90F40D05AC5");
 
                 entity.ToTable("investment_request");
 
@@ -266,7 +270,7 @@ namespace SSI.Models
             {
                 entity.ToTable("transaction");
 
-                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BEDD34766A")
+                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BEEC1A1F20")
                     .IsUnique();
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
@@ -301,18 +305,25 @@ namespace SSI.Models
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164C68A34EE")
+                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164B47A3FE5")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.AvatarUrl)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("avatar_url");
 
+                entity.Property(e => e.BankAccountNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("bank_account_number");
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(100)
+                    .HasColumnName("bank_name");
+
                 entity.Property(e => e.Bio)
-                    .HasMaxLength(500)
+                    .HasColumnType("text")
                     .HasColumnName("bio");
 
                 entity.Property(e => e.CreatedAt)
@@ -329,11 +340,11 @@ namespace SSI.Models
                     .HasColumnName("email");
 
                 entity.Property(e => e.FacebookUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("facebook_url");
 
                 entity.Property(e => e.LinkedinUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("linkedin_url");
 
                 entity.Property(e => e.Location)
@@ -357,11 +368,11 @@ namespace SSI.Models
                     .HasColumnName("status");
 
                 entity.Property(e => e.TwitterUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("twitter_url");
 
                 entity.Property(e => e.WebsiteUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("website_url");
             });
 

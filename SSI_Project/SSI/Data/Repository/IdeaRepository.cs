@@ -11,8 +11,8 @@ namespace SSI.Data.Repository
 {
     public class IdeaRepository : IIdeaRepository
     {
-        private readonly SSIV2Context _context;
-        public IdeaRepository(SSIV2Context context)
+        private readonly SSIV3Context _context;
+        public IdeaRepository(SSIV3Context context)
         {
             _context = context;
         }

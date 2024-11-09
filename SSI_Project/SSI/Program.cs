@@ -13,6 +13,7 @@ using SSI.Services.IService;
 using SSI.Data.Repository;
 using SSI.Data.IRepository;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 namespace SSI
 {
     public class Program
@@ -27,7 +28,7 @@ namespace SSI
             builder.Services.AddScoped<IIdeaService, IdeaService>();
             builder.Services.AddScoped<IInvestmentRequestService, InvestmentRequestService>();
 
-            builder.Services.AddDbContext<SSIV2Context>(options =>
+            builder.Services.AddDbContext<SSIV3Context>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
                        .EnableSensitiveDataLogging()
@@ -56,6 +57,22 @@ namespace SSI
                 options.Cookie.Name = "SSI";
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = async context =>
+                    {
+                        var userPrincipal = context.Principal;
+                        if (userPrincipal == null || !userPrincipal.Identity.IsAuthenticated)
+                        {
+                            Console.WriteLine("User has an invalid cookie but is not authenticated.");
+
+                            context.RejectPrincipal();
+                            await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                        }
+                    }
+                };
+
 
             })
             .AddGoogle(googleOptions =>

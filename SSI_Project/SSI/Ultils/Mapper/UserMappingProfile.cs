@@ -14,6 +14,8 @@ namespace SSI.Ultils.Mapper
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => HashPassword(src.Password)));
 
             CreateMap<User, UserViewModel>();
+
+            CreateMap<UserViewModel, User>();
         }
 
         private string HashPassword(string password)

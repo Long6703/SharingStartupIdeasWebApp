@@ -5,8 +5,8 @@ namespace SSI.Data.Repository
 {
     public class AdminRepository : IAdminRepository
     {
-        private readonly SSIV2Context _context;
-        public AdminRepository(SSIV2Context context)
+        private readonly SSIV3Context _context;
+        public AdminRepository(SSIV3Context context)
         {
             _context = context;
         }

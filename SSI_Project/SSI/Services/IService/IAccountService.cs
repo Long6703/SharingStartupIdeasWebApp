@@ -7,7 +7,8 @@ namespace SSI.Services.IService
         Task Register(RegisterViewModel registerViewModel);
         UserViewModel Login(LoginViewModel loginViewModel);
         bool CheckEmail(string email);
-        Task UpdateProfile(UserViewModel userViewModel);
+        Task<bool> UpdateProfile(UserViewModel userViewModel);
         bool ChangePassword(string newpassword, string userEmail);
+        UserViewModel GetUserByEmail(string email);
     }
 }

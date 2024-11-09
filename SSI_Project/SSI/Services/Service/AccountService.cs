@@ -27,6 +27,11 @@ namespace SSI.Services.Service
             return _accountRepository.CheckEmail(email);
         }
 
+        public UserViewModel GetUserByEmail(string email)
+        {
+            return _accountRepository.GetUserByEmail(email);
+        }
+
         public UserViewModel Login(LoginViewModel loginViewModel)
         {
             var user = _accountRepository.LoginAsync(loginViewModel);
@@ -40,9 +45,9 @@ namespace SSI.Services.Service
             await _accountRepository.RegisterAsync(user);
         }
 
-        public Task UpdateProfile(UserViewModel userViewModel)
+        public Task<bool> UpdateProfile(UserViewModel userViewModel)
         {
-            throw new NotImplementedException();
+            return _accountRepository.UpdateProfileAsync(userViewModel);
         }
     }
 }

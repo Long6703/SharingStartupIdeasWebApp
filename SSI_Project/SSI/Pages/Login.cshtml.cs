@@ -27,13 +27,13 @@ namespace SSI.Pages
         }
         public async Task<IActionResult> OnPost()
         {
-            var userViewModel = _accountService.Login(LoginViewModel);
-            if (userViewModel == null)
+            var userLoginViewModel = _accountService.Login(LoginViewModel);
+            if (userLoginViewModel == null)
             {
                 message = "Invalid email or password";
                 return Page();
             }
-
+            var userViewModel = _accountService.GetUserByEmail(userLoginViewModel.Email);
             var userJson = JsonSerializer.Serialize(userViewModel);
             HttpContext.Session.Set("UserSession", System.Text.Encoding.UTF8.GetBytes(userJson));
 
