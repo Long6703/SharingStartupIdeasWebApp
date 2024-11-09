@@ -21,6 +21,7 @@ namespace SSI.Services.Service
         public async Task<IEnumerable<Idea>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId, int pageNumber, int pageSize)
         {
             return await _investmentRequestRepository.GetIdeasWithInvestmentRequestsByFounderAsync(founderUserId, pageNumber, pageSize);
+        }
         public async Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync()
         {
             return await _investmentRequestRepository.GetAllInvestmentRequestAsync();

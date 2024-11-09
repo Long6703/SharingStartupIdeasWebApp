@@ -25,6 +25,7 @@ namespace SSI.Data.Repository
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+        }
         public async Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync()
         {
             return await Task.FromResult(_dbset.Include(t => t.Idea).Include(t => t.Transactions));
