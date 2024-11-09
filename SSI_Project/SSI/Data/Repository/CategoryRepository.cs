@@ -13,9 +13,9 @@ namespace SSI.Data.Repository
     }
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly SSIV3Context _context;
+        private readonly SSIV2Context _context;
 
-        public CategoryRepository(SSIV3Context context)
+        public CategoryRepository(SSIV2Context context)
         {
             _context = context;
         }

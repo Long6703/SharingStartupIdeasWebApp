@@ -8,12 +8,12 @@ using System.Net.WebSockets;
 
 namespace SSI.Pages.Ideas
 {
-    public class IdeaDetailsModel : PageModel
+    public class AdminIdeaDetailsModel : PageModel
     {
         private readonly IAdminService adminService;
         private readonly IAdminIdeasService adminIdeasService;
         private readonly AdminEmailService _emailService;
-        public IdeaDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeasService, AdminEmailService emailService)
+        public AdminIdeaDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeasService, AdminEmailService emailService)
         {
             this.adminService = adminService;
             this.adminIdeasService = adminIdeasService;

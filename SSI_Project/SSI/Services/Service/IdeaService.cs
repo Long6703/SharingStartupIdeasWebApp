@@ -27,26 +27,32 @@ namespace SSI.Services.Service
         {
             return await _ideaRepository.GetTotalIdeasCountByUserIdAndRoleAsync(userId, role);
         }
+
         public async Task<Idea?> GetIdeaWithDetailsAsync(int ideaId)
         {
             return await _ideaRepository.GetIdeaWithDetailsAsync(ideaId);
         }
+
         public async Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId)
         {
             return await _ideaRepository.GetMilestoneDetailByIdAsync(ideaDetailId);
         }
+
         public List<Idea> SearchIdeas(string searchTerm, int? categoryId)
         {
             return _ideaRepository.SearchIdeas(searchTerm, categoryId);
         }
+
         public (Idea, int, List<Comment>) GetIdeaById(int id)
         {
             return _ideaRepository.GetIdeaById(id);
         }
+
         public (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId)
         {
             return _ideaRepository.GetMilestoneDetailsById(milestoneId);
         }
+
         public void AddComment(Comment comment)
         {
             _ideaRepository.AddComment(comment);
@@ -59,29 +65,36 @@ namespace SSI.Services.Service
         {
             _ideaRepository.AddIdeasToInterestList(ideaInterest);
         }
+
         public bool IsIdeaInInterestList(int ideaId, int userId)
         {
             return _ideaRepository.IsIdeaInInterestList(ideaId, userId);
         }
+
         public List<IdeaInterest> GetInterestList(int userId)
         {
             return _ideaRepository.GetInterestList(userId);
         }
+
         public void DeleteInterest(int interestId)
         {
             _ideaRepository.DeleteInterest(interestId);
         }
+
         public Dictionary<string, int> countNumber()
         {
             return _ideaRepository.countNumber();
         }
+
         public List<User> ProminentInvestor()
         {
             return _ideaRepository.ProminentInvestor();
         }
+
         public List<Idea> GetNewIdea()
         {
             return _ideaRepository.GetNewIdea();
+        }
         public async Task CreateIdeaAsync(Idea idea)
         {
             idea.Status = "Pending";

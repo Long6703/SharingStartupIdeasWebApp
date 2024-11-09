@@ -8,7 +8,7 @@ namespace SSI.Data.Repository
     public class AccountRepository : RepositoryBase<User>, IAccountRepository
     {   
         private readonly IMapper _mapper;
-        public AccountRepository(SSIV3Context context, IMapper mapper) : base(context)
+        public AccountRepository(SSIV2Context context, IMapper mapper) : base(context)
         {
             _mapper = mapper;
         }

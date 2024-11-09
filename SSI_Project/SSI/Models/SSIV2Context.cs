@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SSI.Models
 {
-    public partial class SSIV3Context : DbContext
+    public partial class SSIV2Context : DbContext
     {
-        public SSIV3Context()
+        public SSIV2Context()
         {
         }
 
-        public SSIV3Context(DbContextOptions<SSIV3Context> options)
+        public SSIV2Context(DbContextOptions<SSIV2Context> options)
             : base(options)
         {
         }
@@ -37,7 +37,7 @@ namespace SSI.Models
             {
                 entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B7A9DEDE3")
+                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B70E08EA1")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -72,18 +72,18 @@ namespace SSI.Models
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.IdeaDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__comment__idea_de__4CA06362");
+                    .HasConstraintName("FK__comment__idea_de__5EBF139D");
 
                 entity.HasOne(d => d.Parent)
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK__comment__parent___4E88ABD4");
+                    .HasConstraintName("FK__comment__parent___60A75C0F");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__comment__user_id__4D94879B");
+                    .HasConstraintName("FK__comment__user_id__5FB337D6");
             });
 
             modelBuilder.Entity<Idea>(entity =>
@@ -128,19 +128,19 @@ namespace SSI.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Ideas)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__idea__category_i__4222D4EF");
+                    .HasConstraintName("FK__idea__category_i__5441852A");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Ideas)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea__user_id__412EB0B6");
+                    .HasConstraintName("FK__idea__user_id__534D60F1");
             });
 
             modelBuilder.Entity<IdeaInterest>(entity =>
             {
                 entity.HasKey(e => e.InterestId)
-                    .HasName("PK__idea_int__0F5A1FAD01E1BE36");
+                    .HasName("PK__idea_int__0F5A1FADB628FD6A");
 
                 entity.ToTable("idea_interest");
 
@@ -159,13 +159,13 @@ namespace SSI.Models
                     .WithMany(p => p.IdeaInterests)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea_inte__idea___59063A47");
+                    .HasConstraintName("FK__idea_inte__idea___6B24EA82");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.IdeaInterests)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__idea_inte__user___5812160E");
+                    .HasConstraintName("FK__idea_inte__user___6A30C649");
             });
 
             modelBuilder.Entity<Ideadetail>(entity =>
@@ -189,7 +189,7 @@ namespace SSI.Models
                     .WithMany(p => p.Ideadetails)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ideadetai__idea___45F365D3");
+                    .HasConstraintName("FK__ideadetai__idea___5812160E");
             });
 
             modelBuilder.Entity<Image>(entity =>
@@ -208,13 +208,13 @@ namespace SSI.Models
                     .WithMany(p => p.Images)
                     .HasForeignKey(d => d.IdeaDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__image__idea_deta__48CFD27E");
+                    .HasConstraintName("FK__image__idea_deta__5AEE82B9");
             });
 
             modelBuilder.Entity<InvestmentRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__investme__18D3B90F40D05AC5");
+                    .HasName("PK__investme__18D3B90F8467BB33");
 
                 entity.ToTable("investment_request");
 
@@ -253,20 +253,20 @@ namespace SSI.Models
                     .WithMany(p => p.InvestmentRequests)
                     .HasForeignKey(d => d.IdeaId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__investmen__idea___534D60F1");
+                    .HasConstraintName("FK__investmen__idea___656C112C");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.InvestmentRequests)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__investmen__user___5441852A");
+                    .HasConstraintName("FK__investmen__user___66603565");
             });
 
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("transaction");
 
-                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BEEC1A1F20")
+                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BE5A5BA646")
                     .IsUnique();
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
@@ -294,14 +294,14 @@ namespace SSI.Models
                     .WithMany(p => p.Transactions)
                     .HasForeignKey(d => d.InvestmentRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__transacti__inves__5DCAEF64");
+                    .HasConstraintName("FK__transacti__inves__6FE99F9F");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164B47A3FE5")
+                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164530C0A0D")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");

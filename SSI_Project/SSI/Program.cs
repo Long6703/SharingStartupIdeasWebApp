@@ -3,7 +3,6 @@ using SSI.Models;
 using SSI.Data;
 using SSI.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-//using Microsoft.AspNetCore.Authentication.Google;
 using SSI.Ultils.Mapper;
 using Microsoft.Extensions.Configuration;
 using SSI.Ultils;
@@ -14,7 +13,6 @@ using SSI.Data.Repository;
 using SSI.Data.IRepository;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
-using SSI.Services.Service;
 namespace SSI
 {
     public class Program
@@ -29,7 +27,7 @@ namespace SSI
             builder.Services.AddScoped<IIdeaService, IdeaService>();
             builder.Services.AddScoped<IInvestmentRequestService, InvestmentRequestService>();
 
-            builder.Services.AddDbContext<SSIV3Context>(options =>
+            builder.Services.AddDbContext<SSIV2Context>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
                        .EnableSensitiveDataLogging()

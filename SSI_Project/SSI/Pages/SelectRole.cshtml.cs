@@ -31,10 +31,7 @@ namespace SSI.Pages
             registerViewModel = _sessionService.GetSession<RegisterViewModel>("UserSession");
             registerViewModel.Role = role;
             await _accountService.Register(registerViewModel);
-            _sessionService.RemoveSession("UserSession");
-            var user = _accountService.GetUserByEmail(registerViewModel.Email);
-            _sessionService.SetSession("UserSession", user);
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Logout");
         }
     }
 }
