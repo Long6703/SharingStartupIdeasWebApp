@@ -5,11 +5,11 @@ using SSI.Services.IService;
 
 namespace SSI.Pages.Admin
 {
-    public class UserDetailsModel : PageModel
+    public class AdminUserDetailsModel : PageModel
     {
         private readonly IAdminService adminService;
         private readonly IAdminIdeasService adminIdeasService;
-        public UserDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeas)
+        public AdminUserDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeas)
         {
             this.adminService = adminService;
             this.adminIdeasService = adminIdeas;
