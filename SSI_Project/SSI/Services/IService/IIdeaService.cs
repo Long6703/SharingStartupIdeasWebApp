@@ -15,5 +15,15 @@ namespace SSI.Services.IService
         Task<Ideadetail?> GetMilestoneDetailByIdAsync(int ideaDetailId);
         (Idea,int, List<Comment>) GetIdeaById(int id);
         List<Idea> SearchIdeas(string searchTerm, int? categoryId);
+        (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId);
+        void AddComment(Comment comment);
+        List<Idea> RelatedIdea(int ideaId);
+        void AddIdeasToInterestList(IdeaInterest ideaInterest);
+        bool IsIdeaInInterestList(int ideaId, int userId);
+        List<IdeaInterest> GetInterestList(int userId);
+        void DeleteInterest(int interestId);
+        Dictionary<string, int> countNumber();
+        List<User> ProminentInvestor();
+        List<Idea> GetNewIdea();
     }
 }

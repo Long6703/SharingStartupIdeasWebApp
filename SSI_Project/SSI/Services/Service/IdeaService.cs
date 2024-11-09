@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SSI.Services.Service
 {
@@ -38,9 +39,49 @@ namespace SSI.Services.Service
         {
             return _ideaRepository.SearchIdeas(searchTerm, categoryId);
         }
-        public (Idea,int, List<Comment>) GetIdeaById(int id)
+        public (Idea, int, List<Comment>) GetIdeaById(int id)
         {
             return _ideaRepository.GetIdeaById(id);
+        }
+        public (Ideadetail, List<Comment>) GetMilestoneDetailsById(int milestoneId)
+        {
+            return _ideaRepository.GetMilestoneDetailsById(milestoneId);
+        }
+        public void AddComment(Comment comment)
+        {
+            _ideaRepository.AddComment(comment);
+        }
+        public List<Idea> RelatedIdea(int ideaId)
+        {
+            return _ideaRepository.RelatedIdea(ideaId);
+        }
+        public void AddIdeasToInterestList(IdeaInterest ideaInterest)
+        {
+            _ideaRepository.AddIdeasToInterestList(ideaInterest);
+        }
+        public bool IsIdeaInInterestList(int ideaId, int userId)
+        {
+            return _ideaRepository.IsIdeaInInterestList(ideaId, userId);
+        }
+        public List<IdeaInterest> GetInterestList(int userId)
+        {
+            return _ideaRepository.GetInterestList(userId);
+        }
+        public void DeleteInterest(int interestId)
+        {
+            _ideaRepository.DeleteInterest(interestId);
+        }
+        public Dictionary<string, int> countNumber()
+        {
+            return _ideaRepository.countNumber();
+        }
+        public List<User> ProminentInvestor()
+        {
+            return _ideaRepository.ProminentInvestor();
+        }
+        public List<Idea> GetNewIdea()
+        {
+            return _ideaRepository.GetNewIdea();
         }
     }
 }
