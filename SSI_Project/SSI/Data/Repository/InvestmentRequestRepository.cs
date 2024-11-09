@@ -16,15 +16,12 @@ namespace SSI.Data.Repository
             await AddAsync(investReq);
             SaveChanges();
         }
-        public async Task<IEnumerable<Idea>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId, int pageNumber, int pageSize)
+        public async Task<IEnumerable<Models.InvestmentRequest>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId)
         {
-            return await _context.Ideas
-                .Where(idea => idea.UserId == founderUserId && idea.InvestmentRequests.Any())
-                .Include(idea => idea.InvestmentRequests)
-                    .ThenInclude(request => request.User)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            return await _dbset
+        .Include(ir => ir.Idea) // Include the related Idea for access to its properties
+        .Where(ir => ir.Idea.UserId == founderUserId) // Filter by the founder's UserId in the Idea
+        .ToListAsync();
         }
         public async Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync()
         {

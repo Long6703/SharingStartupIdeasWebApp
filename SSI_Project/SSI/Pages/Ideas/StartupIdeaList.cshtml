@@ -1,7 +1,7 @@
-﻿@page "{userId:int}"
+﻿@page
 @model SSI.Pages.Ideas.StartupIdeaListModel
 @{
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "_LayoutUserDashboard";
 }
 <head>
     <style>
@@ -30,126 +30,70 @@
             }
     </style>
 </head>
-<section class="breadcrumb_area" style="background: url(~/assetsClient/images/breadcrumb_bg.jpg);">
-    <div class="container">
-        <div class="row wow fadeInUp">
-            <div class="col-12">
-                <div class="breadcrumb_text">
-                    <h1>List Ideas</h1>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">List Ideas</a></li>
-                    </ul>
-                </div>
-            </div>
+<div class="col-xl-9 col-lg-8 wow fadeInRight">
+    <div class="dashboard_content">
+        <h2 class="dashboard_title">Ideas List</h2>
+        <div class="text-right mb-4">
+            <a href="@Url.Page("CreateIdea", new { userId = Model.userViewModel.UserId })" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Idea
+            </a>
         </div>
-    </div>
-</section>
-<section class="dashboard pt_120 xs_pt_80">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
-                <div class="dashboard_sidebar">
-                    <div class="dashboard_sidebar_user">
+        <div class="dashboard_reviews">
+            @if (Model.Ideas.Any())
+            {
+                @foreach (var idea in Model.Ideas)
+                {
+                    <div class="single_review">
                         <div class="img">
-                            <img src="~/assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
-                            <label for="profile_photo"><i class="far fa-camera"></i></label>
-                            <input type="file" id="profile_photo" hidden>
+                            <img src="~/assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
                         </div>
-                        <h3>Addition Smith</h3>
-                        <p>Paris, France</p>
-                    </div>
-                    <div class="dashboard_sidebar_menu">
-                        <ul>
-                            <li><a href="dashboard.html"><i class="fas fa-user"></i> Personal Info</a></li>
-                            <li>
-                                <a href="dashboard_address.html"><i class="fas fa-clipboard-list"></i> address</a>
-                            </li>
-                            <li><a href="dashboard_order.html"><i class="fas fa-shopping-basket"></i> Order</a></li>
-                            <li>
-                                <a class="active" href="dashboard_review.html">
-                                    <i class="fas fa-star"></i>
-                                    Idea List
+                        <div class="text">
+                            <h4>
+                                <a href="@Url.Page("StartupIdeaDetails", new { id = idea.IdeaId })">
+                                    @idea.Title
                                 </a>
-                            </li>
-                            <li><a href="dashboard_wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
-                            <li>
-                                <a href="dashboard_change_password.html">
-                                    <i class="fas fa-key"></i> Change
-                                    Password
-                                </a>
-                            </li>
-                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-8 wow fadeInRight">
-                <div class="dashboard_content">
-                    <h2 class="dashboard_title">Ideas List</h2>
-                    <div class="text-right mb-4">
-                        <a href="@Url.Page("CreateIdea", new { userId = Model.UserId })" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Create New Idea
-                        </a>
-                    </div>
-                    <div class="dashboard_reviews">
-                         @if (Model.Ideas.Any())
-                        {
-                            @foreach (var idea in Model.Ideas)
-                            {
-                                <div class="single_review">
-                                    <div class="img">
-                                        <img src="~/assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
-                                    </div>
-                                    <div class="text">
-                                        <h4>
-                                            <a href="@Url.Page("StartupIdeaDetails", new { id = idea.IdeaId })">
-                                                @idea.Title
-                                            </a>
-                                            
-                                            <br />
-                                            <span class="idea-status @idea.Status.ToLower()">@idea.Status</span>
-                                            
-                                        </h4>
-                                        <span>@idea.CreatedAt</span>
-                                        <h5>@idea.Category.Name</h5>
-                                        <p>@idea.Description</p>
-                                    </div>
-                                </div>
-                            }
-                        } else
-                        {
-                            <div class="col-12 text-center">
-                                <h3>No ideas available</h3>
-                            </div>
-                        }
 
-                        
-                        <div class="pagination_area mt_30">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end">
-                                    <li class="page-item ">
-                                        <a class="page-link @(Model.PageNumber <= 1 ? "disabled" : "")" href="?userId=@Model.UserId&pageNumber=@(Model.PageNumber - 1)" aria-label="Previous">
-                                            <i class="far fa-arrow-left"></i>
-                                        </a>
-                                    </li>
-                                    @for (var i = 1; i <= Model.TotalPages; i++)
-                                    {
-                                        <li class="page-item">
-                                            <a class="page-link @(i == Model.PageNumber ? "active" : "")" href="?userId=@Model.UserId&pageNumber=@i">@i</a>
-                                        </li>
-                                    }
-                                    <li class="page-item ">
-                                        <a class="page-link @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")" href="?userId=@Model.UserId&pageNumber=@(Model.PageNumber + 1)" aria-label="Next">
-                                            <i class="far fa-arrow-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                                <br />
+                                <span class="idea-status @idea.Status.ToLower()">@idea.Status</span>
+
+                            </h4>
+                            <span>@idea.CreatedAt</span>
+                            <h5>@idea.Category.Name</h5>
+                            <p>@idea.Description</p>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <h3>No ideas available</h3>
                 </div>
+            }
+
+
+            <div class="pagination_area mt_30">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item ">
+                            <a class="page-link @(Model.PageNumber <= 1 ? "disabled" : "")" href="?userId=@Model.userViewModel.UserId&pageNumber=@(Model.PageNumber - 1)" aria-label="Previous">
+                                <i class="far fa-arrow-left"></i>
+                            </a>
+                        </li>
+                        @for (var i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item">
+                                <a class="page-link @(i == Model.PageNumber ? "active" : "")" href="?userId=@Model.userViewModel.UserId&pageNumber=@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item ">
+                            <a class="page-link @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")" href="?userId=@Model.userViewModel.UserId&pageNumber=@(Model.PageNumber + 1)" aria-label="Next">
+                                <i class="far fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
-</section>
+</div>

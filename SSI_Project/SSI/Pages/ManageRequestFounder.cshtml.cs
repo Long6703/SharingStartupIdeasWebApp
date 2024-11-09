@@ -4,32 +4,43 @@ using SSI.Services.IService;
 using SSI.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
+using System.Net.NetworkInformation;
 
 namespace SSI.Pages
 {
     public class ManageRequestFounderModel : PageModel
     {
         private readonly IInvestmentRequestService _investRequestService;
-
-        public ManageRequestFounderModel(IInvestmentRequestService investmentRequestService)
+        private readonly ISessionService _sessionService;
+        [BindProperty(SupportsGet = true)]
+        public UserViewModel userViewModel { get; set; }
+        public ManageRequestFounderModel(IInvestmentRequestService investmentRequestService, ISessionService sessionService)
         {
+            _sessionService = sessionService;
             _investRequestService = investmentRequestService;
         }
 
-        public IEnumerable<Idea> IdeasWithRequests { get; set; } = new List<Idea>();
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; } = 10;
-        public bool HasMorePages { get; set; }
-
-        public async Task OnGetAsync(int founderUserId, int pageNumber = 1)
+        public List<InvestmentRequest> InvestmentRequests { get; set; }
+        public async Task<IActionResult> OnGetAsync()
         {
-            PageNumber = pageNumber;
+            byte[] userBytes;
+            int founderId = 0;
+            if (HttpContext.Session.TryGetValue("UserSession", out userBytes))
+            {
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                founderId = userViewModel.UserId;
+            }
 
-            // Fetching ideas with associated investment requests
-            IdeasWithRequests = await _investRequestService.GetIdeasWithInvestmentRequestsByFounderAsync(founderUserId, pageNumber, PageSize);
-
-            // Check if we have more pages by verifying if we received exactly PageSize items
-            HasMorePages = IdeasWithRequests.Count() == PageSize;
+            var investRequests = await _investRequestService.GetIdeasWithInvestmentRequestsByFounderAsync(founderId);
+            InvestmentRequests = investRequests.ToList();
+            var uniqueStatuses = investRequests
+            .Select(request => request.Status)
+            .Distinct()
+            .ToList();
+            return Page();
         }
     }
 }
