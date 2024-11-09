@@ -18,7 +18,7 @@ namespace SSI.Data.Repository
         }
         public async Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync()
         {
-            return await Task.FromResult(GetAll());
+            return await Task.FromResult(_dbset.Include(t => t.Idea).Include(t => t.Transactions));
         }
         public async Task<Models.InvestmentRequest?> GetInvestmentRequestByIdAsync(int id)
         {

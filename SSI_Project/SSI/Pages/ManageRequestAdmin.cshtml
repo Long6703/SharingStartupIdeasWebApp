@@ -1,7 +1,6 @@
 ﻿@page
-@model SSI.Pages.ManageRequestInvestorModel
+@model SSI.Pages.ManageRequestAdminModel
 @{
-    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 <!--==========================
         BREADCRUMB AREA START
@@ -78,35 +77,20 @@
                                                 <td>@investReq.CreatedAt</td>
                                                 <td>@investReq.Description</td>
                                                 <td>
-
-
-
-                                                    @if (investReq.Status == "pending")
-                                                    {
-                                                        <form method="get" action="EditInvestmentRequest">
-                                                            <input type="hidden" name="RequestId" value="@investReq.RequestId" />
-                                                            <button type="submit" class="btn btn-success">Update</button>
-                                                        </form>
-                                                        <br />
-                                                        <form method="post" asp-action="ManageRequestInvestor" asp-route-id="@investReq.RequestId" onsubmit="return confirm('Are you sure you want to delete this request?');">
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                                        </form>
-                                                    }
-
-                                                    @if (investReq.Status == "approved")
+                                                    @if (investReq.Status == "Investor thanh toan")
                                                     {
 
-                                                        <form method="get" action="VietQr">
-                                                            <input type="hidden" name="Amount" value="@(investReq.Amount)" />
+                                                        <form method="get" action="VietQrAdmin">
+                                                            <input type="hidden" name="Amount" value="@(investReq.Amount /10*9)" />
                                                             <input type="hidden" name="RequestId" value="@investReq.RequestId" />
                                                             <button type="submit" class="btn btn-success">Thanh Toán VietQr</button>
                                                         </form>
                                                         <br />
 
                                                     }
-                                                    @if (investReq.Status == "approved" || investReq.Status == "completed" || investReq.Status == "Investor thanh toan")
+                                                    @if (investReq.Status == "approved" || investReq.Status == "completed" || investReq.Status == "pending")
                                                     {
-                                                        <a href="/InvestmentRequestDetail?RequestId=@investReq.RequestId" class="btn btn-primary">View Detail</a>
+                                                        <a href="/InvestmentRequestDetailAdmin?RequestId=@investReq.RequestId" class="btn btn-primary">View Detail</a>
                                                     }
                                                 </td>
                                             </tr>
