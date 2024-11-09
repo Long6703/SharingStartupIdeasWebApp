@@ -14,6 +14,7 @@ using SSI.Data.Repository;
 using SSI.Data.IRepository;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using SSI.Services.Service;
 namespace SSI
 {
     public class Program
@@ -81,6 +82,7 @@ namespace SSI
                 googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
             });
+            builder.Services.AddTransient<AdminEmailService>();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
