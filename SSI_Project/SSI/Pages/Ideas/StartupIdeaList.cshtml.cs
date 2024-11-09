@@ -23,10 +23,10 @@ namespace SSI.Pages.Ideas
         {
             UserId = userId;
             PageNumber = pageNumber;
-            int totalIdeas = await _ideaService.GetTotalIdeasCountByUserIdAndRoleAsync(userId, "startup");
+            int totalIdeas = await _ideaService.GetTotalIdeasCountByUserIdAndRoleAsync(userId, "founder");
             TotalPages = (int)Math.Ceiling(totalIdeas / (double)PageSize);
 
-            Ideas = await _ideaService.GetIdeasByUserIdAndRoleAsync(userId, "startup", PageNumber, PageSize);
+            Ideas = await _ideaService.GetIdeasByUserIdAndRoleAsync(userId, "founder", PageNumber, PageSize);
         }
     }
 }

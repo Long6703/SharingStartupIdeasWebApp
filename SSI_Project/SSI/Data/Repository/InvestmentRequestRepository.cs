@@ -1,4 +1,5 @@
-﻿using SSI.Data.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using SSI.Data.IRepository;
 using SSI.Models;
 
 namespace SSI.Data.Repository
@@ -12,6 +13,16 @@ namespace SSI.Data.Repository
         {
             await AddAsync(investReq);
             SaveChanges();
+        }
+        public async Task<IEnumerable<Idea>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId, int pageNumber, int pageSize)
+        {
+            return await _context.Ideas
+                .Where(idea => idea.UserId == founderUserId && idea.InvestmentRequests.Any())
+                .Include(idea => idea.InvestmentRequests)
+                    .ThenInclude(request => request.User)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

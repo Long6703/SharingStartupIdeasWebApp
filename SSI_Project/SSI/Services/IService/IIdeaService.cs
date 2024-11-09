@@ -25,5 +25,9 @@ namespace SSI.Services.IService
         Dictionary<string, int> countNumber();
         List<User> ProminentInvestor();
         List<Idea> GetNewIdea();
+        Task CreateIdeaAsync(Idea idea);
+        Task CreateIdeaWithDetailAsync(Ideadetail ideaDetails);
+        Task CreateImageAsync(Image image);
+        Task AddCommentAsync(Comment comment);
     }
 }

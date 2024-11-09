@@ -50,6 +50,7 @@ namespace SSI.Data.Repository
                 .Include(d => d.Images)
                 .Include(d => d.Comments)
                     .ThenInclude(c => c.User)
+                    .OrderByDescending(d => d.CreatedAt)
                 .FirstOrDefaultAsync(d => d.IdeaDetailId == ideaDetailId);
         }
         public List<Idea> SearchIdeas(string searchTerm, int? categoryId)
@@ -186,6 +187,25 @@ namespace SSI.Data.Repository
         {
             var newIdea = _context.Ideas.Include(i=>i.Category).Include(i=>i.User).OrderByDescending(i=>i.CreatedAt).Take(3).ToList();
             return newIdea;
+        public async Task CreateIdeaAsync(Idea idea)
+        {
+            _context.Ideas.Add(idea);
+            await _context.SaveChangesAsync();
+        }
+        public async Task CreateIdeaDetailAsync(Ideadetail ideaDetail)
+        {
+            _context.Ideadetails.Add(ideaDetail);
+            await _context.SaveChangesAsync();
+        }
+        public async Task CreateImageAsync(Image image)
+        {
+            await _context.Images.AddAsync(image);
+            await _context.SaveChangesAsync();
+        }
+        public async Task AddCommentAsync(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
         }
     }
 }

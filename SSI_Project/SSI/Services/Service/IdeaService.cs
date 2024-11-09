@@ -82,6 +82,24 @@ namespace SSI.Services.Service
         public List<Idea> GetNewIdea()
         {
             return _ideaRepository.GetNewIdea();
+        public async Task CreateIdeaAsync(Idea idea)
+        {
+            idea.Status = "Pending";
+            idea.CreatedAt = DateTime.UtcNow;
+
+            await _ideaRepository.CreateIdeaAsync(idea);
+        }
+        public async Task CreateIdeaWithDetailAsync(Ideadetail ideaDetail)
+        {
+            await _ideaRepository.CreateIdeaDetailAsync(ideaDetail); 
+        }
+        public async Task CreateImageAsync(Image image)
+        {
+            await _ideaRepository.CreateImageAsync(image);
+        }
+        public async Task AddCommentAsync(Comment comment)
+        {
+            await _ideaRepository.AddCommentAsync(comment);
         }
     }
 }

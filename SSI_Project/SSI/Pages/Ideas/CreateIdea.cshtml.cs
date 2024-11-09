@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
 using SSI.Services.Service;
+using SSI.Ultils.ViewModel;
+using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
@@ -10,7 +12,9 @@ namespace SSI.Pages.Ideas
     {
         private readonly IIdeaService _ideaService;
         private readonly ICategoryService _categoryService;
+        private readonly CloudinaryService _cloudinaryService;
         private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<CreateIdeaModel> _logger;
 
         [BindProperty]
         public Idea Idea { get; set; }
@@ -19,60 +23,106 @@ namespace SSI.Pages.Ideas
         public Ideadetail Ideadetail { get; set; }
 
         [BindProperty]
+        public IFormFile PosterImage { get; set; }
+
+        [BindProperty]
         public List<IFormFile> Images { get; set; }
 
         public List<Category> Categories { get; set; }
 
-        public CreateIdeaModel(IIdeaService ideaService, ICategoryService categoryService, IWebHostEnvironment environment)
+        public CreateIdeaModel(IIdeaService ideaService, ICategoryService categoryService,
+                               CloudinaryService cloudinaryService, IWebHostEnvironment environment,
+                               ILogger<CreateIdeaModel> logger)
         {
             _ideaService = ideaService;
             _categoryService = categoryService;
+            _cloudinaryService = cloudinaryService;
             _environment = environment;
+            _logger = logger;
         }
 
-        public void OnGetAsync()
+        public void OnGet()
         {
-            // Load categories to populate the dropdown
-            Categories =  _categoryService.GetAllCategories();
+            Categories = _categoryService.GetAllCategories();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int userId)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    // Reload categories if form submission fails
-            //    Categories = await _categoryService.GetAllCategoriesAsync();
-            //    return Page();
-            //}
-
-            // Set initial properties for the new idea
-            Idea.Status = "Pending";
-            Idea.CreatedAt = DateTime.UtcNow;
-            Ideadetail.CreatedAt = DateTime.UtcNow;
-
-            // Save each uploaded image file to wwwroot/images and add to Ideadetail
-            Ideadetail.Images = new List<Image>();
-            foreach (var formFile in Images)
+            var session = HttpContext.Session;
+            if (session.TryGetValue("UserSession", out var userBytes))
             {
-                if (formFile.Length > 0)
+                var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
+                var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
+                if (userViewModel != null)
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
-                    var filePath = Path.Combine(_environment.WebRootPath, "images", fileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
-                    Ideadetail.Images.Add(new Image { Url = fileName });
+                    userId = userViewModel.UserId;
                 }
             }
 
-            // Associate Ideadetail with Idea
-            Idea.Ideadetails = new List<Ideadetail> { Ideadetail };
+            try
+            {
+                Idea.UserId = userId;
+                Idea.Status = "pending";
+                Idea.CreatedAt = DateTime.UtcNow;
 
-            // Save the idea and detail using the service
-            //await _ideaService.CreateIdeaWithDetailAsync(Idea);
+                // Upload Poster Image to Cloudinary using temporary file path
+                if (PosterImage != null && PosterImage.Length > 0)
+                {
+                    var tempPosterPath = Path.GetTempFileName(); // Create a temporary file path
+                    using (var stream = new FileStream(tempPosterPath, FileMode.Create))
+                    {
+                        await PosterImage.CopyToAsync(stream);
+                    }
 
-            return RedirectToPage("IdeaList");
+                    // Upload to Cloudinary and delete the temporary file
+                    Idea.PosterImg = await _cloudinaryService.UploadImageAsync(tempPosterPath);
+                    System.IO.File.Delete(tempPosterPath); // Delete temp file after upload
+                }
+
+                await _ideaService.CreateIdeaAsync(Idea);
+
+                Ideadetail.CreatedAt = DateTime.UtcNow;
+                Ideadetail.IdeaId = Idea.IdeaId;
+
+                List<Image> imagesToSave = new List<Image>();
+
+                // Upload additional images to Cloudinary using temporary file paths
+                foreach (var formFile in Images)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        var tempImagePath = Path.GetTempFileName(); // Create a temporary file path
+                        using (var stream = new FileStream(tempImagePath, FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+
+                        // Upload to Cloudinary and delete the temporary file
+                        var imageUrl = await _cloudinaryService.UploadImageAsync(tempImagePath);
+                        imagesToSave.Add(new Image { Url = imageUrl, IdeaDetailId = Ideadetail.IdeaDetailId });
+                        System.IO.File.Delete(tempImagePath); // Delete temp file after upload
+                    }
+                }
+
+                await _ideaService.CreateIdeaWithDetailAsync(Ideadetail);
+
+                // Save image URLs to the database
+                foreach (var image in imagesToSave)
+                {
+                    image.IdeaDetailId = Ideadetail.IdeaDetailId;
+                    await _ideaService.CreateImageAsync(image);
+                }
+
+                return RedirectToPage("/Ideas/StartupIdeaList", new { id = userId });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the idea.");
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request. Please try again.");
+                Categories = _categoryService.GetAllCategories();
+                return Page();
+            }
         }
+
     }
 }

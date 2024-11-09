@@ -1,5 +1,5 @@
-﻿@page "{userId:int}"
-@model SSI.Pages.Ideas.StartupIdeaListModel
+﻿@page "{founderUserId:int}"
+@model SSI.Pages.ManageRequestFounderModel
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
 }
@@ -38,7 +38,7 @@
                     <h1>List Ideas</h1>
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">List Ideas</a></li>
+                        <li><a href="#">List Request</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,64 +86,63 @@
             </div>
             <div class="col-xl-9 col-lg-8 wow fadeInRight">
                 <div class="dashboard_content">
-                    <h2 class="dashboard_title">Ideas List</h2>
-                    <div class="text-right mb-4">
-                        <a href="@Url.Page("CreateIdea", new { userId = Model.UserId })" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Create New Idea
-                        </a>
-                    </div>
+                    <h2 class="dashboard_title">List Request</h2>
                     <div class="dashboard_reviews">
-                         @if (Model.Ideas.Any())
+                        @if (Model.IdeasWithRequests.Any())
                         {
-                            @foreach (var idea in Model.Ideas)
+                            @foreach (var idea in Model.IdeasWithRequests)
                             {
                                 <div class="single_review">
                                     <div class="img">
                                         <img src="~/assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
                                     </div>
                                     <div class="text">
-                                        <h4>
-                                            <a href="@Url.Page("StartupIdeaDetails", new { id = idea.IdeaId })">
-                                                @idea.Title
-                                            </a>
-                                            
-                                            <br />
-                                            <span class="idea-status @idea.Status.ToLower()">@idea.Status</span>
-                                            
-                                        </h4>
-                                        <span>@idea.CreatedAt</span>
-                                        <h5>@idea.Category.Name</h5>
-                                        <p>@idea.Description</p>
+                                        @foreach (var request in idea.InvestmentRequests)
+                                        {
+                                            <h4>
+                                                <a href="@Url.Page("RequestDetails", new { id = idea.IdeaId })">
+                                                    @idea.Title
+                                                </a>
+
+                                                <br />
+                                                <span class="idea-status @request.Status.ToLower()">@request.Status</span>
+                                            </h4>
+                                            <span>@request.CreatedAt</span>
+                                            <h5>@request.User.Displayname</h5>
+                                            <p>@request.EquityPercentage%</p>
+                                        }
                                     </div>
                                 </div>
                             }
-                        } else
+                        }
+                        else
                         {
                             <div class="col-12 text-center">
-                                <h3>No ideas available</h3>
+                                <h3>No request available</h3>
                             </div>
                         }
 
-                        
+                        <!-- Pagination Section -->
                         <div class="pagination_area mt_30">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-end">
-                                    <li class="page-item ">
-                                        <a class="page-link @(Model.PageNumber <= 1 ? "disabled" : "")" href="?userId=@Model.UserId&pageNumber=@(Model.PageNumber - 1)" aria-label="Previous">
-                                            <i class="far fa-arrow-left"></i>
-                                        </a>
-                                    </li>
-                                    @for (var i = 1; i <= Model.TotalPages; i++)
+                                    @if (Model.PageNumber > 1)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link @(i == Model.PageNumber ? "active" : "")" href="?userId=@Model.UserId&pageNumber=@i">@i</a>
+                                            <a class="page-link" href="?founderUserId=@Model.PageNumber&pageNumber=@(Model.PageNumber - 1)" aria-label="Previous">
+                                                <i class="far fa-arrow-left"></i> Previous
+                                            </a>
                                         </li>
                                     }
-                                    <li class="page-item ">
-                                        <a class="page-link @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")" href="?userId=@Model.UserId&pageNumber=@(Model.PageNumber + 1)" aria-label="Next">
-                                            <i class="far fa-arrow-right"></i>
-                                        </a>
-                                    </li>
+
+                                    @if (Model.HasMorePages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="?founderUserId=@Model.PageNumber&pageNumber=@(Model.PageNumber + 1)" aria-label="Next">
+                                                Next <i class="far fa-arrow-right"></i>
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>

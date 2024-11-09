@@ -25,5 +25,9 @@ namespace SSI.Data.IRepository
         Dictionary<string, int> countNumber();
         List<User> ProminentInvestor();
         List<Idea> GetNewIdea();
+        Task CreateIdeaAsync(Idea idea);
+        Task CreateIdeaDetailAsync(Ideadetail ideaDetail);
+        Task CreateImageAsync(Image image);
+        Task AddCommentAsync(Comment comment);
     }
 }
