@@ -127,7 +127,13 @@ namespace SSI.Data.Repository
         public List<Idea> RelatedIdea(int ideaId)
         {
             var idea = _context.Ideas.Where(i => i.IdeaId == ideaId).FirstOrDefault();
-            var rerelatedIdeas = _context.Ideas.Where(i => i.CategoryId == idea.CategoryId).Where(i => i.IdeaId != idea.IdeaId).Where(i => i.Status.ToLower() == "approved").ToList();
+            var rerelatedIdeas = _context.Ideas
+                .Where(i => i.CategoryId == idea.CategoryId)
+                .Where(i => i.IdeaId != idea.IdeaId)
+                .Where(i => i.Status.ToLower() == "approved")
+                .OrderByDescending(i => i.CreatedAt) 
+                .Take(4)
+                .ToList();
             return rerelatedIdeas.ToList();
         }
 
