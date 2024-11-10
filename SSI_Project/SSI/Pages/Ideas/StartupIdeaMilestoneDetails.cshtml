@@ -4,7 +4,20 @@
 @{
     ViewData["Title"] = "Milestone Details";
     Layout = "/Pages/Shared/_Layout.cshtml";
+    
     @functions {
+        private int CountCommentsAndReplies(ICollection<SSI.Models.Comment> comments)
+        {
+            int count = comments.Count;
+
+            foreach (var comment in comments)
+            {
+                // Add the count of replies recursively
+                count += CountCommentsAndReplies(comment.InverseParent);
+            }
+
+            return count;
+        }
         private IHtmlContent DisplayReplies(ICollection<SSI.Models.Comment> replies)
         {
             var content = new HtmlContentBuilder();
@@ -12,24 +25,70 @@
             foreach (var reply in replies)
             {
                 content.AppendHtml($@"
-                <div class='single_review reply'>
+                <div class='single_review reply' style='margin-left: 30px;'>
                     <div class='img'>
                         <img src='~/assetsClient/images/client_img_2.png' alt='Reviewer' class='img-fluid w-100'>
                     </div>
                     <div class='text'>
-                        <h4>{reply.User.Displayname} <span>{reply.CreatedAt}</span></h4>
-                        <p>{reply.Content}</p>
-                        <a href='#'><i class='far fa-reply'></i> Reply</a>
+                        <h4>{reply.User.Displayname} <span>{reply.CreatedAt}</span></h4>");
+                if (reply.Parent != null)
+                {
+                content.AppendHtml($@"
+                <p><strong>{reply.Parent.User.Displayname}</strong>:<span>{reply.Content}</span></p>
+                ");
+                }
+                else
+                {
+                content.AppendHtml($@"
+                <p>{reply.Content}</p>
+                ");
+                }
+                content.AppendHtml($@"
+                        <a href='javascript:void(0);' onclick='toggleReplyForm({reply.CommentId})'><i class='far fa-reply'></i> Reply</a>
                     </div>
                 </div>
-            ");
 
-                // Recursively display replies of the current reply
+                <!-- Nested reply form for each reply -->
+                <div id='replyForm-{reply.CommentId}' class='reply-form' style='display: none; margin-left: 50px;'>
+                    <form method='post' asp-page-handler='AddReply' asp-route-parentId='{reply.CommentId}'>
+                        <input type='hidden' name='IdeaDetailId' value='{reply.IdeaDetailId}' />
+                        <input type='hidden' name='IdeaId' value='{Model.Idea?.IdeaId ?? 0}' />
+                        <textarea name='replyContent' class='form-control' placeholder='Write your reply...'></textarea>
+                        <button type='submit' class='btn btn-primary mt-2'>Post Reply</button>
+                    </form>
+                </div>
+                ");
                 content.AppendHtml(DisplayReplies(reply.InverseParent));
             }
 
             return content;
         }
+        Func<string, ICollection<SSI.Models.Image>, IHtmlContent> displayContentWithImages = (content, images) =>
+    {
+        var htmlContent = new HtmlContentBuilder();
+        var sentences = content.Split(new[] { '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+        int imageIndex = 0;
+
+        for (int i = 0; i < sentences.Length; i++)
+        {
+            // Add the sentence to the content
+            htmlContent.AppendHtml($"<p>{sentences[i].Trim()}.</p>");
+
+            // Insert an image every 5 sentences
+            if ((i + 1) % 5 == 0 && imageIndex < images.Count)
+            {
+                var image = images.ElementAt(imageIndex);
+                htmlContent.AppendHtml($@"
+                    <div class='blog_details_img'>
+                        <img src='{image.Url}' alt='Milestone Image' class='img-fluid w-100'>
+                    </div>");
+
+                imageIndex = (imageIndex + 1) % images.Count;
+            }
+        }
+
+        return htmlContent;
+    };
     }
 }
 <section class="blog_details mt_120 xs_mt_100">
@@ -42,23 +101,20 @@
                 <div class="blog_details_text">
                     <h2>@Model.Idea?.Title</h2>
                     <p>@Model.Idea?.Description</p>
+
                     @if (Model.MilestoneDetail != null)
                     {
-                        <div class="col-lg-8 wow fadeInLeft">
+                        <div class="col-lg-12 wow fadeInLeft">
                             <div class="blog_details_text">
-                                <p>@Model.MilestoneDetail.Content</p>
-                            </div>
-                            <div class="blog_details_img">
-                                @foreach (var image in Model.MilestoneDetail.Images)
-                                {
-                                    <img src="@image.Url" alt="Image for @Model.Idea?.Title" class="img-fluid w-100">
-                                }
+                                <!-- Display content with inserted images -->
+                                @displayContentWithImages(Model.MilestoneDetail.Content, Model.MilestoneDetail.Images)
                             </div>
                         </div>
                     }
                 </div>
+
                 <div class="blog_det_comment_area menu_det_review_area mt_80">
-                    <h2>(@Model.MilestoneDetail?.Comments.Count) Comments</h2>
+                    <h2>(@CountCommentsAndReplies(Model.MilestoneDetail?.Comments ?? new List<SSI.Models.Comment>())) Comments</h2>
 
                     @foreach (var comment in @Model.MilestoneDetail?.Comments ?? Enumerable.Empty<SSI.Models.Comment>())
                     {
@@ -69,8 +125,16 @@
                             <div class="text">
                                 <h4>@comment.User.Displayname <span>@comment.CreatedAt</span></h4>
                                 <p>@comment.Content</p>
-                                <a href="#"><i class="far fa-reply"></i> Reply</a>
+                                <a href="javascript:void(0);" onclick="toggleReplyForm(@comment.CommentId)"><i class="far fa-reply"></i> Reply</a>
                             </div>
+                        </div>
+                        <div id="replyForm-@comment.CommentId" class="reply-form" style="display: none; margin-left: 50px;">
+                            <form method="post" asp-page-handler="AddReply" asp-route-parentId="@comment.CommentId">
+                                <input type="hidden" name="IdeaDetailId" value="@comment.IdeaDetailId" />
+                                <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
+                                <textarea name="replyContent" class="form-control" placeholder="Write your reply..."></textarea>
+                                <button type="submit" class="btn btn-primary mt-2">Post Reply</button>
+                            </form>
                         </div>
                         @DisplayReplies( comment.InverseParent)
                     }
@@ -145,3 +209,9 @@
         </div>
     </div>
 </section>
+<script>
+    function toggleReplyForm(commentId) {
+        var replyForm = document.getElementById("replyForm-" + commentId);
+        replyForm.style.display = replyForm.style.display === "none" ? "block" : "none";
+    }
+</script>

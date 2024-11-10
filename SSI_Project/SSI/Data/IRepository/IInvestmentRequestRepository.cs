@@ -5,7 +5,7 @@ namespace SSI.Data.IRepository
     public interface IInvestmentRequestRepository
     {
         Task AddInvestmentRequestAsync(Models.InvestmentRequest investReq);
-        Task<IEnumerable<Idea>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId, int pageNumber, int pageSize);
+        Task<IEnumerable<Models.InvestmentRequest>> GetIdeasWithInvestmentRequestsByFounderAsync(int founderUserId);
         Task<IQueryable<Models.InvestmentRequest>> GetAllInvestmentRequestAsync();
         Task<Models.InvestmentRequest> GetInvestmentRequestByIdAsync(int id);
         Task<IQueryable<Models.InvestmentRequest>> GetInvestmentRequestByInvestorIdAsync(int investorId);

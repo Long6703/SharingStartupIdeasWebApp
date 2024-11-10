@@ -223,5 +223,11 @@ namespace SSI.Data.Repository
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
         }
+        public async Task<Comment?> GetCommentByIdAsync(int commentId)
+        {
+            return await _context.Comments
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.CommentId == commentId);
+        }
     }
 }

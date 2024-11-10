@@ -4,6 +4,7 @@ using SSI.Models;
 using SSI.Services.IService;
 using System.Threading.Tasks;
 using System.Linq;
+using SSI.Ultils.ViewModel;
 
 namespace SSI.Pages.Ideas
 {
@@ -11,9 +12,12 @@ namespace SSI.Pages.Ideas
     {
         private readonly IIdeaService _ideaService;
         private const int CommentsPerPage = 5;
-
-        public StartupIdeaMilestoneDetailsModel(IIdeaService ideaService)
+        private readonly ISessionService _sessionService;
+        [BindProperty(SupportsGet = true)]
+        public UserViewModel userViewModel { get; set; }
+        public StartupIdeaMilestoneDetailsModel(IIdeaService ideaService, ISessionService sessionService)
         {
+            _sessionService = sessionService;
             _ideaService = ideaService;
         }
 
@@ -46,6 +50,33 @@ namespace SSI.Pages.Ideas
                                                .Take(CommentsPerPage)
                                                .ToList();
             return Page();
+        }
+        public async Task<IActionResult> OnPostAddReplyAsync(int parentId, string replyContent,int IdeaDetailId, int IdeaId)
+        {
+            userViewModel = _sessionService.GetSession<UserViewModel>("UserSession");
+            if (string.IsNullOrWhiteSpace(replyContent))
+            {
+                ModelState.AddModelError(string.Empty, "Reply content cannot be empty.");
+                return RedirectToPage(new { id = MilestoneDetail?.IdeaDetailId, ideaId = Idea?.IdeaId, page = CurrentPage });
+            }
+
+            var parentComment = await _ideaService.GetCommentByIdAsync(parentId);
+            if (parentComment == null)
+            {
+                return NotFound();
+            }
+
+            var reply = new Comment
+            {
+                Content = replyContent,
+                CreatedAt = DateTime.UtcNow,
+                UserId = userViewModel.UserId, 
+                ParentId = parentId,
+                IdeaDetailId = parentComment.IdeaDetailId 
+            };
+
+            await _ideaService.AddCommentAsync(reply);
+            return RedirectToPage(new { id = IdeaDetailId, ideaId = IdeaId });
         }
     }
 }
