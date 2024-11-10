@@ -1,4 +1,5 @@
-﻿using SSI.Ultils.ViewModel;
+﻿using SSI.Models;
+using SSI.Ultils.ViewModel;
 
 namespace SSI.Data.IRepository
 {
@@ -24,5 +25,7 @@ namespace SSI.Data.IRepository
         IEnumerable<MonthlyStats> GetMonthlyRevenueAndIdeas();
 
         IEnumerable<UserMonthly> GetMonthlyInvestAndFounder();
+
+        
     }
 }

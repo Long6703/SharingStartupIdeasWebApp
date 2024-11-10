@@ -45,7 +45,7 @@ namespace SSI.Services.Service
 
         public IEnumerable<User> GetFounders()
         {
-            return _adminRepository.GetAllUsers().Where(u => u.Role == "startup");
+            return _adminRepository.GetAllUsers().Where(u => u.Role == "founder");
         }
 
         public IEnumerable<User> GetInvestors()

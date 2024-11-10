@@ -135,8 +135,11 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="font-16 m-1">About</h5>
-                                <p>@Model.User.Bio</p>
-                                @if (Model.User.Role == "startup")
+                                @foreach(var i in Model.Paras)
+                                {
+                                    <p>@i</p>
+                                }
+                                @if (Model.User.Role == "founder")
                                 {
                                     <h5 class="font-14 mb-3 text-uppercase">List Idea</h5>
                                     @foreach (var i in Model.Ideas)
@@ -144,17 +147,17 @@
                                         <div class="d-flex align-items-center mb-2" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
                                             <!-- Title Button on the Left -->
                                             <div class="flex-grow-1">
-                                                @if (i.Status == "approved")
+                                                @if (i.Status.ToLower() == "approved")
                                                 {
-                                                    <a href="~/Ideas/AdminIdeaDetails?id=@i.IdeaId">
+                                                    <a href="@Url.Page("~/Ideas/AdminIdeaDetails", new { ideId = i.IdeaId, uid = Model.User.UserId})">
                                                         <button class="btn btn-icon btn-primary" type="button" style="width: 100%;">
-                                                            <i class="">@i.Title</i>
+                                                            <i>@i.Title</i>
                                                         </button>
                                                     </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/Ideas/AdminIdeaDetails?id=@i.IdeaId">
+                                                    <a href="@Url.Page("~/Ideas/AdminIdeaDetails", new { ideId = i.IdeaId, uid = Model.User.UserId })">
                                                         <button class="btn btn-icon btn-danger" type="button" style="width: 100%;">
                                                             <i class="">@i.Title</i>
                                                         </button>
@@ -163,30 +166,26 @@
                                             </div>
 
                                             <!-- Status Button on the Right -->
-                                            <div class="ml-2">
-                                                <button class="btn  @(i.IsImplement == false ? "btn-dark btn-rounded" : "btn-success")" type="button">
-                                                    @(i.IsImplement == false ? "Not Started" : "In Progress")
-                                                </button>
-                                            </div>
+                                            @* <div class="ml-2">
+                                                @{
+                                                    if (i.IsImplement == true && i.Status.ToLower() == "approved" && Model.Transaction.Status.ToLower().Equals("completed"))
+                                                    {
+                                                        <button class="btn btn-success">In Progress</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-dark btn-rounded">Not Started</button>
+                                                    }
+                                                }
+                                            </div> *@
                                         </div>
                                     }
                                 }else if(Model.User.Role == "investor")
                                 {
-                                    <h5>Number Of Investment:</h5>
-                                    @if (Model.NoOfSuccessInvest > 1 || Model.NoOfRejectInvest > 1)
-                                    {
-                                        <h4 style="color:red;">@Model.NoOfSuccessInvest Successful Ideas , @Model.NoOfRejectInvest Failed Ideas </h4>
-                                    }
-                                    else if (Model.NoOfSuccessInvest == 1 || Model.NoOfRejectInvest == 1)
-                                    {
-                                        <h4 style="color:red;">@Model.NoOfSuccessInvest Successful Idea, @Model.NoOfRejectInvest Failed Idea</h4>
-                                    }
-                                    else
-                                    {
-                                        <h4 style="color:red;">No Idea</h4>
-                                    }
+                                    
+                                    
 
-                                    <h5 class="font-14 mb-3 text-uppercase">List Idea</h5>
+                                    <h5>List Idea Investment</h5>
                                     @foreach (var i in Model.Ideas)
                                     {
                                         <div class="d-flex align-items-center mb-2" style="border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
@@ -194,7 +193,7 @@
                                             <div class="flex-grow-1">
                                                 @if (i.Status == "approved")
                                                 {
-                                                    <a href="~/Ideas/AdminIdeaDetails?id=@i.IdeaId">
+                                                    <a href="@Url.Page("~/Ideas/AdminIdeaDetails", new { ideId = i.IdeaId, uid = Model.User.UserId})">
                                                         <button class="btn btn-icon btn-primary" type="button" style="width: 100%;">
                                                             <i class="">@i.Title</i>
                                                         </button>
@@ -202,7 +201,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/Ideas/AdminIdeaDetails?id=@i.IdeaId">
+                                                    <a href="@Url.Page("~/Ideas?AdminIdeaDetails", new { ideId = i.IdeaId, uid = Model.User.UserId})">
                                                         <button class="btn btn-icon btn-danger" type="button" style="width: 100%;">
                                                             <i class="">@i.Title</i>
                                                         </button>
@@ -211,11 +210,11 @@
                                             </div>
 
                                             <!-- Status Button on the Right -->
-                                            <div class="ml-2">
+                                            @* <div class="ml-2">
                                                 <button class="btn  @(i.IsImplement == false ? "btn-dark btn-rounded" : "btn-success")" type="button">
                                                     @(i.IsImplement == false ? "Not Started" : "In Progress")
                                                 </button>
-                                            </div>
+                                            </div> *@
                                         </div>
                                     }
                                     

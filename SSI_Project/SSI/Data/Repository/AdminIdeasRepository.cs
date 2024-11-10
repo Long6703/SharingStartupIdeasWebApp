@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using SSI.Data.IRepository;
 using SSI.Models;
 
@@ -25,11 +26,6 @@ namespace SSI.Data.Repository
             _context.SaveChanges();
         }
 
-        
-
-    
-
-       
 
         public IEnumerable<Idea> GetIdeas()
         {
@@ -40,20 +36,20 @@ namespace SSI.Data.Repository
 
         public ICollection<Idea> GetIdeasByFounder(int userId)
         {
-            return _context.Ideas
-                    .Where(i => i.UserId == userId)
-                    .Include(i => i.User)
-                    .Include(iv => iv.InvestmentRequests)
-                    .ToList();
+
+            var lis = (from i in _context.Ideas
+                       join u in _context.Users on i.UserId equals u.UserId
+                       where u.UserId == userId
+                       select i).ToList();
+            return lis;
         }
 
         public ICollection<Idea> GetIdeasByInvestore(int userId)
         {
-           var list = (from i in _context.Ideas
-                   join iv in _context.InvestmentRequests on i.IdeaId equals iv.IdeaId
-                   join t in _context.Transactions on iv.RequestId equals t.InvestmentRequestId
-                    where iv.UserId == userId
-                    select i).ToList();
+           var list = (from u in _context.Users
+                       join i in _context.Ideas on u.UserId equals i.UserId
+                       where u.UserId == userId
+                       select i).ToList();
             return list;
         }
 
@@ -85,14 +81,17 @@ namespace SSI.Data.Repository
         //ideadetail
         public Models.Idea GetIdeaById(int id)
         {
-            return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
+            var idea = (from i in _context.Ideas
+                       where i.IdeaId == id
+                       select i).FirstOrDefault();
+            return idea;
         }
         public ICollection<Ideadetail> GetIdeadetailsByIdeaId(int ideaId)
         {
-            var list = (from i in _context.Ideas
-                       join id in _context.Ideadetails on i.IdeaId equals id.IdeaId
-                       where i.IdeaId == ideaId
-                       select id).ToList();
+            var list = (from ideadetail in _context.Ideadetails
+                        join i in _context.Ideas on ideadetail.IdeaId equals i.IdeaId
+                        where ideadetail.IdeaId == ideaId
+                        select ideadetail).ToList();
             return list;
         }
 
@@ -118,9 +117,27 @@ namespace SSI.Data.Repository
         {
             var c = from category in _context.Categories
                     join i in _context.Ideas on category.CategoryId equals i.CategoryId
-                    where i.IdeaId == id
                    select category;
             return c as Models.Category;
+        }
+
+        public ICollection<InvestmentRequest> GetInvestByIdeaId(int ideaId, int userId)
+        {
+            var  l = (from i in _context.Ideas
+                      join invest in _context.InvestmentRequests on i.IdeaId equals invest.IdeaId
+                      where invest.IdeaId == ideaId && invest.UserId == userId
+                      select invest).ToList();
+            return l;
+        }
+
+        public Transaction GetTransactionByReqId(int reqId, int ideaId, int userId)
+        {
+            var trans = (from u in _context.Users
+                     join i in _context.InvestmentRequests on u.UserId equals i.UserId
+                     join t in _context.Transactions on i.RequestId equals t.InvestmentRequestId
+                     where i.IdeaId == ideaId && t.InvestmentRequestId == reqId && i.UserId == userId && t.Status == "completed"
+                     select t) as Transaction;
+            return trans;
         }
     }
 }

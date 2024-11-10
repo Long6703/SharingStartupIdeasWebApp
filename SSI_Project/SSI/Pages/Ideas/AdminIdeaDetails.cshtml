@@ -6,10 +6,14 @@
 
 <div class="container-fluid">
 
+   
     <div class="row">
         <div class="col-12">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h4 class="header-title mb-3">Idea Deatils</h4>
+                <a href="@Url.Page("/Ideas/AdminIdeasList")">
+                    <button class="btn btn-icon btn-warning" type="submit"><i class="">Back</i></button>
+                </a>
             </div>
         </div>
     </div>
@@ -25,32 +29,24 @@
 
                     <div class="">
                         <h5 class="mt-3">@Model.Idea.Title</h5>
-                        
+
                     </div>
 
                     <p class="text-muted mt-2">
-                            
+
                     </p>
 
-                    @if(Model.Idea.Status == "pending")
-                    {
-                        <form method="post">
-                            <input type="hidden" value="@Model.Idea.IdeaId" />
-                            <button type="submit" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Reject</button>
-                            <button type="submit" class="btn btn-teal mt-2" name="action" value="Approve">Approve</button>
-                        </form>
-                    }
-                    else if(Model.Idea.Status == "approved")
+                    @if (Model.Idea.Status.ToLower() == "approved")
                     {
 
                         <button type="button" class="btn btn-teal mt-2" name="action" value="Approve">Approved</button>
                     }
-                    else
+                    else if (Model.Idea.Status.ToLower() == "rejected")
                     {
                         <button type="button" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Rejected</button>
                     }
 
-                        
+
 
                 </div>
 
@@ -60,7 +56,7 @@
         </div>
         <!-- end col -->
     </div>
- 
+
 
     <div class="mt-5">
         <ul class="nav nav-tabs tabs-bordered">
@@ -79,45 +75,49 @@
         <div class="tab-content">
             <div class="tab-pane active" id="home-b1">
                 <div class="row">
-                    @{
-                        int count = Model.countIdeaDetais;
-                        int c = 1;
-                    }
+
 
                     <div class="col-lg-12">
                         <!-- Personal-Information -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="timeline" dir="ltr">
+
                                     @{
-                                     
-                                        foreach (var i in Model.ideadetails)
+                                        int count = Model.countIdeaDetais;
+                                        int c = 1;
+                                    }
+                                    @if (Model?.ideadetails != null && Model.ideadetails.Any())
+                                    {
+                                        foreach (var i in Model.Idea.Ideadetails)
                                         {
                                             <article class="timeline-item alt">
-                                     
-                                                <div class="text-left">
-                                                    <div class="time-show first">
-                                                        <a href="#" class="btn btn-primary">Phase @c</a>
+                                                <div class="row">
+                                                    <!-- Phase Button Column -->
+                                                    <div class="col-md-2 text-left">
+                                                        <div class="time-show first">
+                                                            <a href="#" class="btn btn-primary">Phase @c</a>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                      
-                                                <div class="timeline-desk">
-                                                    <div class="panel">
-                                                        <div class="timeline-box">
-                                                            <span class="arrow"></span>
-                                                           
-                                                            <h4 class="text-success">Content:</h4>
-                                                            <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
-                                                            <p>@i.Content</p>
-                                                            <div class="image-gallery">
-                                                                <div class="row">
-                                                                    @{
-                                                                        if(i.Images != null)
+                                                    <!-- Content Column -->
+                                                    <div class="col-md-10 timeline-desk text-left">
+                                                        <div class="panel">
+                                                            <div class="timeline-box" style="text-align: left;">
+                                                                <span class="arrow"></span>
+                                                                <h4 class="text-success" style="text-align: left;">Content:</h4>
+                                                                <p class="timeline-date text-muted" style="text-align: left;"><small>@i.CreatedAt</small></p>
+                                                                @foreach(var p in Model.Paras)
+                                                                {
+                                                                    <p style="text-align: left;">@p</p>
+                                                                }
+                                                                <div class="image-gallery">
+                                                                    <div class="row">
+                                                                        @if (i.Images != null)
                                                                         {
                                                                             foreach (var im in i.Images)
                                                                             {
-                                                                                <div class="col-3">
+                                                                                <div class="col-md-4 col-6">
                                                                                     <img src="@im.Url" class="img-thumbnail" alt="image1" style="width: 100%; height: auto;">
                                                                                 </div>
                                                                             }
@@ -126,9 +126,7 @@
                                                                         {
                                                                             <p>No picture</p>
                                                                         }
-                                                                    }
-                                                                   
-                                                                    
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -138,12 +136,15 @@
                                             c++;
                                         }
                                     }
+                                    else
+                                    {
+                                        <p>No Milestone</p>
+                                    }
+
                                 </div>
                             </div>
                         </div>
-                        <!-- end row -->
-                       
-                        <!-- Personal-Information -->
+                   
 
                     </div>
 
@@ -180,24 +181,24 @@
                                 </div>
                             </div>
                             <!-- /col-md-5 -->
-                            <!-- Cột bên phải chứa ảnh -->
+
                             <div class="col-md-5">
                                 <div class="p-4">
                                     <!-- Avatar -->
                                     <div class="mb-4">
                                         <h6></h6>
-                                        <p><img src="@Model.Idea.PosterImg?" class="img-fluid rounded" alt="Profile Image" /></p>
+                                        <p><img src="@Model.Idea.PosterImg?" class="img-fluid rounded" alt="Profile Image" style="max-width:50%" /></p>
                                     </div>
                                 </div>
                             </div>
                             <!-- /col-md-5 -->
                         </div>
-   
+
                         <div class="row justify-content-center">
                             <div class="col-md-9">
                                 <div class="p-4">
                                     <h5>Description:</h5>
-                                    @foreach(var p in Model.Paras)
+                                    @foreach (var p in Model.Paras)
                                     {
                                         <p>@p</p>
                                     }
@@ -206,7 +207,7 @@
                             <div class="col-md-1">
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <!-- Personal-Information -->
@@ -228,9 +229,9 @@
             if (ideaDetail) {
                 const ideaInfoContainer = document.getElementById('profile-b1');
                 ideaInfoContainer.innerHTML = `
-              <h2>Phase ${ideaDetail.PhaseNumber} Details</h2>
-              <p><strong>Content:</strong> ${ideaDetail.Content}</p>
-              `;
+                  <h2>Phase ${ideaDetail.PhaseNumber} Details</h2>
+                  <p><strong>Content:</strong> ${ideaDetail.Content}</p>
+                  `;
                 $('#profile-b1').tab('show');
             } else {
                 console.error('Idea detail not found for Phase', phaseNumber);

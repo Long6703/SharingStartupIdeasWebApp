@@ -77,5 +77,15 @@ namespace SSI.Services.Service
         {
             return _repository.GetCategoryById(ideId);
         }
+
+        public ICollection<InvestmentRequest> GetInvestByIdeaId(int ideaId, int userId)
+        {
+            return _repository.GetInvestByIdeaId(ideaId, userId);
+        }
+
+        public Transaction GetTransactionByReqId(int reqId, int ideaId, int userId)
+        {
+            return _repository.GetTransactionByReqId(reqId, ideaId, userId);
+        }
     }
 }

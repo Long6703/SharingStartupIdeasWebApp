@@ -27,6 +27,9 @@ namespace SSI.Data.IRepository
 
         public Models.Category GetCategoryById(int id);
 
+        ICollection<InvestmentRequest> GetInvestByIdeaId(int ideaId, int useid);
+
+        Models.Transaction GetTransactionByReqId(int reqId, int ideaId, int userId);
 
     }
 

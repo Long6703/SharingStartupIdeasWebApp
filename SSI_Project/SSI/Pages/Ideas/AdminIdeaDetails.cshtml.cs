@@ -35,7 +35,7 @@ namespace SSI.Pages.Ideas
         public void OnGet(int ideId, int uid)
         {
             Idea = adminIdeasService.GetIdeaById(ideId);
-            ideadetails = adminIdeasService.GetIdeadetailsByIdeaId(ideId);
+            ideadetails = adminIdeasService.GetIdeadetailsByIdeaId(Idea.IdeaId);
             User = adminService.GetUser(uid);
             Idea.Ideadetails = ideadetails;
             Idea.User = User;
@@ -43,14 +43,16 @@ namespace SSI.Pages.Ideas
             foreach (var i in ideadetails)
             {
                 images = adminIdeasService.GetImages(i.IdeaDetailId);
-                if (images != null) {
-                    i.Images = images;
-                }
-                
+                i.Images = images;
+
                 i.Idea.Category = Category;
             }
             countIdeaDetais = adminIdeasService.CountIdeaDetailByIdeaId(ideId);
             Paras = GetPara(Idea.Description);
+
+            
+
+           
         }
 
         public IActionResult OnPost(string action, int id)
@@ -104,7 +106,7 @@ namespace SSI.Pages.Ideas
             {
                 currentParagraph.Append(word).Append(" ");
                 wordCount++;
-                if (wordCount >= 100 && word.EndsWith("."))
+                if (wordCount >= 50 && word.EndsWith("."))
                 {
                     para.Add(currentParagraph.ToString().Trim());
                     currentParagraph.Clear();
