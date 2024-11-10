@@ -68,7 +68,7 @@
                     <h1>Idea details</h1>
                     <ul>
                         <li><a href="#">Home </a></li>
-                        <li><a href="#">Idea details</a></li>
+                        <li><a href="@Url.Page("IdeaDetails", new { id = Model.Idea.IdeaId})">Idea details</a></li>
                     </ul>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 <section class="menu_details pt_120 xs_pt_100">
     <div class="container">
         <div class="row">
-            <div class="col-xl-4 col-md-8 col-lg-5 wow fadeInLeft">
+            @* <div class="col-xl-4 col-md-8 col-lg-5 wow fadeInLeft">
                 <div class="menu_det_slider_area sticky_sidebar">
                     <div class="row">
                         <!-- Large image display area, initially showing the first image -->
@@ -123,15 +123,17 @@
                         }
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-5 col-md-8 col-lg-7 wow fadeInUp">
+            </div> *@
+            <div class="col-xl-9 col-md-8 col-lg-7 wow fadeInUp">
                 <div class="menu_det_text">
                     <h2 class="details_title">@Model.Idea.Title</h2>
                     <p class="rating">
                         <span>Comments (@Model.CommentCount)</span>
                     </p>
+                    @if (Model.SelectedMilestone == null)
+                    {
                     <h3>Description</h3>
-                    <div class="" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                    <div class="" style=" overflow-y: auto; solid #ccc; padding: 10px;">
                         @for (int i = 0; i < chunkedDescription.Count; i++)
                         {
                             <p>@chunkedDescription[i]</p>
@@ -141,10 +143,11 @@
                             }
                         }
                     </div>
+                    }
                     @if (Model.SelectedMilestone != null)
                     {
                         <h3>Milestone Content</h3>
-                        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                        <div style=" overflow-y: auto; solid #ccc; padding: 10px;">
 
                             @{
                                 var contentSentences = Model.SelectedMilestone.Content.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
