@@ -1,0 +1,78 @@
+﻿@page
+@model SSI.Pages.VietQrModel
+@{
+}
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Payment Request</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Payment Request</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--=========================
+    DASHBOARD ORDER START
+==========================-->
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 wow fadeInLeft">
+                <div class="dashboard_sidebar">
+                    
+
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-8 wow">
+                <div class="dashboard_content">
+                    <h2 class="dashboard_title">Scan QR Code for Payment</h2>
+                    <div class="dashboard_order">
+                        <img src="@Model.PaymentUrl" />
+                    </div>
+                    <input type="hidden" id="price" value="@Model.Amount"/>
+                    <input type="hidden" id="info" value="@Model.Info" />
+                    <input type="hidden" id="requestId" value="@Model.RequestId" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    setInterval(() => {
+        checkPaidByVietQR();
+    }, 5000);
+
+    async function checkPaidByVietQR() {
+        var price = document.getElementById("price").value;
+        var info = document.getElementById("info").value;
+        var reqId = document.getElementById("requestId").value;
+        if (price == null) {
+            return;
+        }
+        try {
+            const response = await fetch(
+                "https://script.google.com/macros/s/AKfycbwpXe-o8JjgRH12DYY3eDdEwUig2Eha183nk1-uKyUg3Ow9yDKRxL_otJfWti97VYQxKA/exec"
+            );
+            const data = await response.json();
+            const lastPaid = data.data[data.data.length - 1];
+            var lastPrice = lastPaid["Giá trị"];
+            var content = lastPaid["Mô tả"];
+            if (lastPrice >= price && content.includes(info)) {
+                alert("Paid Successfully");
+                // Redirect with amount and requestId as query parameters
+                window.location.href = `/vietqr-return?amount=${price}&requestId=${reqId}`;
+            }
+        } catch {
+            alert("Error due to payment!");
+        }
+    }
+</script>

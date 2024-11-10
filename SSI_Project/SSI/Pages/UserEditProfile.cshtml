@@ -1,0 +1,58 @@
+﻿@page
+@model SSI.Pages.UserEditProfileModel
+@{
+    Layout = "_LayoutUserDashboard";
+}
+
+<div class="col-xl-9 col-lg-8 wow fadeInRight">
+    <div class="dashboard_content">
+        <div class="dashboard_profile_info">
+            <div class="dashboard_profile_info_edit">
+                <h2>Edit Information <a href="#">Cancel</a></h2>
+                <form class="info_edit_form" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="Displayname" placeholder="Name" value="@Model.userViewModel.Displayname">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" name="Email" placeholder="Email" value="@Model.userViewModel.Email" disabled>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea style="text-align: left; direction: ltr;" rows="12" name="Bio" placeholder="Your Bio">@Model.userViewModel.Bio</textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Location" placeholder="Location" value="@Model.userViewModel.Location">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Profession" placeholder="Profession" value="@Model.userViewModel.Profession">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="WebsiteUrl" placeholder="Website URL" value="@Model.userViewModel.WebsiteUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="LinkedinUrl" placeholder="LinkedIn URL" value="@Model.userViewModel.LinkedinUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="TwitterUrl" placeholder="Twitter URL" value="@Model.userViewModel.TwitterUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="FacebookUrl" placeholder="Facebook URL" value="@Model.userViewModel.FacebookUrl">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="BankAccountNumber" placeholder="Back Account Number" value="@Model.userViewModel.BankAccountNumber">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="BankName" placeholder="Bank Name" value="@Model.userViewModel.BankName">
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="common_btn">
+                                Save Profile
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

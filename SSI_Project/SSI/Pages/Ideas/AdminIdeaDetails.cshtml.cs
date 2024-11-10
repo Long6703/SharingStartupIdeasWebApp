@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,12 +11,13 @@ using System.Text;
 
 namespace SSI.Pages.Ideas
 {
-    public class IdeaDetailsModel : PageModel
+    [Authorize(Roles ="admin")]
+    public class AdminIdeaDetailsModel : PageModel
     {
         private readonly IAdminService adminService;
         private readonly IAdminIdeasService adminIdeasService;
         private readonly AdminEmailService _emailService;
-        public IdeaDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeasService, AdminEmailService emailService)
+        public AdminIdeaDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeasService, AdminEmailService emailService)
         {
             this.adminService = adminService;
             this.adminIdeasService = adminIdeasService;
@@ -41,7 +43,10 @@ namespace SSI.Pages.Ideas
             foreach (var i in ideadetails)
             {
                 images = adminIdeasService.GetImages(i.IdeaDetailId);
-                i.Images = images;
+                if (images != null) {
+                    i.Images = images;
+                }
+                
                 i.Idea.Category = Category;
             }
             countIdeaDetais = adminIdeasService.CountIdeaDetailByIdeaId(ideId);

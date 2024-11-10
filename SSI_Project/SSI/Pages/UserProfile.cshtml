@@ -1,0 +1,33 @@
+﻿@page
+@model SSI.Pages.UserProfileModel
+@{
+    Layout = "_LayoutUserDashboard";
+}
+
+<div class="col-xl-9 col-lg-8 wow fadeInRight">
+    <div class="dashboard_content">
+        <h2 class="dashboard_title">@Model.userViewModel.Displayname - @Model.userViewModel.Role?.ToUpper()</h2>
+
+        <div class="dashboard_profile_info">
+            <div class="row mt_15">
+                <div class="col-xl-12 col-sm-6 wow fadeInUp">
+                    <div class="profile_overview_item">
+                        <p style="text-align: left; font-size: large">@Model.userViewModel.Bio</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard_profile_info_list mt_25 wow fadeInUp">
+                <h2>Personal Information <a asp-page="UserEditProfile" >Edit</a></h2>
+                <ul>
+                    <li><span>Name:</span> @Model.userViewModel.Displayname</li>
+                    <li><span>Email:</span> @Model.userViewModel.Email</li>
+                    <li><span>Location:</span> @Model.userViewModel.Location</li>
+                    <li><span>Profession:</span> @Model.userViewModel.Profession</li>
+                    <li><span>Bank Information:</span> @Model.userViewModel.BankAccountNumber - @Model.userViewModel.BankName</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

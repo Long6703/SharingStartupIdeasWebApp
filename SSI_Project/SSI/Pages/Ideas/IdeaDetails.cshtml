@@ -1,0 +1,442 @@
+﻿@page
+@using SSI.Models
+@using System.Web
+@model SSI.Pages.Ideas.IdeaDetailsModel
+@{
+    var description = Model.Idea.Description;
+    var sentencePattern = @"(?<=[\.!\?])\s+(?=[A-Z])"; 
+    var sentences = System.Text.RegularExpressions.Regex.Split(description, sentencePattern);
+    var chunkedDescription = new List<string>();
+    int chunkSize = 5;
+
+    for (int i = 0; i < sentences.Length; i += chunkSize)
+    {
+        var chunk = string.Join(" ", sentences.Skip(i).Take(chunkSize));
+        chunkedDescription.Add(chunk);
+    }
+}
+
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+@{
+    var ideaUrl = Url.Page("IdeaDetails", new { id = Model.Idea.IdeaId });
+    var fullUrl = $"{Request.Scheme}://{Request.Host}{ideaUrl}";
+}
+
+@{
+
+    int updateCount = 1; 
+    var selectedMilestone = ViewData["SelectedMilestone"] as Ideadetail;
+}
+
+<style>
+    .replies .reply {
+        margin-left: 20px; 
+        border-left: 2px solid #ccc; 
+        padding-left: 10px; 
+    }
+
+    .inline-form {
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+    .love-btn {
+        background: none;
+        border: none;
+        color: #e74c3c; /* Change to desired color */
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0;
+    }
+
+        .love-btn:hover {
+            color: #c0392b;
+        }
+</style>
+
+<section class="breadcrumb_area" style="background: url('@Url.Content("https://alumni.arizona.edu/sites/default/files/styles/az_large/public/2022-07/is_your_idea_innovative.jpeg.webp?itok=F6C-r8q2")');">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Idea details</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Idea details</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--=========================
+    MENU DETAILS START
+==========================-->
+<section class="menu_details pt_120 xs_pt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-8 col-lg-5 wow fadeInLeft">
+                <div class="menu_det_slider_area sticky_sidebar">
+                    <div class="row">
+                        <!-- Large image display area, initially showing the first image -->
+                        <div class="col-12">
+                            <div class="details_large_img">
+                                <img id="largeImage" src="@Model.Idea.Ideadetails.FirstOrDefault()?.Images.FirstOrDefault()?.Url" alt="slider" class="img-fluid w-100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row slider-nav mt-3">
+                        @if (Model.SelectedMilestone != null)
+                        {
+                            @foreach (var image in Model.SelectedMilestone.Images)
+                            {
+                                <div class="col-xl-3 col-4">
+                                    <div class="details_small_img">
+                                        <img src="@image.Url" alt="slider" class="img-fluid w-100 thumbnail-image" data-large="@image.Url">
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            foreach (var detail in Model.Idea.Ideadetails)
+                            {
+                                @foreach (var image in detail.Images)
+                                {
+                                    <div class="col-xl-3 col-4">
+                                        <div class="details_small_img">
+                                            <img src="@image.Url" alt="slider" class="img-fluid w-100 thumbnail-image" data-large="@image.Url">
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-md-8 col-lg-7 wow fadeInUp">
+                <div class="menu_det_text">
+                    <h2 class="details_title">@Model.Idea.Title</h2>
+                    <p class="rating">
+                        <span>Comments (@Model.CommentCount)</span>
+                    </p>
+                    <h3>Description</h3>
+                    <div class="" style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                        @for (int i = 0; i < chunkedDescription.Count; i++)
+                        {
+                            <p>@chunkedDescription[i]</p>
+                            @if (i < chunkedDescription.Count - 1)
+                            {
+                                <img src="@Model.Idea.PosterImg" alt="Description Image" class="img-fluid" style="margin: 10px 0;">
+                            }
+                        }
+                    </div>
+                    @if (Model.SelectedMilestone != null)
+                    {
+                        <h3>Milestone Content</h3>
+                        <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+
+                            @{
+                                var contentSentences = Model.SelectedMilestone.Content.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+                                var images = Model.SelectedMilestone.Images.ToList(); // Chuyển ICollection<Image> thành List<Image>
+                                var imageIndex = 0;
+                                var totalImages = images.Count;
+                            }
+
+                            @for (int i = 0; i < contentSentences.Length; i++)
+                            {
+                                <p>@contentSentences[i].Trim()</p>
+                                @if ((i + 1) % 5 == 0 && imageIndex < totalImages)
+                                {
+                                    <br />
+                                    <img src="@images[imageIndex].Url" alt="Milestone Image" class="img-fluid w-100 thumbnail-image">
+                                    <br />
+                                    imageIndex++; // Tăng chỉ số hình ảnh sau khi sử dụng
+                                }
+                            }
+                        </div>
+                    }
+
+                    <div class="details_cart_btn">
+                        <a class="common_btn" href="#">
+                            <span class="icon">
+                                <img src="~/assetsClient/images/dau-tu.jpg" alt="order" class="img-fluid w-100">
+                            </span>
+                            Invest
+                        </a>
+                        <form method="post" asp-page-handler="AddToInterestList" class="inline-form">
+                            <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" />
+                            <button type="submit" class="love-btn">
+                                <i class="far fa-heart"></i> Add to Interest List 
+                            </button>
+                        </form>
+                    </div>
+                    <div class="details_cart_btn">
+                    @if (TempData["InterestListSuccess"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["InterestListSuccess"]
+                        </div>
+                    }
+                    </div>
+
+                    <ul class="share">
+                        <li>Share with friends:</li>
+                        <li>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=@HttpUtility.UrlEncode(fullUrl)" target="_blank">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fab fa-behance" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-8 d-lg-none d-xl-block wow fadeInRight">
+                <div class="sticky_sidebar">
+                    <div class="menu_details_offer">
+                        <p>Created By @Model.Idea.User.Displayname at @Model.Idea.CreatedAt</p>
+                    </div>
+                </div>
+                @if(Model.Idea.Ideadetails.Count() != 0)
+                {
+                    <div class="sticky_sidebar">
+                        <div class="menu_details_offer">
+                            @foreach (var detail in Model.Idea.Ideadetails)
+                            {
+                                <form method="post" asp-page-handler="Milestone">
+                                    <input type="hidden" name="milestoneId" value="@detail.IdeaDetailId" />
+                                    <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" />
+                                    <button type="submit" class="milestone-button">@($"Milestone {updateCount}")</button>
+                                </form>
+
+                                <br />
+                                updateCount++;
+                            }
+                        </div>
+                    </div>
+                }
+                     
+            </div>
+        </div>
+        <div class="row mt_120 xs_mt_100 wow fadeInUp">
+            <div class="col-12">
+                <div class="menu_det_content_area">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                                    aria-selected="false">
+                                Reviews
+                            </button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-contact" role="tabpanel"
+                             aria-labelledby="nav-contact-tab" tabindex="0">
+                            <div class="menu_det_review_area">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <h2>(@Model.CommentCount) Reviews</h2>
+                                        @foreach (var comment in (Model.SelectedMilestone != null ? Model.MilestoneComments : Model.Comments)
+                                        .Where(c => c.ParentId == null)  
+                                        .Skip((Model.CurrentPage - 1) * Model.CommentsPerPage)
+                                        .Take(Model.CommentsPerPage))
+                                        {
+                                            <div class="single_review">
+                                                @if (comment.User.AvatarUrl!=null)
+                                                {
+                                                    <div class="img">
+                                                        <img src="@comment.User.AvatarUrl" alt="Reviewer" class="img-fluid w-100">
+                                                    </div>
+                                                }                                               
+                                                <div class="text">
+                                                        <h4>@(comment.User?.Displayname ?? "Unknown User")<span>@comment.CreatedAt</span></h4>
+                                                        <p>@comment.Content</p>
+                                                    <button class="reply-button" data-comment-id="@comment.CommentId" data-reply-to="@comment.User?.Displayname"><i class="far fa-reply">Reply</i></button>
+                                                   
+                                                    <div class="reply-form" id="reply-form-@comment.CommentId" style="display:none;">
+                                                        <form method="post" asp-page-handler="SubmitReply">
+                                                            <div class="review_input_box">
+                                                                <label>Write Your Reply *</label>
+                                                                <textarea rows="2" name="ReplyContent" required></textarea>
+                                                            </div>
+                                                            <input type="hidden" name="ParentId" value="@comment.CommentId" />
+                                                            <input type="hidden" name="IdeaDetailId" value="@comment.IdeaDetailId" />
+                                                            <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
+                                                            <button type="submit" class="common_btn">Submit Reply</button>
+                                                        </form>
+                                                    </div>
+                                                    @foreach (var reply in Model.GetNestedReplies(comment))
+                                                    {
+                                                        <div class="reply" style="margin-left: 20px;">
+                                                            @* @if (reply.User.AvatarUrl != null)
+                                                            {
+                                                                <div class="img">
+                                                                    <img src="@reply.User.AvatarUrl" class="img-fluid">
+                                                                </div>
+                                                            } *@
+                                                            <div class="text">
+                                                                <h5>@(reply.User?.Displayname ?? "Unknown User") replied to @reply.Parent?.User?.Displayname <span>@reply.CreatedAt</span></h5>
+                                                                <p>@reply.Content</p>
+                                                                <button class="reply-button" data-comment-id="@reply.CommentId" data-reply-to="@reply.User?.Displayname">
+                                                                    <i class="far fa-reply">Reply</i>
+                                                                </button>
+                                                                <div class="reply-form" id="reply-form-@reply.CommentId" style="display:none;">
+                                                                    <form method="post" asp-page-handler="SubmitReply">
+                                                                        <div class="review_input_box">
+                                                                            <label>Write Your Reply *</label>
+                                                                            <textarea rows="2" name="ReplyContent" required></textarea>
+                                                                        </div>
+                                                                        <input type="hidden" name="ParentId" value="@reply.CommentId" />
+                                                                        <input type="hidden" name="IdeaDetailId" value="@reply.IdeaDetailId" />
+                                                                        <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
+                                                                        <button type="submit" class="common_btn">Submit Reply</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!-- Pagination Buttons -->
+                                        <div class="pagination">
+                                            @for (int i = 1; i <= Model.TotalPages; i++)
+                                            {
+                                                <form method="post" asp-page-handler="ChangePage" class="d-inline">
+                                                    <input type="hidden" name="milestoneId" value="@(Model.SelectedMilestone?.IdeaDetailId ?? 0)" />
+                                                    <input type="hidden" name="ideaId" value="@Model.Idea.IdeaId" />
+                                                    <input type="hidden" name="page" value="@i" />
+                                                    <button type="submit" class="btn @(Model.CurrentPage == i ? "btn-primary" : "btn-light")">
+                                                        @i
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-lg-4">
+                                        <div class="review_input_area">
+                                            <h2>Write A Review</h2>
+                                            <form method="post" asp-page-handler="SubmitReview">
+                                                <div class="review_input_box">
+                                                    <label>Write Review *</label>
+                                                    <textarea rows="5" name="ReviewContent" required></textarea>
+                                                </div>
+                                                <input type="hidden" name="milestoneId" value="@selectedMilestone?.IdeaDetailId" />
+                                                <input type="hidden" name="IdeaId" value="@Model.Idea.IdeaId" />
+                                                <button type="submit" class="common_btn">Submit Review</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--=========================
+    MENU DETAILS END
+==========================-->
+<!--=========================
+    RELATED MENU START
+==========================-->
+@if (ViewData["RelatedIdeas"] is List<Idea> relatedIdeas && relatedIdeas != null && relatedIdeas.Any())
+        {
+<section class="related_menu pt_105 xs_pt_85">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-xl-5">
+                <div class="section_heading heading_left mb_25">
+                    <h2>Related Ideas</h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row related_slider">
+            @foreach (var relatedIdea in (List<Idea>)ViewData["RelatedIdeas"]){
+                <div class="col-xl-4 col-md-6 wow fadeInUp">
+                    <div class="single_blog_2">
+                        <a href="blog_details.html" class="single_blog_2_img">
+                            <img src="@relatedIdea.PosterImg" alt="blog" class="img-fluid w-100">
+                        </a>
+                        <div class="single_blog_2_text">
+                            <ul>
+                                <li>
+                                    <a href="#">@relatedIdea.Category.Name</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        <img src="~/assetsClient/images/calendar_2.svg" alt="calendar" class="img-fluid w-100">
+                                    </span>
+                                    @relatedIdea.CreatedAt
+                                </li>
+                            </ul>
+                            <a class="title" href="@Url.Page("IdeaDetails", new { id = relatedIdea.IdeaId })">
+                                @relatedIdea.Title
+                            </a>
+                            <a class="read_btn" href="@Url.Page("IdeaDetails", new { id = relatedIdea.IdeaId })">
+                                Read More <i class="far fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }           
+        </div>
+        
+    </div>
+        <div id="notification" class="alert alert-success" style="display:none; position: fixed; top: 20px; right: 20px; z-index: 1000;">
+            Add to interest list successfully!
+        </div>
+</section>
+}
+<script>
+    // JavaScript/jQuery to handle thumbnail clicks and update the large image
+    document.addEventListener("DOMContentLoaded", function () {
+        // Add click event listeners to all thumbnail images
+        document.querySelectorAll('.thumbnail-image').forEach(thumbnail => {
+            thumbnail.addEventListener('click', function () {
+                // Update the src of the large image with the clicked thumbnail's data-large attribute
+                const largeImage = document.getElementById('largeImage');
+                largeImage.src = this.getAttribute('data-large');
+            });
+        });
+        document.querySelectorAll('.reply-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const commentId = this.getAttribute('data-comment-id');
+                const replyToName = this.getAttribute('data-reply-to');
+                const replyForm = document.getElementById(`reply-form-${commentId}`);
+
+                if (replyForm) {
+                    replyForm.style.display = replyForm.style.display === 'block' ? 'none' : 'block';
+                    const textarea = replyForm.querySelector("textarea[name='ReplyContent']");
+                    textarea.value = `Replying to ${replyToName} `;
+                    textarea.focus();
+                }
+            });
+        });
+
+        document.querySelectorAll('.reply-form form').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                const textarea = this.querySelector("textarea[name='ReplyContent']");
+                const replyToName = this.closest('.reply-form').previousElementSibling.getAttribute('data-reply-to');
+
+                const prefixPattern = new RegExp(`^Replying to ${replyToName} `, 'i'); // 'i' for case-insensitive matching
+                const replyContent = textarea.value.replace(prefixPattern, ''); // Remove the prefix if it matches
+                textarea.value = replyContent.trim();
+            });
+        });
+    });
+</script>

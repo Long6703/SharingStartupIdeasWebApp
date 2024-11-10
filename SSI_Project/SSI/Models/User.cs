@@ -26,6 +26,8 @@ namespace SSI.Models
         public string? LinkedinUrl { get; set; }
         public string? TwitterUrl { get; set; }
         public string? FacebookUrl { get; set; }
+        public string? BankAccountNumber { get; set; }
+        public string? BankName { get; set; }
         public DateTime? CreatedAt { get; set; }
         public string? Status { get; set; }
 

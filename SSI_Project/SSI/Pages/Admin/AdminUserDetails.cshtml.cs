@@ -1,10 +1,12 @@
-    using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
 
 namespace SSI.Pages.Admin
 {
+    [Authorize(Roles = "admin")]
     public class AdminUserDetailsModel : PageModel
     {
         private readonly IAdminService adminService;

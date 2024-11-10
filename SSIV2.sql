@@ -1,15 +1,25 @@
-create database SSIV2;
+CREATE DATABASE SSIV2;
 
-use SSIV2;
+USE SSIV2;
 
 CREATE TABLE [user] (
     user_id INT PRIMARY KEY IDENTITY,
     displayname NVARCHAR(50) NULL,
     email NVARCHAR(100) NOT NULL UNIQUE,
     password NVARCHAR(255) NOT NULL,
-    role NVARCHAR(20) CHECK (role IN ('admin', 'startup', 'investor')) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('active', 'inactive')) DEFAULT 'active',
-    created_at DATETIME DEFAULT GETDATE()
+    role NVARCHAR(20),
+    avatar_url TEXT NULL,
+    bio TEXT NULL,
+    location NVARCHAR(100) NULL,
+    profession NVARCHAR(100) NULL,
+    website_url TEXT NULL,
+    linkedin_url TEXT NULL,
+    twitter_url TEXT NULL,
+    facebook_url TEXT NULL,
+	bank_account_number NVARCHAR(50) NULL,
+    bank_name NVARCHAR(100) NULL,   
+    created_at DATETIME DEFAULT GETDATE(),
+    status NVARCHAR(20)
 );
 select * from [user]
 INSERT INTO [user] (displayname, email, password, role, status)
@@ -31,11 +41,10 @@ CREATE TABLE idea (
     description TEXT NULL,
     category_id INT,
     created_at DATETIME DEFAULT GETDATE(),
-    status NVARCHAR(20) CHECK (status IN ('approved', 'pending', 'rejected')) DEFAULT 'pending',
+    status NVARCHAR(20),
     is_seeking_investment BIT DEFAULT 0,
     is_implement BIT DEFAULT 0,
-    poster_img NVARCHAR(255),
-    
+    poster_img TEXT NULL,
     FOREIGN KEY (user_id) REFERENCES [user](user_id),
     FOREIGN KEY (category_id) REFERENCES category(category_id)
 );
@@ -51,7 +60,7 @@ CREATE TABLE ideadetail (
 CREATE TABLE image (
     image_id INT PRIMARY KEY IDENTITY,
     idea_detail_id INT NOT NULL,
-    url NVARCHAR(255) NOT NULL,
+    url TEXT NOT NULL,
     FOREIGN KEY (idea_detail_id) REFERENCES ideadetail(idea_detail_id)
 );
 
@@ -72,7 +81,7 @@ CREATE TABLE investment_request (
     idea_id INT NOT NULL,
     user_id INT NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('approved', 'rejected', 'pending')) DEFAULT 'pending',
+    status NVARCHAR(20),
     created_at DATETIME DEFAULT GETDATE(),
     equity_percentage DECIMAL(5, 2) CHECK (equity_percentage BETWEEN 0 AND 100) NOT NULL,
     investment_period NVARCHAR(50) NOT NULL,
@@ -94,7 +103,7 @@ CREATE TABLE [transaction] (
     transaction_id INT PRIMARY KEY IDENTITY,
     investment_request_id INT NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
-    status NVARCHAR(20) CHECK (status IN ('completed', 'pending', 'cancelled')) DEFAULT 'pending',
+    status NVARCHAR(20),
     created_at DATETIME DEFAULT GETDATE(),
     transaction_code NVARCHAR(50) UNIQUE,
     FOREIGN KEY (investment_request_id) REFERENCES investment_request(request_id)

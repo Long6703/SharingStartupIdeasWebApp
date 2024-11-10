@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSI.Data.IRepository;
 using SSI.Models;
+using SSI.Ultils.ViewModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SSI.Data.Repository
@@ -79,6 +80,68 @@ namespace SSI.Data.Repository
                          select t.Amount
                          ).Sum();
             return total;
+        }
+
+        public decimal SumAmountIncome()
+        {
+            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+  
+            var total = (from t in _context.Transactions
+                         where t.Status == "completed" && t.CreatedAt >= startOfMonth
+                         select t.Amount)
+                         .Sum();
+
+            return total * 0.1m;
+        }
+
+        public int CountTransaction()
+        {
+            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+   
+            return _context.Transactions
+                .Where(t => t.Status == "completed" && t.CreatedAt >= startOfMonth )
+                .Count();
+        }
+
+        public int CountIdeas()
+        {
+            var startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+         
+            return _context.Ideas
+                .Where(i => i.CreatedAt >= startOfMonth )
+                .Count();
+        }
+
+        public IEnumerable<MonthlyStats> GetMonthlyRevenueAndIdeas()
+        {
+            return _context.Transactions
+                 .GroupBy(t => new { Year = t.CreatedAt.Value.Year, Month = t.CreatedAt.Value.Month })
+            .Select(g => new MonthlyStats
+            {
+                Year = g.Key.Year,
+                Month = g.Key.Month,
+                TotalRevenue = g.Where(t => t.Status == "completed").Sum(t => t.Amount),
+                TotalIdeas = g.Count()
+            })
+            .OrderBy(ms => ms.Year)
+            .ThenBy(ms => ms.Month)
+            .ToList();
+        }
+
+        public IEnumerable<UserMonthly> GetMonthlyInvestAndFounder()
+        {
+            return _context.Users
+                .GroupBy(u => new { Year = u.CreatedAt.Value.Year, Month = u.CreatedAt.Value.Month })
+                .Select(g => new UserMonthly 
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalInvestors = g.Count(u => u.Role == "investor"),
+                    TotalFounder = g.Count(u => u.Role == "startup")
+                })
+                .OrderBy(r => r.Year)
+                .ThenBy(r => r.Month)
+                .ToList();
         }
     }
 }

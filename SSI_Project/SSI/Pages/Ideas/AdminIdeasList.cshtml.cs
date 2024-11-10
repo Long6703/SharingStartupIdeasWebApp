@@ -1,4 +1,5 @@
 using MailKit.Search;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -8,6 +9,7 @@ using System.Collections;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles ="admin")]
     public class AdminIdeasListModel : PageModel
     {
         private readonly IAdminIdeasService _adminIdeasService;

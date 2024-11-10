@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SSI.Web.Client.Pages.UserDashboard
+namespace SSI.Pages
 {
-    public class DashboardModel : PageModel
+    public class AccessDeniedModel : PageModel
     {
         public void OnGet()
         {

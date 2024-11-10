@@ -1,0 +1,154 @@
+﻿@page "{founderUserId:int}"
+@model SSI.Pages.ManageRequestFounderModel
+@{
+    Layout = "/Pages/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .idea-status {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+            .idea-status.pending {
+                background-color: #e0f0ff;
+                color: #007bff;
+            }
+
+            .idea-status.approved {
+                background-color: #e0ffe0;
+                color: #28a745;
+            }
+
+            .idea-status.rejected {
+                background-color: #ffe0e0;
+                color: #dc3545;
+            }
+    </style>
+</head>
+<section class="breadcrumb_area" style="background: url(~/assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>List Ideas</h1>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">List Request</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
+                <div class="dashboard_sidebar">
+                    <div class="dashboard_sidebar_user">
+                        <div class="img">
+                            <img src="~/assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
+                            <label for="profile_photo"><i class="far fa-camera"></i></label>
+                            <input type="file" id="profile_photo" hidden>
+                        </div>
+                        <h3>Addition Smith</h3>
+                        <p>Paris, France</p>
+                    </div>
+                    <div class="dashboard_sidebar_menu">
+                        <ul>
+                            <li><a href="dashboard.html"><i class="fas fa-user"></i> Personal Info</a></li>
+                            <li>
+                                <a href="dashboard_address.html"><i class="fas fa-clipboard-list"></i> address</a>
+                            </li>
+                            <li><a href="dashboard_order.html"><i class="fas fa-shopping-basket"></i> Order</a></li>
+                            <li>
+                                <a class="active" href="dashboard_review.html">
+                                    <i class="fas fa-star"></i>
+                                    Idea List
+                                </a>
+                            </li>
+                            <li><a href="dashboard_wishlist.html"><i class="fas fa-heart"></i> Wishlist</a></li>
+                            <li>
+                                <a href="dashboard_change_password.html">
+                                    <i class="fas fa-key"></i> Change
+                                    Password
+                                </a>
+                            </li>
+                            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 wow fadeInRight">
+                <div class="dashboard_content">
+                    <h2 class="dashboard_title">List Request</h2>
+                    <div class="dashboard_reviews">
+                        @if (Model.IdeasWithRequests.Any())
+                        {
+                            @foreach (var idea in Model.IdeasWithRequests)
+                            {
+                                <div class="single_review">
+                                    <div class="img">
+                                        <img src="~/assetsClient/images/client_img_2.png" alt="Reviewer" class="img-fluid w-100">
+                                    </div>
+                                    <div class="text">
+                                        @foreach (var request in idea.InvestmentRequests)
+                                        {
+                                            <h4>
+                                                <a href="@Url.Page("RequestDetails", new { id = idea.IdeaId })">
+                                                    @idea.Title
+                                                </a>
+
+                                                <br />
+                                                <span class="idea-status @request.Status.ToLower()">@request.Status</span>
+                                            </h4>
+                                            <span>@request.CreatedAt</span>
+                                            <h5>@request.User.Displayname</h5>
+                                            <p>@request.EquityPercentage%</p>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 text-center">
+                                <h3>No request available</h3>
+                            </div>
+                        }
+
+                        <!-- Pagination Section -->
+                        <div class="pagination_area mt_30">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    @if (Model.PageNumber > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="?founderUserId=@Model.PageNumber&pageNumber=@(Model.PageNumber - 1)" aria-label="Previous">
+                                                <i class="far fa-arrow-left"></i> Previous
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (Model.HasMorePages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="?founderUserId=@Model.PageNumber&pageNumber=@(Model.PageNumber + 1)" aria-label="Next">
+                                                Next <i class="far fa-arrow-right"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,5 +1,5 @@
 ﻿@page
-@model SSI.Pages.Ideas.IdeaDetailsModel
+@model SSI.Pages.Ideas.AdminIdeaDetailsModel
 @{
     Layout = "_LayoutAdmin";
 }
@@ -32,11 +32,25 @@
                             
                     </p>
 
-                    <form method="post">
-                        <input type="hidden" value="@Model.Idea.IdeaId"/>
-                        <button type="submit" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Reject</button>
-                        <button type="submit" class="btn btn-teal mt-2" name="action" value="Approve">Approve</button>
-                    </form>
+                    @if(Model.Idea.Status == "pending")
+                    {
+                        <form method="post">
+                            <input type="hidden" value="@Model.Idea.IdeaId" />
+                            <button type="submit" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Reject</button>
+                            <button type="submit" class="btn btn-teal mt-2" name="action" value="Approve">Approve</button>
+                        </form>
+                    }
+                    else if(Model.Idea.Status == "approved")
+                    {
+
+                        <button type="button" class="btn btn-teal mt-2" name="action" value="Approve">Approved</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Rejected</button>
+                    }
+
+                        
 
                 </div>
 
@@ -76,65 +90,54 @@
                             <div class="col-sm-12">
                                 <div class="timeline" dir="ltr">
                                     @{
-                                        @foreach (var i in Model.ideadetails)
+                                     
+                                        foreach (var i in Model.ideadetails)
                                         {
                                             <article class="timeline-item alt">
-                                                
-                                                <div class="text-right">
+                                     
+                                                <div class="text-left">
                                                     <div class="time-show first">
                                                         <a href="#" class="btn btn-primary">Phase @c</a>
                                                     </div>
                                                 </div>
+
+                                      
+                                                <div class="timeline-desk">
+                                                    <div class="panel">
+                                                        <div class="timeline-box">
+                                                            <span class="arrow"></span>
+                                                           
+                                                            <h4 class="text-success">Content:</h4>
+                                                            <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
+                                                            <p>@i.Content</p>
+                                                            <div class="image-gallery">
+                                                                <div class="row">
+                                                                    @{
+                                                                        if(i.Images != null)
+                                                                        {
+                                                                            foreach (var im in i.Images)
+                                                                            {
+                                                                                <div class="col-3">
+                                                                                    <img src="@im.Url" class="img-thumbnail" alt="image1" style="width: 100%; height: auto;">
+                                                                                </div>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>No picture</p>
+                                                                        }
+                                                                    }
+                                                                   
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </article>
-
-
-                                            if (count % 2 != 0)
-                                            {
-                                                <article class="timeline-item ">
-                                                    <div class="timeline-desk">
-                                                        <div class="panel">
-                                                            <div class="timeline-box">
-                                                                <div class="avatar-xxl member-thumb mb-2 center-page mx-auto" style="float: left; margin-right: 15px;">
-                                                                    <!-- Xóa class "rounded-circle" để ảnh không còn hình tròn, chỉ cần đặt width và height để ảnh vuông -->
-                                                                    <img src="@Model.Idea.PosterImg" class="img-thumbnail" alt="profile-image" style="width: 50px; height: 50px;">
-                                                                </div>
-                                                                <span class="arrow"></span>
-                                                                <span class="timeline-icon bg-success"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                                                <h4 class="text-success">Content:</h4>
-                                                                <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
-                                                                <p>@i.Content</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            }
-                                            else
-                                            {
-                                                <article class="timeline-item alt">
-                                                    <div class="timeline-desk">
-                                                        <div class="panel">
-                                                            <div class="timeline-box">
-                                                                <div class="avatar-xxl member-thumb mb-2 center-page mx-500" style="float: right; margin-left: 15px;">
-                                                                    <img src="@Model.Idea.PosterImg" class="img-thumbnail" alt="profile-image" style="width: 50px; height: 50px;">
-                                                                </div>
-                                                                <span class="arrow"></span>
-                                                                <span class="timeline-icon bg-success"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                                                <h4 class="text-success">Content:</h4>
-                                                                <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
-                                                                <p>@i.Content</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            }
-                                            count--;
                                             c++;
                                         }
                                     }
-                                    
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -203,29 +206,7 @@
                             <div class="col-md-1">
                             </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <div class="col-md-3">
-                                <div class="p-4">
-                                    <h5>Milestone:</h5>
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-
-
-                                 <div class="col-md-9">
-                                    
-                                </div>
-
-                                <div class="col-md-1">
-                                    
-                                </div>
-                            
-
-
-                        </div>
+                        
                     </div>
                 </div>
                 <!-- Personal-Information -->

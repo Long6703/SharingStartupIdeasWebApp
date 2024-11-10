@@ -41,7 +41,7 @@ namespace SSI.Models
             {
                 entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B7CC2DE55")
+                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B9700D698")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -116,7 +116,7 @@ namespace SSI.Models
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.PosterImg)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("poster_img");
 
                 entity.Property(e => e.Status)
@@ -144,7 +144,7 @@ namespace SSI.Models
             modelBuilder.Entity<IdeaInterest>(entity =>
             {
                 entity.HasKey(e => e.InterestId)
-                    .HasName("PK__idea_int__0F5A1FAD7D1A901F");
+                    .HasName("PK__idea_int__0F5A1FAD5A8B9F40");
 
                 entity.ToTable("idea_interest");
 
@@ -205,7 +205,7 @@ namespace SSI.Models
                 entity.Property(e => e.IdeaDetailId).HasColumnName("idea_detail_id");
 
                 entity.Property(e => e.Url)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("url");
 
                 entity.HasOne(d => d.IdeaDetail)
@@ -218,7 +218,7 @@ namespace SSI.Models
             modelBuilder.Entity<InvestmentRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__investme__18D3B90FDB4EE0C8");
+                    .HasName("PK__investme__18D3B90F714703D5");
 
                 entity.ToTable("investment_request");
 
@@ -270,7 +270,7 @@ namespace SSI.Models
             {
                 entity.ToTable("transaction");
 
-                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BEC2746C14")
+                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BE7D830448")
                     .IsUnique();
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
@@ -305,18 +305,25 @@ namespace SSI.Models
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Email, "UQ__user__AB6E616400C3E7EA")
+                entity.HasIndex(e => e.Email, "UQ__user__AB6E61645A6E3918")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.AvatarUrl)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
+                    .HasColumnType("text")
                     .HasColumnName("avatar_url");
 
+                entity.Property(e => e.BankAccountNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("bank_account_number");
+
+                entity.Property(e => e.BankName)
+                    .HasMaxLength(100)
+                    .HasColumnName("bank_name");
+
                 entity.Property(e => e.Bio)
-                    .HasMaxLength(500)
+                    .HasColumnType("text")
                     .HasColumnName("bio");
 
                 entity.Property(e => e.CreatedAt)
@@ -333,11 +340,11 @@ namespace SSI.Models
                     .HasColumnName("email");
 
                 entity.Property(e => e.FacebookUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("facebook_url");
 
                 entity.Property(e => e.LinkedinUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("linkedin_url");
 
                 entity.Property(e => e.Location)
@@ -361,11 +368,11 @@ namespace SSI.Models
                     .HasColumnName("status");
 
                 entity.Property(e => e.TwitterUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("twitter_url");
 
                 entity.Property(e => e.WebsiteUrl)
-                    .HasMaxLength(255)
+                    .HasColumnType("text")
                     .HasColumnName("website_url");
             });
 

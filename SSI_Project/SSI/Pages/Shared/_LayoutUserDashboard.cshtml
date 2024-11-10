@@ -1,0 +1,79 @@
+﻿@using SSI.Ultils.ViewModel
+@using SSI.Services.IService
+@inject ISessionService SessionService
+
+@{
+    Layout = "_Layout";
+}
+
+<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>personal info</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">personal infor</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
+                <div class="dashboard_sidebar">
+                    @{
+                        var userViewModel = SessionService.GetSession<UserViewModel>("UserSession");
+                    }
+
+                    <div class="dashboard_sidebar_user">
+                        <form method="post" enctype="multipart/form-data" id="avatarForm" asp-page-handler="UpdateAvatar">
+                            <div class="img">
+                                <img src="@(string.IsNullOrEmpty(userViewModel?.AvatarUrl) ? "assetsClient/images/dfa.jpg" : userViewModel.AvatarUrl)" alt="dashboard" class="img-fluid w-100">
+                                <label for="profile_photo"><i class="far fa-camera"></i></label>
+                                <input type="file" id="profile_photo" name="Avatar" hidden onchange="this.form.submit();">
+                            </div>
+                        </form>
+                        <h3>@userViewModel?.Displayname</h3>
+                        <p>@userViewModel?.Location</p>
+
+                        <div class="social_links d-flex justify-content-center mt-3">
+                            @if (!string.IsNullOrEmpty(userViewModel?.FacebookUrl))
+                            {
+                                <a href="@userViewModel.FacebookUrl" class="me-3"><i style="color: #AB162C" class="fab fa-facebook"></i></a>
+                            }
+                            @if (!string.IsNullOrEmpty(userViewModel?.TwitterUrl))
+                            {
+                                <a href="@userViewModel.TwitterUrl" class="me-3"><i style="color: #AB162C" class="fab fa-twitter"></i></a>
+                            }
+                            @if (!string.IsNullOrEmpty(userViewModel?.LinkedinUrl))
+                            {
+                                <a href="@userViewModel.LinkedinUrl" class="me-3"><i style="color: #AB162C" class="fab fa-linkedin"></i></a>
+                            }
+                            @if (!string.IsNullOrEmpty(userViewModel?.WebsiteUrl))
+                            {
+                                <a href="@userViewModel.WebsiteUrl" class="me-3"><i style="color: #AB162C" class="fas fa-globe"></i></a>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="dashboard_sidebar_menu">
+                        <ul>
+                            <li><a asp-page="UserProfile"><i class="fas fa-user"></i> Personal Info</a></li>
+                            <li><a asp-page="ChangePassword"><i class="fas fa-key"></i> Change Password</a></li>
+                            <li><a asp-page="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+</section>
+

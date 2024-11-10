@@ -30,67 +30,78 @@
 
     <!-- User List with Pagination -->
     <div class="row" id="userList">
-        @foreach (var i in Model.Ideas)
-        {
-            <div class="col-lg-4 user-card" data-displayname="@i.Title" data-email="@i.Description" data-role="@i.Category.Name">
-                <div class="text-center card-box ribbon-box">
-                    <div class="member-card">
+        @{
+            if(Model.Ideas != null)
+            {
+                @foreach (var i in Model.Ideas)
+                {
+                    <div class="col-lg-4 user-card" data-displayname="@i.Title" data-email="@i.Description" data-role="@i.Category.Name">
+                        <div class="text-center card-box ribbon-box">
+                            <div class="member-card">
 
-                            
-                      
-                        <div class="avatar-xl member-thumb mx-auto">
-                            <img src="@i.PosterImg" class="rounded-circle img-thumbnail" alt="profile-image">
-                            <i class="mdi mdi-information-outline member-star text-success" title="verified user"></i>
-                        </div>
 
-                        <div class="mt-3">
-                            <h5 class="mt-2">@i.Title</h5>
-                        </div>
-                        <div class="mt-3">
-                            <h6 class="mt-2" style="font-weight:bold;">@i.Category.Name</h6>
-                        </div>
-                        <div class="mt-3">
-                        @{
-                            string bio = i.Description.Length > 30 ? i.Description.Substring(0, 30) + "..." : i.Description;
-                        }
-                        <p class="text-muted font-13">
-                            @bio
-                        </p>
-                        </div>
 
-                        <form method="post">
-                            <input type="hidden" name="id" value="@i.IdeaId" />
-                            @if(i.Status != "approved" && i.Status != "rejected")
-                            {
-                                <button type="submit" class="btn btn-danger btn-sm mt-2 mr-1" name="action" value="Approve">Approve</button>
-                           
-                                <button type="submit" class="btn btn-warning btn-sm mt-2 mr-1" name="action" value="Reject">Reject</button>
-                                
-                            }
-                            <button type="submit" class="btn btn-primary btn-sm mt-2" name="action" value="View">View Idea</button>
-                                
-                        
-                            
-                        </form>
-                         <ul class="social-links list-inline mt-4 pt-2 mb-0">
-                                           
-                         </ul>
+                                <div class="avatar-xl member-thumb mx-auto">
+                                    <img src="@i.PosterImg" class="rounded-circle img-thumbnail" alt="profile-image">
+                                    <i class="mdi mdi-information-outline member-star text-success" title="verified user"></i>
+                                </div>
+
+                                <div class="mt-3">
+                                    <h5 class="mt-2">@i.Title</h5>
+                                </div>
+                                <div class="mt-3">
+                                    <h6 class="mt-2" style="font-weight:bold;">@i.Category.Name</h6>
+                                </div>
+                                <div class="mt-3">
+                                    @{
+                                        string bio = i.Description.Length > 30 ? i.Description.Substring(0, 30) + "..." : i.Description;
+                                    }
+                                    <p class="text-muted font-13">
+                                        @bio
+                                    </p>
+                                </div>
+
+                                <form method="post">
+                                    <input type="hidden" name="id" value="@i.IdeaId" />
+                                    @if (i.Status.ToLower() != "approved" && i.Status.ToLower() != "rejected")
+                                    {
+                                        <button type="submit" class="btn btn-danger btn-sm mt-2 mr-1" name="action" value="Approve">Approve</button>
+
+                                        <button type="submit" class="btn btn-warning btn-sm mt-2 mr-1" name="action" value="Reject">Reject</button>
+
+                                    }
+                                    <button type="submit" class="btn btn-primary btn-sm mt-2" name="action" value="View">View Idea</button>
+
+
+
+                                </form>
+                                <ul class="social-links list-inline mt-4 pt-2 mb-0">
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-    </div>
 
-    <!-- Pagination Controls -->
+
+                }
+            }
+            else
+            {
+                <p>No Idea</p>
+            }
+        }
+        
+        
+    </div>
     <div class="row mb-3">
         <div class="col-12 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination">
-                    <!-- Pagination items will be injected here -->
                 </ul>
             </nav>
         </div>
     </div>
+
+    
 </div>
 
 <!-- jQuery Library -->

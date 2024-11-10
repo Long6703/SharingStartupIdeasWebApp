@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSI.Models;
+using SSI.Ultils.ViewModel;
 
 namespace SSI.Services.IService
 {
@@ -18,5 +19,13 @@ namespace SSI.Services.IService
         int CountNoRejecrInvest(int investorId);
         decimal SumAmountInvest(int investorId);
 
+        decimal SumAmountIncome();
+
+        int CountTransaction();
+
+        int CountIdeas();
+
+        IEnumerable<MonthlyStats> GetMonthlyRevenueAndIdeas();
+        IEnumerable<UserMonthly> GetMonthlyInvestAndFounder();
     }
 }

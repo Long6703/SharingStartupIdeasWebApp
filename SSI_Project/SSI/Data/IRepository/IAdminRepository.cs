@@ -1,4 +1,6 @@
-﻿namespace SSI.Data.IRepository
+﻿using SSI.Ultils.ViewModel;
+
+namespace SSI.Data.IRepository
 {
     public interface IAdminRepository
     {
@@ -13,6 +15,14 @@
         int CountNoRejecrInvest(int userId);
         decimal SumAmountInvest(int investorId);
 
+        decimal SumAmountIncome();
 
+        int CountTransaction();
+
+        int CountIdeas();
+
+        IEnumerable<MonthlyStats> GetMonthlyRevenueAndIdeas();
+
+        IEnumerable<UserMonthly> GetMonthlyInvestAndFounder();
     }
 }
