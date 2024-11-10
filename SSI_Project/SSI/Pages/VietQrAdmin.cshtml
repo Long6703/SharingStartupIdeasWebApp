@@ -51,7 +51,7 @@
 
     async function checkPaidByVietQR() {
         var price = document.getElementById("price").value;
-        var info = document.getElementById("info").value;
+        var info = document.getElementById("info").value.toLowerCase();
         var reqId = document.getElementById("requestId").value;
         if (price == null) {
             return;
@@ -63,7 +63,7 @@
             const data = await response.json();
             const lastPaid = data.data[data.data.length - 1];
             var lastPrice = lastPaid["Giá trị"];
-            var content = lastPaid["Mô tả"];
+            var content = lastPaid["Mô tả"].toLowerCase();
             if (lastPrice <= price && content.includes(info)) {
                 alert("Paid Successfully");
                 // Redirect with amount and requestId as query parameters

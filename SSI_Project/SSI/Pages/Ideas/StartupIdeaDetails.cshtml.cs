@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -5,6 +6,7 @@ using SSI.Services.IService;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles = "founder")]
     public class StartupIdeaDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;

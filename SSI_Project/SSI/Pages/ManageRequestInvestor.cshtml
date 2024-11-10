@@ -93,7 +93,7 @@
                                                         </form>
                                                     }
 
-                                                    @if (investReq.Status == "approved")
+                                                    @if (investReq.Status.ToLower() == "approved")
                                                     {
 
                                                         <form method="get" action="VietQr">
@@ -104,7 +104,7 @@
                                                         <br />
 
                                                     }
-                                                    @if (investReq.Status == "approved" || investReq.Status == "completed" || investReq.Status == "Investor thanh toan")
+                                                    @if (investReq.Status.ToLower() == "approved" || investReq.Status.ToLower() == "completed" || investReq.Status.ToLower() == "investor thanh toan")
                                                     {
                                                         <a href="/InvestmentRequestDetail?RequestId=@investReq.RequestId" class="btn btn-primary mt-2">View Detail</a>
                                                     }

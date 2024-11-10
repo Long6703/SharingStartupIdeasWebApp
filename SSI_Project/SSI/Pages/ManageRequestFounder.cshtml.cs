@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using SSI.Ultils.ViewModel;
 using System.Text.Json;
 using System.Net.NetworkInformation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SSI.Pages
 {
+    [Authorize(Roles = "founder")]
     public class ManageRequestFounderModel : PageModel
     {
         private readonly IInvestmentRequestService _investRequestService;

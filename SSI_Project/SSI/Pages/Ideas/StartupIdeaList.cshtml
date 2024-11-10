@@ -3,33 +3,33 @@
 @{
     Layout = "_LayoutUserDashboard";
 }
-<head>
-    <style>
-        .idea-status {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            text-transform: capitalize;
+
+<style>
+    .idea-status {
+        display: inline-block;
+        margin-left: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+        .idea-status.pending {
+            background-color: #e0f0ff;
+            color: #007bff;
         }
 
-            .idea-status.pending {
-                background-color: #e0f0ff;
-                color: #007bff;
-            }
+        .idea-status.approved {
+            background-color: #e0ffe0;
+            color: #28a745;
+        }
 
-            .idea-status.approved {
-                background-color: #e0ffe0;
-                color: #28a745;
-            }
+        .idea-status.rejected {
+            background-color: #ffe0e0;
+            color: #dc3545;
+        }
+</style>
 
-            .idea-status.rejected {
-                background-color: #ffe0e0;
-                color: #dc3545;
-            }
-    </style>
-</head>
 <div class="col-xl-9 col-lg-8 wow fadeInRight">
     <div class="dashboard_content">
         <h2 class="dashboard_title">Ideas List</h2>

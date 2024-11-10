@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -7,6 +8,7 @@ using System.Text.Json;
 
 namespace SSI.Pages
 {
+    [Authorize(Roles = "admin")]
     public class ManageRequestAdminModel : PageModel
     {
         private readonly ILogger<ManageRequestAdminModel> _logger;

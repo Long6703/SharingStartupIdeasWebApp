@@ -5,9 +5,11 @@ using SSI.Services.IService;
 using System.Threading.Tasks;
 using System.Linq;
 using SSI.Ultils.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles = "founder")]
     public class StartupIdeaMilestoneDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;

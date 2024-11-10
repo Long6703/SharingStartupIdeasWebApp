@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
 
 namespace SSI.Pages
 {
+    [Authorize(Roles = "admin")]
     public class VietQrAdmin_ReturnModel : PageModel
     {
         private readonly ILogger<VietQrAdmin_ReturnModel> _logger;
