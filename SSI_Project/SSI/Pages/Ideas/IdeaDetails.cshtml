@@ -28,6 +28,10 @@
 
     int updateCount = 1; 
     var selectedMilestone = ViewData["SelectedMilestone"] as Ideadetail;
+    if (selectedMilestone == null && Model.Idea.Ideadetails.Any())
+    {
+        selectedMilestone = Model.Idea.Ideadetails.First();
+    }
 }
 
 <style>
@@ -440,3 +444,5 @@
         });
     });
 </script>
+<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/script_signalr.js"></script>

@@ -18,12 +18,17 @@ namespace SSI.Web.Client.Pages
         }
         public void OnGet()
         {
-            //CountData = _ideaService.countNumber();
-            //TopInvestors = _ideaService.ProminentInvestor();
-            //NewIdeas = _ideaService.GetNewIdea();
-            CountData = new Dictionary<string, int>();
-            TopInvestors = new List<User>();
-            NewIdeas = new List<Idea>();
+            CountData = _ideaService.countNumber() ?? new Dictionary<string, int>
+            {
+                { "numOfUser", 0 },
+                { "numOfInvestor", 0 },
+                { "numOfStartup", 0 },
+                { "numOfIdeas", 0 },
+                { "numOfIdeaIsSeeking", 0 },
+                { "numOfIdeaImplement", 0 }
+            };
+            TopInvestors = _ideaService.ProminentInvestor() ?? new List<User>();
+            NewIdeas = _ideaService.GetNewIdea() ?? new List<Idea>();
         }
     }
 }
