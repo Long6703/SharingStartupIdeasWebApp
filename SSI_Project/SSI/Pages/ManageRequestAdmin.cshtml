@@ -1,6 +1,7 @@
 ﻿@page
 @model SSI.Pages.ManageRequestAdminModel
 @{
+    Layout = "~/Pages/Shared/_LayoutAdmin1.cshtml";
 }
 <!--==========================
         BREADCRUMB AREA START
@@ -81,7 +82,7 @@
                                                     {
 
                                                         <form method="get" action="VietQrAdmin">
-                                                            <input type="hidden" name="Amount" value="@(investReq.Amount)" />
+                                                            <input type="hidden" name="Amount" value="@(investReq.Amount /10*9)" />
                                                             <input type="hidden" name="RequestId" value="@investReq.RequestId" />
                                                             <button type="submit" class="btn btn-success mt-2">Thanh Toán VietQr</button>
                                                         </form>

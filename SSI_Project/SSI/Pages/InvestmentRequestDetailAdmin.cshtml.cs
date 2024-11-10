@@ -5,7 +5,6 @@ using SSI.Services.IService;
 
 namespace SSI.Pages
 {
-    [Authorize(Roles = "admin")]
     public class InvestmentRequestDetailAdminModel : PageModel
     {
         private readonly ILogger<InvestmentRequestDetailModel> _logger;
