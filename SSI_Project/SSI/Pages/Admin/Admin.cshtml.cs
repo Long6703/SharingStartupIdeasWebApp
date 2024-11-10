@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -5,6 +6,8 @@ using SSI.Services.IService;
 
 namespace SSI.Pages.Admin
 {
+    [Authorize(Roles ="admin")]   
+    
     public class AdminModel : PageModel
     {
         private readonly IAdminService _adminService;
@@ -19,6 +22,7 @@ namespace SSI.Pages.Admin
             Users = _adminService.GetAllUsers();
         }
 
+        [Authorize(Roles ="admin")]
         public IActionResult OnPost(int id, string action, string nAc)
         {
             

@@ -15,11 +15,11 @@ namespace SSI.Services.Service
 
         public void SendEmail(string toEmail, string subject, string body)
         {
-            var senderName = _configuration.GetValue<string>("AdminStmpSettings:SenderName");
-            var email = _configuration.GetValue<string>("AdminStmpSettings:SenderEmail");
-            var pw = _configuration.GetValue<string>("AdminStmpSettings:Password");
-            var server = _configuration.GetValue<string>("AdminStmpSettings:Server");
-            var port = _configuration.GetValue<int>("AdminStmpSettings:Port");
+            var senderName = _configuration.GetValue<string>("SmtpSettings:SenderName");
+            var email = _configuration.GetValue<string>("SmtpSettings:SenderEmail");
+            var pw = _configuration.GetValue<string>("SmtpSettings:Password");
+            var server = _configuration.GetValue<string>("SmtpSettings:Server");
+            var port = _configuration.GetValue<int>("SmtpSettings:Port");
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(senderName, email));
             message.To.Add(new MailboxAddress("", toEmail));

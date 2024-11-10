@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using SSI.Services.IService
+@using SSI.Ultils.ViewModel
+@inject ISessionService SessionService
+<!DOCTYPE html>
 <html lang="en">
 
 
@@ -155,18 +158,54 @@
                 </li>
 
                 <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="false" aria-expanded="false">
-                        <img src="~/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
-                        <span class="pro-user-name ml-1">
-                            Maxine K <i class="mdi mdi-chevron-down"></i>
-                        </span>
-                    </a>
+                    @{
+                        var userViewModel = SessionService.GetSession<UserViewModel>("UserSession");
+                        if (userViewModel != null && !string.IsNullOrEmpty(userViewModel.Displayname))
+                        {
+                            <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="false" aria-expanded="false">
+                                <img src="~/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                <span class="pro-user-name ml-1">
+                                    @userViewModel.Displayname <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+
+                        }
+                        else
+                        {
+                            <button style="margin-top: 20px"><i class="bi bi-box-arrow-in-left"></i>Logout</button>
+                        }
+                    }
+                    
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                         <!-- item-->
-                        <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome !</h6>
-                        </div>
+                        @{
+                            if (userViewModel != null && !string.IsNullOrEmpty(userViewModel.Displayname))
+                            {
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="mdi mdi-account-outline"></i>
+                                    <span>Welcome @userViewModel.Displayname !</span>
+                                </a>
+
+                            }
+                            else
+                            {
+                                <ul class="menu_right">
+                                    <li>
+                                        <a class="menu_order common_btn" asp-page="Login">
+                                            login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="menu_order common_btn" asp-page="Register">
+                                            Register
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        }
+                        
+                        
 
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
@@ -189,7 +228,7 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a asp-page="Logout" class="dropdown-item notify-item">
                             <i class="mdi mdi-logout-variant"></i>
                             <span>Logout</span>
                         </a>
@@ -257,16 +296,34 @@
         <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
         <div class="left-side-menu">
 
+            @{
+                if (userViewModel != null && !string.IsNullOrEmpty(userViewModel.Displayname))
+                {
+                    <div class="user-box">
+                        <div class="float-left">
+                            <img src="@userViewModel.AvatarUrl" alt="" class="avatar-md rounded-circle">
+                        </div>
+                        <div class="user-info">
+                            <a href="#">@userViewModel.Displayname</a>
+                            <p class="text-muted m-0">Administrator</p>
+                        </div>
+                    </div>
 
-            <div class="user-box">
-                <div class="float-left">
-                    <img src="~/assets/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
-                </div>
-                <div class="user-info">
-                    <a href="#">Stanley Jones</a>
-                    <p class="text-muted m-0">Administrator</p>
-                </div>
-            </div>
+                }
+                else
+                {
+                    <div class="user-box">
+                        <div class="float-left">
+                            <img src="" alt="" class="avatar-md rounded-circle">
+                        </div>
+                        <div class="user-info">
+                            <a asp-page="Login"></a>
+                            <p class="text-muted m-0">Administrator</p>
+                        </div>
+                    </div>
+                }
+            }
+            
 
             <!--- Sidemenu -->
             <div id="sidebar-menu">
@@ -276,7 +333,7 @@
                     <li class="menu-title">Navigation</li>
 
                     <li>
-                        <a href="index.html">
+                        <a href="@Url.Page("/Admin/Dashboard")">
                             <i class="ti-home"></i>
                             <span> Dashboard </span>
                         </a>
@@ -398,6 +455,8 @@
 
     <!-- Vendor js -->
     <script src="~/assets/js/vendor.min.js"></script>
+    <script src="~/assets/libs/morris-js/morris.min.js"></script>
+    <script src="~/assets/libs/raphael/raphael.min.js"></script>
 
     <!-- Required datatable js -->
     <script src="~/assets/libs/datatables/jquery.dataTables.min.js"></script>

@@ -28,7 +28,11 @@ namespace SSI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=(local);Database=SSIV2;UID=sa;PWD=123;TrustServerCertificate=True");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,7 +41,7 @@ namespace SSI.Models
             {
                 entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B70E08EA1")
+                entity.HasIndex(e => e.Name, "UQ__category__72E12F1B9700D698")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -140,7 +144,7 @@ namespace SSI.Models
             modelBuilder.Entity<IdeaInterest>(entity =>
             {
                 entity.HasKey(e => e.InterestId)
-                    .HasName("PK__idea_int__0F5A1FADB628FD6A");
+                    .HasName("PK__idea_int__0F5A1FAD5A8B9F40");
 
                 entity.ToTable("idea_interest");
 
@@ -214,7 +218,7 @@ namespace SSI.Models
             modelBuilder.Entity<InvestmentRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__investme__18D3B90F8467BB33");
+                    .HasName("PK__investme__18D3B90F714703D5");
 
                 entity.ToTable("investment_request");
 
@@ -266,7 +270,7 @@ namespace SSI.Models
             {
                 entity.ToTable("transaction");
 
-                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BE5A5BA646")
+                entity.HasIndex(e => e.TransactionCode, "UQ__transact__DD5740BE7D830448")
                     .IsUnique();
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
@@ -301,7 +305,7 @@ namespace SSI.Models
             {
                 entity.ToTable("user");
 
-                entity.HasIndex(e => e.Email, "UQ__user__AB6E6164530C0A0D")
+                entity.HasIndex(e => e.Email, "UQ__user__AB6E61645A6E3918")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
 
 namespace SSI.Pages.Transactions
 {
+    [Authorize(Roles = "admin")]
     public class AdminTransactionsListModel : PageModel
     {
         private readonly IAdminTransactionService service;

@@ -26,6 +26,8 @@ namespace SSI.Data.IRepository
         public int CountIdeaDetailByIdeaId(int ideId);
 
         public Models.Category GetCategoryById(int id);
+
+
     }
 
 }

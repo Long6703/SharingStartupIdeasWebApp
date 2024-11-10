@@ -6,5 +6,6 @@
         Task<IQueryable<Models.Transaction>> GetAllTransactionAsync();
         Task<Models.Transaction> GetTransactionByIdAsync(int id);
         Task<IQueryable<Models.Transaction>> GetTransactionByUserIdAsync(int userId);
+
     }
 }

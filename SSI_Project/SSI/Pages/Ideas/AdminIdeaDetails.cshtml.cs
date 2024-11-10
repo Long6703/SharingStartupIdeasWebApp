@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Data.Repository;
@@ -5,9 +7,11 @@ using SSI.Models;
 using SSI.Services.IService;
 using SSI.Services.Service;
 using System.Net.WebSockets;
+using System.Text;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles ="admin")]
     public class AdminIdeaDetailsModel : PageModel
     {
         private readonly IAdminService adminService;
@@ -26,6 +30,8 @@ namespace SSI.Pages.Ideas
         public ICollection<Image> images { get; set; }
         public Models.Category Category { get; set; } = new Models.Category();
         public int countIdeaDetais {  get; set; }
+
+        public List<string> Paras {  get; set; } = new List<string>();
         public void OnGet(int ideId, int uid)
         {
             Idea = adminIdeasService.GetIdeaById(ideId);
@@ -37,10 +43,14 @@ namespace SSI.Pages.Ideas
             foreach (var i in ideadetails)
             {
                 images = adminIdeasService.GetImages(i.IdeaDetailId);
-                i.Images = images;
+                if (images != null) {
+                    i.Images = images;
+                }
+                
                 i.Idea.Category = Category;
             }
             countIdeaDetais = adminIdeasService.CountIdeaDetailByIdeaId(ideId);
+            Paras = GetPara(Idea.Description);
         }
 
         public IActionResult OnPost(string action, int id)
@@ -81,6 +91,31 @@ namespace SSI.Pages.Ideas
                        "<p>Thank you for your submission, and please feel free to reach out if you have any questions.</p>";
 
             _emailService.SendEmail(user.Email, subject, body);
+        }
+
+
+        private List<string> GetPara(string text)
+        {
+            List<string> para = new List<string>();
+            string[] words = text.Split(' ');
+            StringBuilder currentParagraph = new StringBuilder();
+            int wordCount = 0;
+            foreach (var word in words)
+            {
+                currentParagraph.Append(word).Append(" ");
+                wordCount++;
+                if (wordCount >= 100 && word.EndsWith("."))
+                {
+                    para.Add(currentParagraph.ToString().Trim());
+                    currentParagraph.Clear();
+                    wordCount = 0;
+                }
+            }
+            if (currentParagraph.Length > 0)
+            {
+                para.Add(currentParagraph.ToString().Trim());
+            }
+            return para;
         }
     }
 }
