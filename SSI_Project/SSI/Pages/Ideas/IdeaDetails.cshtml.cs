@@ -1,6 +1,8 @@
 using MailKit.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
+using SSI.Hubs;
 using SSI.Models;
 using SSI.Services.IService;
 using System.Text.Json;
@@ -10,6 +12,7 @@ namespace SSI.Pages.Ideas
     public class IdeaDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;
+        private readonly IHubContext<SignalRServer> _hubContext;
         public Idea Idea { get; set; }
         public int CommentCount { get; set; }
         public List<Comment> Comments { get; set; }
@@ -19,11 +22,12 @@ namespace SSI.Pages.Ideas
         public int TotalPages => (int)Math.Ceiling((double)TotalCommentCount / CommentsPerPage);
         public int CommentsPerPage { get; } = 2;
         public int TotalCommentCount => (SelectedMilestone != null ? MilestoneComments.Count(c => c.ParentId == null) : Comments.Count(c => c.ParentId == null));
-        public IdeaDetailsModel(IIdeaService ideaService)
+        public IdeaDetailsModel(IIdeaService ideaService, IHubContext<SignalRServer> hubContext)
         {
             _ideaService = ideaService;
             MilestoneComments = new List<Comment>();
             Comments = new List<Comment>();
+            _hubContext = hubContext;
         }
 
         public IActionResult OnGet(int id)
@@ -94,7 +98,7 @@ namespace SSI.Pages.Ideas
 
             _ideaService.AddComment(newComment);
             ViewData["RelatedIdeas"] = relatedIdeas;
-
+            _hubContext.Clients.All.SendAsync("ReloadData");
             return RedirectToPage(new { id = ideaId });
         }
         public IActionResult OnPostSubmitReply(string replyContent, int parentId, int ideaDetailId, int ideaId)
@@ -124,7 +128,7 @@ namespace SSI.Pages.Ideas
 
             _ideaService.AddComment(newReply);
             ViewData["RelatedIdeas"] = relatedIdeas;
-
+            _hubContext.Clients.All.SendAsync("ReloadData");
             return RedirectToPage(new { id = ideaId });
         }
         public List<Comment> GetNestedReplies(Comment parentComment)

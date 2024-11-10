@@ -13,6 +13,7 @@ using SSI.Data.Repository;
 using SSI.Data.IRepository;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
+using SSI.Hubs;
 namespace SSI
 {
     public class Program
@@ -41,6 +42,7 @@ namespace SSI
             builder.Services.AddTransient<CloudinaryService>();
             builder.Services.AddRepository();
             builder.Services.AddService();
+            builder.Services.AddSignalR();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -102,7 +104,9 @@ namespace SSI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            
             app.MapRazorPages();
+            app.MapHub<SignalRServer>("/hub");
             app.Run();
         }
     }
