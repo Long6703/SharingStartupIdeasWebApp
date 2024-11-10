@@ -5,7 +5,7 @@
 <!--==========================
         BREADCRUMB AREA START
     ===========================-->
-<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+<section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
     <div class="container">
         <div class="row wow fadeInUp">
             <div class="col-12">
@@ -81,17 +81,16 @@
                                                     {
 
                                                         <form method="get" action="VietQrAdmin">
-                                                            <input type="hidden" name="Amount" value="@(investReq.Amount /10*9)" />
+                                                            <input type="hidden" name="Amount" value="@(investReq.Amount)" />
                                                             <input type="hidden" name="RequestId" value="@investReq.RequestId" />
-                                                            <button type="submit" class="btn btn-success">Thanh Toán VietQr</button>
+                                                            <button type="submit" class="btn btn-success mt-2">Thanh Toán VietQr</button>
                                                         </form>
                                                         <br />
 
                                                     }
-                                                    @if (investReq.Status == "approved" || investReq.Status == "completed" || investReq.Status == "pending")
-                                                    {
-                                                        <a href="/InvestmentRequestDetailAdmin?RequestId=@investReq.RequestId" class="btn btn-primary">View Detail</a>
-                                                    }
+                                                    
+                                                        <a href="/InvestmentRequestDetailAdmin?RequestId=@investReq.RequestId" class="btn btn-primary mt-2">View Detail</a>
+                                                    
                                                 </td>
                                             </tr>
                                         }

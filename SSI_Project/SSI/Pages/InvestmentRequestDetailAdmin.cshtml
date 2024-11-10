@@ -6,7 +6,7 @@
 <!--==========================
         BREADCRUMB AREA START
     ===========================-->
-<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+<section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
     <div class="container">
         <div class="row wow fadeInUp">
             <div class="col-12">
@@ -30,21 +30,8 @@
 <section class="dashboard pt_120 xs_pt_80">
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
-                <div class="dashboard_sidebar">
-                    <div class="dashboard_sidebar_user">
-                        <div class="img">
-                            <img src="assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
-                            <label for="profile_photo"><i class="far fa-camera"></i></label>
-                            <input type="file" id="profile_photo" hidden>
-                        </div>
-                        <h3>Addition Smith</h3>
-                        <p>Paris, France</p>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-8 wow fadeInRight">
+            
+            <div class="col-xl-8 col-lg-4 wow">
                 <div class="dashboard_content">
                     <a class="back_btn common_btn" href="/ManageRequestAdmin">
                         <i class="far fa-long-arrow-left"></i> Go
@@ -78,21 +65,22 @@
                             <div class="text">
                                 @if (Model.InvestmentRequest.Transactions != null)
                                 {
+                                    <h2>Transaction</h2>
                                     foreach (var trans in Model.InvestmentRequest.Transactions)
                                     {
-                                        <h2>Transaction</h2>
+                                        
                                         if (trans.TransactionCode.Contains("Receive"))
                                         {
-                                            <h3>Investor thanh toan yeu cau dau tu</h3>
+                                            <h6>Investor pay for invesment request</h6>
                                         }
                                         if (trans.TransactionCode.Contains("Send"))
                                         {
-                                            <h3>Thanh toan tien dau tu cho nha khoi nghiep</h3>
+                                            <h6>Pay invesment money for founder</h6>
                                         }
                                         <ul>
                                             <li><span>Amount:</span> @trans.Amount</li>
                                             <li><span>Date:</span> @trans.CreatedAt</li>
-                                            <li><span>@trans.TransactionCode</span></li>
+                                            
                                         </ul>
                                     }
 
@@ -102,11 +90,7 @@
                             </div>
                         </div>
 
-                        <div class="dashboard_invoice_footer">
-                            <h4>Notes</h4>
-                            <p>Thanks for your request</p>
-
-                        </div>
+                        
                     </div>
                 </div>
             </div>

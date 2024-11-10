@@ -2,7 +2,7 @@
 @model SSI.Pages.VietQrAdminModel
 @{
 }
-<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+<section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
     <div class="container">
         <div class="row wow fadeInUp">
             <div class="col-12">
@@ -64,7 +64,7 @@
             const lastPaid = data.data[data.data.length - 1];
             var lastPrice = lastPaid["Giá trị"];
             var content = lastPaid["Mô tả"];
-            if (lastPrice >= price && content.includes(info)) {
+            if (lastPrice <= price && content.includes(info)) {
                 alert("Paid Successfully");
                 // Redirect with amount and requestId as query parameters
                 window.location.href = `/vietqradmin-return?amount=${price}&requestId=${reqId}`;

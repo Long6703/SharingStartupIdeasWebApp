@@ -31,12 +31,12 @@ namespace SSI.Pages
         {
             var investReq = await _investReqService.GetInvestmentRequestByIdAsync(RequestId);
             String url = "https://img.vietqr.io/image/";
-            String bankName = "";
-            String stk = "";
+            String bankName = investReq.Idea.User.BankName;
+            String stk = investReq.Idea.User.BankAccountNumber;
             String amount = Amount.ToString();
-            String addInfo = " Thanh toan tien dau tu cho nguoi khoi nghiep:" + RequestId;
+            String addInfo = " Thanh toan den founder " + RequestId;
             Info = addInfo;
-            String accountName = investReq.User.Displayname;
+            String accountName = investReq.Idea.User.Displayname;
             PaymentUrl = url + bankName+ "-"+ stk+ "-compact2.png?"+ "amount=" + amount + "&addInfo=" + addInfo + "&accountName=" + accountName;
             return Page();
         }
