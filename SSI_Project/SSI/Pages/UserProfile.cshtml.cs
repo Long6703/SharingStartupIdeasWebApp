@@ -7,7 +7,7 @@ using SSI.Ultils.ViewModel;
 
 namespace SSI.Pages
 {
-    [Authorize(Roles = "investor")]
+    [Authorize]
     public class UserProfileModel : PageModel
     {
         private readonly ISessionService _sessionService;
