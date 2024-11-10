@@ -29,5 +29,6 @@ namespace SSI.Services.IService
         Task CreateIdeaWithDetailAsync(Ideadetail ideaDetails);
         Task CreateImageAsync(Image image);
         Task AddCommentAsync(Comment comment);
+        Task<Comment?> GetCommentByIdAsync(int commentId);
     }
 }

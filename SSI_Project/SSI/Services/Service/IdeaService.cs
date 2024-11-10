@@ -114,5 +114,9 @@ namespace SSI.Services.Service
         {
             await _ideaRepository.AddCommentAsync(comment);
         }
+        public async Task<Comment?> GetCommentByIdAsync(int commentId)
+        {
+            return await _ideaRepository.GetCommentByIdAsync(commentId);
+        }
     }
 }
