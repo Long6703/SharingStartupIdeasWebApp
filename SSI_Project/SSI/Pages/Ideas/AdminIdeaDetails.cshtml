@@ -32,11 +32,25 @@
                             
                     </p>
 
-                    <form method="post">
-                        <input type="hidden" value="@Model.Idea.IdeaId"/>
-                        <button type="submit" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Reject</button>
-                        <button type="submit" class="btn btn-teal mt-2" name="action" value="Approve">Approve</button>
-                    </form>
+                    @if(Model.Idea.Status == "pending")
+                    {
+                        <form method="post">
+                            <input type="hidden" value="@Model.Idea.IdeaId" />
+                            <button type="submit" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Reject</button>
+                            <button type="submit" class="btn btn-teal mt-2" name="action" value="Approve">Approve</button>
+                        </form>
+                    }
+                    else if(Model.Idea.Status == "approved")
+                    {
+
+                        <button type="button" class="btn btn-teal mt-2" name="action" value="Approve">Approved</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary mt-2 mr-1" name="action" value="Reject">Rejected</button>
+                    }
+
+                        
 
                 </div>
 
@@ -65,67 +79,70 @@
         <div class="tab-content">
             <div class="tab-pane active" id="home-b1">
                 <div class="row">
-                    
+                    @{
+                        int count = Model.countIdeaDetais;
+                        int c = 1;
+                    }
 
                     <div class="col-lg-12">
                         <!-- Personal-Information -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="timeline" dir="ltr">
-                                    <article class="timeline-item alt">
-                                        <div class="text-right">
-                                            <div class="time-show first">
-                                                <a href="#" class="btn btn-primary">Milestone</a>
-                                            </div>
-                                        </div>
-                                    </article>
                                     @{
-                                        int count = Model.countIdeaDetais;
-                                        int c = 1;
-                                    }
-                                    @foreach(var i in Model.ideadetails)
-                                    {
-                                        if(count % 2 != 0)
+                                     
+                                        foreach (var i in Model.ideadetails)
                                         {
-                                            <article class="timeline-item ">
+                                            <article class="timeline-item alt">
+                                     
+                                                <div class="text-left">
+                                                    <div class="time-show first">
+                                                        <a href="#" class="btn btn-primary">Phase @c</a>
+                                                    </div>
+                                                </div>
+
+                                      
                                                 <div class="timeline-desk">
                                                     <div class="panel">
                                                         <div class="timeline-box">
                                                             <span class="arrow"></span>
-                                                            <span class="timeline-icon bg-success"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                                            <h4 class="text-success">Phase @c:</h4>
+                                                           
+                                                            <h4 class="text-success">Content:</h4>
                                                             <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
                                                             <p>@i.Content</p>
-
+                                                            <div class="image-gallery">
+                                                                <div class="row">
+                                                                    @{
+                                                                        if(i.Images != null)
+                                                                        {
+                                                                            foreach (var im in i.Images)
+                                                                            {
+                                                                                <div class="col-3">
+                                                                                    <img src="@im.Url" class="img-thumbnail" alt="image1" style="width: 100%; height: auto;">
+                                                                                </div>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>No picture</p>
+                                                                        }
+                                                                    }
+                                                                   
+                                                                    
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </article>
+                                            c++;
                                         }
-                                        else
-                                        {
-                                            <article class="timeline-item alt">
-                                                <div class="timeline-desk">
-                                                    <div class="panel">
-                                                        <div class="timeline-box">
-                                                            <span class="arrow-alt"></span>
-                                                            <span class="timeline-icon"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
-                                                            <h4 class="">Phase @c:</h4>
-                                                            <p class="timeline-date text-muted"><small>@i.CreatedAt</small></p>
-                                                            <p>@i.Content</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        }
-                                        count--;
-                                        c++;
                                     }
                                 </div>
                             </div>
                         </div>
                         <!-- end row -->
-
+                       
                         <!-- Personal-Information -->
 
                     </div>
@@ -136,76 +153,60 @@
                 <!-- Personal-Information -->
                 <div class="panel card panel-fill">
                     <div class="card-header">
-                        <h5 class="font-16 m-1">Edit Profile</h5>
+                        <h5 class="font-16 m-1">Idea Deatils</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row mt-5 justify-content-center">
+                        <div class="row justify-content-center">
+                            <!-- Cột bên trái chứa thông tin -->
                             <div class="col-md-5">
                                 <div class="p-4">
-                                    <!-- Question/Answer -->
+                                    <!-- Founder -->
                                     <div class="mb-4">
-                                        <h6>What is Lorem Ipsum?</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                        <h5>Founder:</h5>
+                                        <p>@Model.Idea.User.Displayname</p>
                                     </div>
 
-                                    <!-- Question/Answer -->
-
+                                    <!-- Category -->
                                     <div class="mb-4">
-                                        <h6>Why use Lorem Ipsum?</h6>
-                                        <p>Lorem ipsum dolor sit amet, in mea nonumes dissentias dissentiunt, pro te solet oratio iriure. Cu sit consetetur moderatius intellegam, ius decore accusamus te. Ne primis suavitate disputando nam. Mutat convenirete.</p>
+                                        <h6>Category:</h6>
+                                        <p>@Model.Idea.Category.Name</p>
                                     </div>
 
-                                    <!-- Question/Answer -->
-
+                                    <!-- Created At -->
                                     <div class="mb-4">
-                                        <h6>How many variations exist?</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                        <h6>Created At:</h6>
+                                        <p>@Model.Idea.CreatedAt</p>
                                     </div>
-
-                                    <!-- Question/Answer -->
-                                    <div class="mb-4">
-                                        <h6>What is Lorem Ipsum?</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                    </div>
-
                                 </div>
-
                             </div>
-                            <!--/col-md-5 -->
-
+                            <!-- /col-md-5 -->
+                            <!-- Cột bên phải chứa ảnh -->
                             <div class="col-md-5">
-
                                 <div class="p-4">
-                                    <!-- Question/Answer -->
+                                    <!-- Avatar -->
                                     <div class="mb-4">
-                                        <h6>Is safe use Lorem Ipsum?</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                    </div>
-
-                                    <!-- Question/Answer -->
-
-                                    <div class="mb-4">
-                                        <h6>When can be used?</h6>
-                                        <p>Lorem ipsum dolor sit amet, in mea nonumes dissentias dissentiunt, pro te solet oratio iriure. Cu sit consetetur moderatius intellegam, ius decore accusamus te. Ne primis suavitate disputando nam. Mutat convenirete.</p>
-                                    </div>
-
-                                    <!-- Question/Answer -->
-
-                                    <div class="mb-4">
-                                        <h6>License &amp; Copyright</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                                    </div>
-
-                                    <!-- Question/Answer -->
-                                    <div class="mb-4">
-                                        <h6>Is safe use Lorem Ipsum?</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                        <h6></h6>
+                                        <p><img src="@Model.Idea.PosterImg?" class="img-fluid rounded" alt="Profile Image" /></p>
                                     </div>
                                 </div>
-
                             </div>
-                            <!--/col-md-5-->
+                            <!-- /col-md-5 -->
                         </div>
+   
+                        <div class="row justify-content-center">
+                            <div class="col-md-9">
+                                <div class="p-4">
+                                    <h5>Description:</h5>
+                                    @foreach(var p in Model.Paras)
+                                    {
+                                        <p>@p</p>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 <!-- Personal-Information -->

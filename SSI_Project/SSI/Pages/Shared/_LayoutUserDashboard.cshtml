@@ -6,7 +6,7 @@
     Layout = "_Layout";
 }
 
-<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
+<section class="breadcrumb_area" style="background:  url('@Url.Content("https://alumni.arizona.edu/sites/default/files/styles/az_large/public/2022-07/is_your_idea_innovative.jpeg.webp?itok=F6C-r8q2")');">
     <div class="container">
         <div class="row wow fadeInUp">
             <div class="col-12">
@@ -65,6 +65,8 @@
                     <div class="dashboard_sidebar_menu">
                         <ul>
                             <li><a asp-page="UserProfile"><i class="fas fa-user"></i> Personal Info</a></li>
+                            <li><a asp-page="Ideas/StartupIdeaList"><i class="fas fa-user"></i>List Idea</a></li>
+                            <li><a asp-page="ManageRequestFounder"><i class="fas fa-user"></i>List Investment Request</a></li>
                             <li><a asp-page="ChangePassword"><i class="fas fa-key"></i> Change Password</a></li>
                             <li><a asp-page="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>

@@ -1,0 +1,83 @@
+﻿@page
+@model SSI.Pages.EditInvestmentRequestModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!--==========================
+    BREADCRUMB AREA START
+===========================-->
+<section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Update Invest Request</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Update Invest Request</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--==========================
+    RESERVATION PAGE START
+===========================-->
+<section class="reservation_page pt_120 xs_pt_100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInLeft">
+                <div class="reservation_img">
+                    <img src="https://dpilaw.vn/wp-content/uploads/2021/06/dau-tu-nuoc-ngoai.jpg" alt="reservation" class="img-fluid w-100">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight">
+                <div class="reservation_form">
+                    <h2>Update INVEST REQUEST</h2>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="number" name="Amount" placeholder="Investment Amount" required value="@Model.InvestmentRequests.Amount">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="hidden" name="IdeaId" placeholder="Idea ID" required value="@Model.InvestmentRequests.IdeaId">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="number" name="EquityPercentage" placeholder="Equity Percentage" required value="@Model.InvestmentRequests.EquityPercentage">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reservation_form_input">
+                                    <input type="text" name="InvestmentPeriod" placeholder="Investment Period" required value="@Model.InvestmentRequests.InvestmentPeriod">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="reservation_form_input">
+                                    <textarea name="Description" rows="7" placeholder="Description" value="@Model.InvestmentRequests.Description">@Model.InvestmentRequests.Description</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="common_btn" type="submit">Update Investment Request</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    RESERVATION PAGE END
+===========================-->
+

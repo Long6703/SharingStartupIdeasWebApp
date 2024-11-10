@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
@@ -9,6 +10,7 @@ using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles = "founder")]
     public class UpdateIdeaDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;

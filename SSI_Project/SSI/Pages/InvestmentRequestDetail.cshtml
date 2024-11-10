@@ -1,0 +1,101 @@
+﻿@page
+@model SSI.Pages.InvestmentRequestDetailModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<!--==========================
+        BREADCRUMB AREA START
+    ===========================-->
+<section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
+    <div class="container">
+        <div class="row wow fadeInUp">
+            <div class="col-12">
+                <div class="breadcrumb_text">
+                    <h1>Invesment Request Detail</h1>
+                    <ul>
+                        <li><a href="#">Home </a></li>
+                        <li><a href="#">Invesment Request Detail</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--==========================
+    BREADCRUMB AREA END
+===========================-->
+<!--================================
+    DASHBOARD ORDER INVOICE START
+=================================-->
+<section class="dashboard pt_120 xs_pt_80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-4 wow">
+                <div class="dashboard_content">
+                    <a class="back_btn common_btn" href="/ManageRequestInvestor">
+                        <i class="far fa-long-arrow-left"></i> Go
+                        Back <span></span>
+                    </a>
+                    <div class="dashboard_order_invoice">
+                        <div class="dashboard_invoice_logo_area">
+                            <div class="invoice_logo">
+                                <img src="assetsClient/images/logo.png" alt="logo" class="img-fluid w-100">
+                            </div>
+                            <div class="text" style="width=150px">
+                                <h2>Invesment Request</h2>
+                                <p>Request Id: @Model.InvestmentRequest.RequestId</p>
+                                <p>Date: @Model.InvestmentRequest.CreatedAt</p>
+                                <p>Amount: @Model.InvestmentRequest.Amount.ToString("0.#")</p>
+                                <p>Investment Period: @Model.InvestmentRequest.InvestmentPeriod</p>
+                                <p>Equity Percentage: @Model.InvestmentRequest.EquityPercentage.ToString("0.#")</p>
+                                <p>Description: @Model.InvestmentRequest.Description</p>
+                            </div>
+                        </div>
+                        <div class="dashboard_invoice_header">
+                            <div class="text">
+                                <h2>Request To Idea</h2>
+                                <p>User: <a href="">@Model.InvestmentRequest.Idea.User.Displayname</a></p>
+                                <p>Title: @Model.InvestmentRequest.Idea.Title</p>
+                                <p>Description: @Model.InvestmentRequest.Idea.Description</p>
+                                <p>Date: @Model.InvestmentRequest.Idea.CreatedAt</p>
+                                <p>Category: @Model.InvestmentRequest.Idea.Category.Name</p>
+                                <img src="@Model.InvestmentRequest.Idea.PosterImg" />
+                            </div>
+                            <div class="text">
+                                @if (Model.InvestmentRequest.Transactions != null)
+                                {
+                                    <h2>Transaction</h2>
+                                    foreach (var trans in Model.InvestmentRequest.Transactions)
+                                    {
+                                        
+                                        if (trans.TransactionCode.Contains("Receive"))
+                                        {
+                                            <h6>Investor pay for invesment request</h6>
+                                        }
+                                        if (trans.TransactionCode.Contains("Send"))
+                                        {
+                                            <h6>Pay invesment money for founder</h6>
+                                        }
+                                        <ul>
+                                            <li><span>Amount:</span> @trans.Amount</li>
+                                            <li><span>Date:</span> @trans.CreatedAt</li>
+                                            
+                                        </ul>
+                                    }
+
+                                }
+
+
+                            </div>
+                        </div>
+
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================================
+    DASHBOARD ORDER INVOICE END
+=================================-->

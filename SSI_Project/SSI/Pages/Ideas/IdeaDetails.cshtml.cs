@@ -1,4 +1,5 @@
 using MailKit.Search;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
@@ -9,6 +10,7 @@ using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles = "investor")]
     public class IdeaDetailsModel : PageModel
     {
         private readonly IIdeaService _ideaService;

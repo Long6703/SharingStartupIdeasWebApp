@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
@@ -7,6 +8,7 @@ using System.Text.Json;
 
 namespace SSI.Pages.Ideas
 {
+    [Authorize(Roles = "investor")]
     public class ListIdeasModel : PageModel
     {
         private readonly IIdeaService _ideaService;

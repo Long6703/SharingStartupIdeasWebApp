@@ -29,5 +29,6 @@ namespace SSI.Data.IRepository
         Task CreateIdeaDetailAsync(Ideadetail ideaDetail);
         Task CreateImageAsync(Image image);
         Task AddCommentAsync(Comment comment);
+        Task<Comment?> GetCommentByIdAsync(int commentId);
     }
 }

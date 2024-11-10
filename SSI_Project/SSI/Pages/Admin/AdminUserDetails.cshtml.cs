@@ -1,15 +1,17 @@
-    using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Models;
 using SSI.Services.IService;
 
 namespace SSI.Pages.Admin
 {
-    public class UserDetailsModel : PageModel
+    [Authorize(Roles = "admin")]
+    public class AdminUserDetailsModel : PageModel
     {
         private readonly IAdminService adminService;
         private readonly IAdminIdeasService adminIdeasService;
-        public UserDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeas)
+        public AdminUserDetailsModel(IAdminService adminService, IAdminIdeasService adminIdeas)
         {
             this.adminService = adminService;
             this.adminIdeasService = adminIdeas;

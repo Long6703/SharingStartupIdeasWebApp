@@ -89,6 +89,7 @@ namespace SSI
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
             builder.Services.AddAuthorization();
 
             var app = builder.Build();

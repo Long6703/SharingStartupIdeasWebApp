@@ -1,0 +1,159 @@
+﻿@page
+@model SSI.Pages.Admin.DashboardModel
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <h4 class="header-title mb-3">Welcome !</h4>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <div class="card-box widget-inline">
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 widget-inline-box">
+                        <div class="text-center p-3">
+                            <h2 class="mt-2">
+                                <i class="text-primary mdi mdi-access-point-network mr-2"></i>
+                                <b>@Model.CountTransaction</b>
+                            </h2>
+                            <p class="text-muted mb-0">Total Transactions</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6 widget-inline-box">
+                        <div class="text-center p-3">
+                            <h2 class="mt-2">
+                                <i class="text-teal mdi mdi-airplay mr-2"></i>
+                                <b>@Model.AmountIncome</b>
+                            </h2>
+                            <p class="text-muted mb-0">Income amounts</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6 widget-inline-box">
+                        <div class="text-center p-3">
+                            <h2 class="mt-2">
+                                <i class="text-info mdi mdi-black-mesa mr-2"></i>
+                                <b>@Model.NoOfUsers</b>
+                            </h2>
+                            <p class="text-muted mb-0">Total users</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="text-center p-3">
+                            <h2 class="mt-2">
+                                <i class="text-danger mdi mdi-cellphone-link mr-2"></i>
+                                <b>@Model.CountIdeas</b>
+                            </h2>
+                            <p class="text-muted mb-0">Total Ideas</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end row -->
+@{
+    var monthlyStatsJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model.MonthlyStatistics);
+    var getUserMonthliesJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model.GetUserMonthlies);
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card-box">
+            <h5 class="mt-0 font-14">Total Revenue</h5>
+            <div class="text-center">
+                <ul class="list-inline chart-detail-list">
+                    <li class="list-inline-item">
+                        <p class="font-weight-semibold">
+                            <i class="fa fa-circle mr-2 text-primary"></i>Investor
+                        </p>
+                    </li>
+                    <li class="list-inline-item">
+                        <p class="font-weight-semibold">
+                            <i class="fa fa-circle mr-2 text-muted"></i>Founder
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div id="dashboard-bar-stacked" class="morris-chart" dir="ltr" style="height: 300px;">
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+
+    <div class="col-lg-12">
+        <div class="card-box">
+            <h5 class="mt-0 font-14">Ideas Analytics</h5>
+            <div class="text-center">
+                <ul class="list-inline chart-detail-list">
+                    <li class="list-inline-item">
+                        <p class="font-weight-semibold">
+                            <i class="fa fa-circle mr-2 text-primary"></i>Revenue
+                        </p>
+                    </li>
+                    <li class="list-inline-item">
+                        <p class="font-weight-semibold">
+                            <i class="fa fa-circle mr-2 text-info"></i>Ideas
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div id="dashboard-line-chart" class="morris-chart" dir="ltr" style="height: 300px;">
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+
+
+
+<script>
+    const monthlyData = @Html.Raw(monthlyStatsJson);
+    const userMonthliesData = @Html.Raw(getUserMonthliesJson);
+    console.log(monthlyData);
+    // Initialize the chart
+    document.addEventListener("DOMContentLoaded", function () {
+        new Morris.Line({
+            element: 'dashboard-line-chart',
+            data: monthlyData.map(item => ({
+                period: `${item.Month}-${item.Year}`,
+                revenue: item.TotalRevenue || 0,
+                ideas: item.TotalIdeas || 0
+            })),
+            xkey: 'period',
+            ykeys: ['revenue', 'ideas'],
+            labels: ['Revenue', 'Ideas'],
+            lineColors: ['#007bff', '#17a2b8'], // Blue for revenue, teal for ideas
+            parseTime: false
+        });
+        new Morris.Bar({
+            element: 'dashboard-bar-stacked',
+            data: userMonthliesData.map(item => ({
+                period: `${item.Month}-${item.Year}`,
+                investorRevenue: item.TotalInvestors || 0,
+                founderRevenue: item.TotalFounder || 0
+            })),
+            xkey: 'period',
+            ykeys: ['investorRevenue', 'founderRevenue'],
+            labels: ['Investor', 'Founder'],
+            barColors: ['#458bc4', '#6c757d'],
+            stacked: true // Enable stacked bars
+        });
+    });
+</script>
+
+<script src="~/assets/js/vendor.min.js"></script>
+<script src="~/assets/libs/morris-js/morris.min.js"></script>
+<script src="~/assets/libs/raphael/raphael.min.js"></script>
