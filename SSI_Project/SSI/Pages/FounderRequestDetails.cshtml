@@ -1,100 +1,60 @@
 ﻿@page
 @model SSI.Pages.FounderRequestDetailsModel
 @{
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_LayoutUserDashboard.cshtml";
 }
-<!--==========================
-        BREADCRUMB AREA START
-    ===========================-->
-<section class="breadcrumb_area" style="background: url(assetsClient/images/breadcrumb_bg.jpg);">
-    <div class="container">
-        <div class="row wow fadeInUp">
-            <div class="col-12">
-                <div class="breadcrumb_text">
-                    <h1>Invesment Request Detail</h1>
-                    <ul>
-                        <li><a href="#">Home </a></li>
-                        <li><a href="#">Invesment Request Detail</a></li>
-                    </ul>
+<div class="col-xl-9 col-lg-8 wow fadeInRight">
+    <div class="dashboard_content">
+        <a class="back_btn common_btn" href="/ManageRequestFounder">
+            <i class="far fa-long-arrow-left"></i> Go Back <span></span>
+        </a>
+        <div class="dashboard_order_invoice">
+            <div class="dashboard_invoice_logo_area">
+                <div class="invoice_logo">
+                    <img src="assetsClient/images/logo.png" alt="logo" class="img-fluid w-100">
                 </div>
+                <div class="text" style="width=150px">
+                    <h2>Investment Request</h2>
+                    <p>Date: @Model.InvestmentRequest.CreatedAt</p>
+                    <p>Amount: @Model.InvestmentRequest.Amount.ToString("0.#")</p>
+                    <p>Investment Period: @Model.InvestmentRequest.InvestmentPeriod</p>
+                    <p>Equity Percentage: @Model.InvestmentRequest.EquityPercentage.ToString("0.#")</p>
+                    <p>Description: @Model.InvestmentRequest.Description</p>
+                </div>
+            </div>
+            <div class="dashboard_invoice_header">
+                <div class="text">
+                    <h2>Request To Idea</h2>
+                    <p>Title: @Model.InvestmentRequest.Idea.Title</p>
+                    <p>Description: @Model.InvestmentRequest.Idea.Description</p>
+                    <p>Date: @Model.InvestmentRequest.Idea.CreatedAt</p>
+                    <p>Category: @Model.InvestmentRequest.Idea.Category.Name</p>
+                </div>
+            </div>
+
+            <div class="dashboard_invoice_footer">
+                <h4>Notes</h4>
+                <p>Thanks for your request</p>
+
+                @if (!string.IsNullOrEmpty(TempData["ErrorMessage"]?.ToString()))
+                {
+                    <div class="alert alert-danger">
+                        <p>@TempData["ErrorMessage"]</p>
+                    </div>
+                }
+
+                @if (Model.InvestmentRequest.Status.ToLower() == "pending")
+                {
+                    <form method="post">
+                        <button type="submit" class="common_btn" name="action" value="accept">Accept</button>
+                        <button type="submit" class="common_btn" name="action" value="reject">Reject</button>
+                    </form>
+                }
+                else
+                {
+                    <p>Status: @Model.InvestmentRequest.Status</p>
+                }
             </div>
         </div>
     </div>
-</section>
-<!--==========================
-    BREADCRUMB AREA END
-===========================-->
-<!--================================
-    DASHBOARD ORDER INVOICE START
-=================================-->
-<section class="dashboard pt_120 xs_pt_80">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-3 col-lg-4 wow fadeInLeft">
-                <div class="dashboard_sidebar">
-                    <div class="dashboard_sidebar_user">
-                        <div class="img">
-                            <img src="assetsClient/images/dashboard_user_img.png" alt="dashboard" class="img-fluid w-100">
-                            <label for="profile_photo"><i class="far fa-camera"></i></label>
-                            <input type="file" id="profile_photo" hidden>
-                        </div>
-                        <h3>Addition Smith</h3>
-                        <p>Paris, France</p>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-8 wow fadeInRight">
-                <div class="dashboard_content">
-                    <a class="back_btn common_btn" href="/ManageRequestFounder">
-                        <i class="far fa-long-arrow-left"></i> Go
-                        Back <span></span>
-                    </a>
-                    <div class="dashboard_order_invoice">
-                        <div class="dashboard_invoice_logo_area">
-                            <div class="invoice_logo">
-                                <img src="assetsClient/images/logo.png" alt="logo" class="img-fluid w-100">
-                            </div>
-                            <div class="text" style="width=150px">
-                                <h2>Invesment Request</h2>
-                                <p>Date: @Model.InvestmentRequest.CreatedAt</p>
-                                <p>Amount: @Model.InvestmentRequest.Amount.ToString("0.#")</p>
-                                <p>Investment Period: @Model.InvestmentRequest.InvestmentPeriod</p>
-                                <p>Equity Percentage: @Model.InvestmentRequest.EquityPercentage.ToString("0.#")</p>
-                                <p>Description: @Model.InvestmentRequest.Description</p>
-                            </div>
-                        </div>
-                        <div class="dashboard_invoice_header">
-                            <div class="text">
-                                <h2>Request To Idea</h2>
-                                <p>Title: @Model.InvestmentRequest.Idea.Title</p>
-                                <p>Description: @Model.InvestmentRequest.Idea.Description</p>
-                                <p>Date: @Model.InvestmentRequest.Idea.CreatedAt</p>
-                                <p>Category: @Model.InvestmentRequest.Idea.Category.Name</p>
-                            </div>
-                        </div>
-
-                        <div class="dashboard_invoice_footer">
-                            <h4>Notes</h4>
-                            <p>Thanks for your request</p>
-                            @if (Model.InvestmentRequest.Status.ToLower() == "pending")
-                            {
-                                <form method="post">
-                                    <button type="submit" class="common_btn" name="action" value="accept">Accept</button>
-                                    <button type="submit" class="common_btn" name="action" value="reject">Reject</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <p>Status: @Model.InvestmentRequest.Status</p>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--================================
-    DASHBOARD ORDER INVOICE END
-=================================-->
+</div>

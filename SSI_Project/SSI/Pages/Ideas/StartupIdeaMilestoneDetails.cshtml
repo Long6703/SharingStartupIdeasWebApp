@@ -27,7 +27,7 @@
                 content.AppendHtml($@"
                 <div class='single_review reply' style='margin-left: 30px;'>
                     <div class='img'>
-                        <img src='~/assetsClient/images/client_img_2.png' alt='Reviewer' class='img-fluid w-100'>
+                        <img src='{reply.User.AvatarUrl}' alt='Reviewer' class='img-fluid w-100'>
                     </div>
                     <div class='text'>
                         <h4>{reply.User.Displayname} <span>{reply.CreatedAt}</span></h4>");
@@ -44,7 +44,6 @@
                 ");
                 }
                 content.AppendHtml($@"
-                        <a href='javascript:void(0);' onclick='toggleReplyForm({reply.CommentId})'><i class='far fa-reply'></i> Reply</a>
                     </div>
                 </div>
 
@@ -120,7 +119,7 @@
                     {
                         <div class="single_review">
                             <div class="img">
-                                <img src="~/assetsClient/images/client_img_1.png" alt="Reviewer" class="img-fluid w-100">
+                                <img src="@comment.User.AvatarUrl" alt="Reviewer" class="img-fluid w-100">
                             </div>
                             <div class="text">
                                 <h4>@comment.User.Displayname <span>@comment.CreatedAt</span></h4>

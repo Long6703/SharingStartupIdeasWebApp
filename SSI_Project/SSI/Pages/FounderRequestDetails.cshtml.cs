@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SSI.Services.IService;
@@ -5,6 +6,7 @@ using SSI.Ultils.ViewModel;
 using System.Text.Json;
 namespace SSI.Pages
 {
+    [Authorize(Roles = "founder")]
     public class FounderRequestDetailsModel : PageModel
     {
         private readonly ILogger<FounderRequestDetailsModel> _logger;
@@ -16,7 +18,8 @@ namespace SSI.Pages
         }
 
         public Models.InvestmentRequest InvestmentRequest { get; set; }
-
+        [TempData]
+        public string ErrorMessage { get; set; }
         public async Task<IActionResult> OnGetAsync(int RequestId)
         {
             InvestmentRequest = await _investmentRequestService.GetInvestmentRequestByIdAsync(RequestId);
@@ -35,8 +38,10 @@ namespace SSI.Pages
             {
                 var userJson = System.Text.Encoding.UTF8.GetString(userBytes);
                 var userViewModel = JsonSerializer.Deserialize<UserViewModel>(userJson);
-                if(userViewModel.BankAccountNumber == null) {
-                    return RedirectToPage("UserProfile");
+                if (userViewModel.BankAccountNumber == null)
+                {
+                    ErrorMessage = "Bank account number is missing. Please update your profile.";
+                    return RedirectToPage("FounderRequestDetails", new { RequestId });
                 }
             }
             InvestmentRequest = await _investmentRequestService.GetInvestmentRequestByIdAsync(RequestId);
