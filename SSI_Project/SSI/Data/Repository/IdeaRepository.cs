@@ -97,7 +97,8 @@ namespace SSI.Data.Repository
                 .Load();
 
             int commentCount = idea.Ideadetails.SelectMany(d => d.Comments).Count();
-            var comments = idea.Ideadetails.SelectMany(d => d.Comments).OrderByDescending(d => d.CreatedAt).ToList();
+
+            var comments = idea.Ideadetails.SelectMany(d => d.Comments).OrderByDescending(d=>d.CreatedAt).ToList();
 
             return (idea, commentCount, comments);
         }
