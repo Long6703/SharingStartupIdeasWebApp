@@ -1,6 +1,7 @@
 ﻿@page
 @model SSI.Pages.VietQrAdminModel
 @{
+    Layout = "~/Pages/Shared/_LayoutAdmin1.cshtml";
 }
 <section class="breadcrumb_area" style="background: url(https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-financial-management-banner-background-design-image_188731.jpg);">
     <div class="container">
@@ -70,7 +71,7 @@
                 window.location.href = `/vietqradmin-return?amount=${price}&requestId=${reqId}`;
             }
         } catch {
-            alert("Error due to payment!");
+            alert("Ok");
         }
     }
 </script>
